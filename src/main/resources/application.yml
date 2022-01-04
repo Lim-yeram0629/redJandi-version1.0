@@ -1,0 +1,25 @@
+# 인코딩의 문제등의 불편함으로 인해 기존의aplication.properties파일이 아닌 yml 파일을 설정
+#server port config
+server:
+  port: 8585
+  
+# oracle driver config
+spring:
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:oracle:thin:@oracle.coffit.me:1521:xe
+    username: C##JANDI
+    password: JANDI
+  
+  # thymeleaf 설정
+  thymeleaf: 
+    prefix: classpath:templates/
+    suffix: .html
+    
+# mybatis config (mappers/**/*.xml -> 매퍼스 밑에 모든 이름의 xml을 사용)
+mybatis:
+  mapper-locations: mappers/**/*.xml
+  # type-alias 설정
+  type-aliases-package: com.jandiFactoring.redJandi.**.*.dto
+  
+  

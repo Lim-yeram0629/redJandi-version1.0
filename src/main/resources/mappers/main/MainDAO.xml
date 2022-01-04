@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jandiFactoring.redJandi.main.model.dao.MainDAO">
+	
+	<resultMap type="com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO" id="classResultMap">
+		<id column="CLASS_CODE" property="classCode"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="TAG" property="tag"/>
+    	<result column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="BOARD_TYPE" property="boardType"/>
+    	<result column="VIEWS" property="views"/>
+    	<result column="MAX_COUNT" property="maxCount"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="PRICE" property="price"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="ORG_FILE_PATH" property="orgFilePath"/>
+    	<result column="NICKNAME" property="nickName" />
+	</resultMap>
+	
+	<select id="selectAllClassList" resultMap="classResultMap">
+		SELECT 
+				C.CLASS_CODE
+			  , C.EMAIL
+		  FROM CLASS_TBL C
+	</select>
+</mapper>
