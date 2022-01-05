@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8">
+	
+    <title>네비바</title>
+    
+    <link href="css/nav.css" rel="stylesheet"/>
+    
+ 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+	    
+    <script>
+      $(function () {
+        $("#acti").on("click", function () {
+          $("#nav-sidebar").css("left", "81%");
+        });
+      });
+
+      $(function () {
+        $(".nav-sidebar-exit").on("click", function () {
+          $("#nav-sidebar").css("left", "100%");
+        });
+      });
+      
+     /*  $(function(){
+    	  if( '${ jandiRegistMessage }' != ''){
+    		  alert('${ jandiRegistMessage }');
+    	  }
+      }); */
+    </script>
+  </head>
+
+  <body>
+    <div class="nav-sidebar" id="nav-sidebar">
+      <div class="nav-sidebar-exit">
+        <img src="images/close.png"/>
+      </div>
+
+      <div class="nav-sidebar-content">
+        <div>
+        <ul>
+          <a href="">
+            <li>
+              <span>🏠</span>
+              <span>홈으로</span>
+            </li>
+          </a>
+        </ul>
+      </div>
+      <div>
+          <hr/>
+          <a href="member/login">
+              <span>✋</span>
+              <span>로그인하기</span>
+          </a>
+            </li>
+        </ul>
+        <ul>
+            <li>
+          <a href="member/terms">
+              <span>📜</span>
+              <span>회원가입 </span>
+          </a>
+            </li>
+        </ul>
+             <ul>
+
+            <li>
+              <a href="mypage/main">
+              <span>✋</span>
+              <span>마이페이지</span>
+             </a>
+            </li>
+        </ul>
+        <ul>
+            <li>
+          <a href="member/logout">
+              <span>📜</span>
+              <span>로그아웃</span>
+          </a>
+            </li>
+        </ul>
+             <ul>
+
+            <li>
+          <a href="manager/mentilist">
+              <span>✋</span>
+              <span>관리자 페이지</span>
+          </a>
+            </li>
+        </ul>
+        <ul>
+            <li>
+          <a href="manager/logout">
+              <span>📜</span>
+              <span>로그아웃</span>
+          </a>
+            </li>
+        </ul>
+
+
+      </div>
+      
+      <div>
+        <hr />
+        <ul class="find-grass">
+          <a href="findclass/findAllClassMain">
+            <li>
+              <span>🌿</span>
+              <span>클래스 둘러보기</span>
+            </li>
+          </a>
+        </ul>
+        <ul class="hide-grass">
+          <a href="findJandi/findAllJandiMain">
+            <li>
+              <span>🍀</span>
+              <span>숨은 잔디 찾기</span>
+            </li>
+          </a>
+        </ul>
+      </div>
+
+      <div>
+        <hr/>
+        
+        <ul>
+          <a href="#">
+            <li>
+              <span>📬</span>
+              <span>이메일 문의</span>
+            </li>
+          </a>
+        </ul>
+        <ul>
+          <a href="faq/notice">
+            <li>
+              <span>📑</span>
+              <span>의견 및 오류 제보</span>
+            </li>
+          </a>
+        </ul>
+        <ul>
+          <a href="manager/login">
+            <li>
+              <span>📑</span>
+              <span>관리자 로그인</span>
+            </li>
+          </a>
+        </ul>
+		
+        <hr />
+        <ul class="nav-sidebar-inline">
+          <a href="#">
+            <li>
+              <div class="nav-sns2">
+                <img
+                  src="images/twitter3.png"
+                  class="navi-face"
+                  style="width: 20px"
+                />
+                <img
+                  src="images/youtube3.png"
+                  class="navi-insta"
+                  style="width: 20px"
+                />
+                <img
+                  src="images/instagram3.png"
+                  class="navi-tw"
+                  style="width: 20px"
+                />
+                <img
+                  src="images/facebook3.png"
+                  class="navi-you"
+                  style="width: 20px"
+                />
+              </div>
+            </li>
+          </a>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+    <nav>
+      <div class="nav-left">
+        <div>
+        <a href="">
+          <img
+            src="images/Logo3.png"
+        /></a>
+      </div>
+      </div>
+
+      <div class="nav-menu">
+        <div class="nav-menu-item">
+          <div>
+            <a
+              href="findJandi/findAllJandiMain"
+              >잔디보기</a
+            >
+          </div>
+          <div>
+            <a
+              href="findclass/findAllClassMain"
+              >클래스</a
+            >
+          </div>
+          <div>
+            <a
+              href="matching/manteeMain/${ sessionScope.loginMember.email}"
+              >매칭</a
+            >
+          </div>
+          <div>
+            <a href="jandi/jandiProfile">잔디 페이지</a>
+          </div>
+        </div>
+
+        <div class="nav-right">
+            <div class="nav-right-login">
+              <a href="member/login"
+                ><button type="button" class="btn">로그인</button>
+              </a>
+               <a
+                href="member/terms"
+                ><button type="button" class="btn" style="background-color:#91c788 ;">회원가입</button>
+              </a>
+            </div>
+          <div class="nav-right-sidebar">
+            <button type="button" id="acti">
+              <img
+                src="images/navi.png"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+.introduce {
+  width: 100%;
+  margin: 0 auto;
+/* border: 1px solid blue; */
+  height: 70%;
+}
+
+.sidebar-content {
+  width: 68% !important;
+  /* overflow: auto; */
+/*  border: 1px solid pink; */
+}
+
+.warn {
+  width: 40%;
+  margin: 50px auto 0;
+  /* border: 1px solid blue; */
+  height: auto;
+}
+
+.introduce-detail {
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 20px;
+/*  border: 1px solid red; */
+  height: 60%;
+  text-align: center;
+  padding: 0;
+}
+
+.introduce-detail1 {
+  width: 48%;
+  margin: 30px auto 0 auto;
+  /* border: 1px solid red; */
+  height: 30%;
+  text-align: left;
+  padding: 0;
+}
+
+.introduce-detail img {
+  width: 60%;
+  height: 60%;
+  text-align: center;
+}
+
+.introduce-detail1 input {
+  /* text-align: right; */
+  border: none;
+  outline: none;
+  margin: 5px 5px;
+  font-size: 18px;
+}
+
+.introduce-detail1 label {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* taking 페이지 */
+.dropsearch { margin: 10px auto; width: 90%; }
+.dropdown { border-radius: 15px; float: left; margin-left: 18%;}
+
+.search {border-radius: 15px; float: left; margin-left: 20px; width: 60%;}
+
+.taking-title {text-align: center; font-size: 25px; font-weight: 600;}
+
+.prompt { width: 100%; }
+
+.unlist-text{text-align: center;}
+.takingtable {text-align: center !important;}
+.takingtable thead tr th {font-weight: 800; background-color: #E3FFEC !important;}
+
+.modify_myinfo {background-color: #E3FFEC;}
+
+/* tiClass 페이지 */
+
+ul.tabs{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+ul.tabs li{
+  display: inline-block;
+	background: #ffffff;
+	color: black;
+	padding: 10px 15px;
+	cursor: pointer;
+  width: 240px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+ul.tabs li.current{
+	background: #ffffff;
+	color: black;
+}
+
+.tab-content{
+  display: none;
+	background: #ffffff;
+	padding: 12px;
+}
+
+.tab-content img {
+  width: 50%;
+  position: relative;
+  left: 25%;
+}
+
+.tab-content.current{
+	display: inherit;
+} 
+
+.title {
+  font-size: 30px;
+  text-align: center;
+  font-weight: 800;
+  color: #52734D;
+}
+
+.tagName{
+  float: left;
+  padding-right: 3%;
+  font-size: 15px;
+  position: relative;
+  top: 7px;
+}
+
+.contents {
+  padding-left: 3%;
+  font-size: 15px;
+}
+
+.after h3 {
+  float: left;
+}
+
+.after p {
+  float: right;
+  position: relative;
+  bottom: 45px;
+}
+
+#aftercard {
+  width: 900px;
+  position: relative;
+  top: 30px;
+  margin-left: 5%;
+}
+
+.afterheader i {
+  color: #FDD442;
+}
+
+#tab-2 p {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.tab2-title a {
+  float: right;
+  position: relative;
+  bottom: 45px;
+}
+
+.tab3-title h3 {float: left; position: relative; top: 55px;}
+.homework {position: relative; left: 40%;font-size: 25px; font-weight: 800; width: 150px;}
+.date {float: right; font-size: 15px; position: relative; bottom: 45px;}
+.plusbtn {float: left;}
+.plus h4 {position: relative; padding-left: 5%; top: 10px;}

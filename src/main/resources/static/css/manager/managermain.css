@@ -1,0 +1,154 @@
+.introduce {
+  width: 100%;
+  margin: 0 auto;
+  /* border: 1px solid blue; */
+  overflow: auto;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.introduce h4 {
+  margin-top: 0;
+}
+
+.sidebar-content {
+  width: 70%;
+  height: 100%;
+  /* overflow: auto; */
+  /* border: 1px solid pink; */
+}
+
+.warn {
+  width: 40%;
+  margin: 50px auto 0;
+  /* border: 1px solid blue; */
+  height: auto;
+}
+
+.introduce-detail {
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 20px;
+  /* border: 1px solid red; */
+  height: 60%;
+  text-align: center;
+  padding: 0;
+}
+
+.introduce-detail1 {
+  width: 48%;
+  margin: 30px auto 0 auto;
+  height: 30%;
+  text-align: left;
+  padding: 0;
+}
+
+.introduce-detail img {
+  width: 60%;
+  height: 60%;
+  text-align: center;
+}
+
+.introduce-detail1 input {
+  border: none;
+  outline: none;
+  margin: 5px 5px;
+  font-size: 18px;
+}
+
+.introduce-detail1 label {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.manager-paging {
+  width: 80%;
+  margin: 0 auto;
+  height: 50px;
+  text-align: center;
+  position: relative;
+}
+
+.manager-paging ul {
+  width: auto;
+  display: inline-block;
+  list-style-type: none;
+  text-align: center;
+  margin-top: 20px;
+  padding-left: 0;
+}
+
+/* .manager-paging li {
+  float: left;
+  padding: 5px 10px;
+  margin: 0 10px;
+  background-color: #91c788;
+  border-radius: 400px;
+  text-decoration: none;
+} */
+
+.manager-paging ul li a {
+  color: white !important;
+}
+
+.manager-search {
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  /* overflow: auto; */
+}
+
+.manager-searchbox {
+  width: 70%;
+  margin: 0 auto;
+  height: 100%;
+  border: 1px solid rgb(200, 200, 200);
+}
+
+.warningtable tbody {
+  text-align: center;
+}
+
+.warningtable thead {
+  background-color: #e3ffec;
+  text-align: center;
+}
+
+.introduce-detail img {
+  width: 60%;
+  height: 60%;
+  text-align: center;
+}
+
+.report button {
+  margin: 10px;
+  background-color: #e3ffec;
+  height: 30px;
+  width: 100px;
+}
+
+.cancelbut {
+  margin: 10px;
+  background-color: #e45656;
+  height: 30px;
+  width: 100px;
+}
+
+.input-search {
+  width: 60%;
+  height: auto;
+  position: relative;
+  margin: 0 auto;
+}
+
+.addnotice button {
+  text-align: right;
+  float: right;
+  margin : 10px 10px;
+  padding : 10px 5px;
+  border: none;
+  border-radius: 20px;
+  background-color:#91c788 ;
+}

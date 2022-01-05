@@ -1,0 +1,132 @@
+
+@charset "UTF-8";
+
+*:focus {
+    outline: 0;
+}
+
+.fullJoin{
+    border: 1px solid green;
+    width: 800px;
+    height: 500px;
+    align-items: center;
+    margin-top: 200px;
+}
+
+.head{
+    padding-left: 240px;
+    background-color: #E3FFEC;
+    height: 90px;
+} 
+
+.fullJoin>div>div{
+    display: inline-block;
+}
+
+.thumbnail{
+  position: relative;
+  bottom: 20%;
+  width: 300px;
+  height: 70px;
+
+}
+
+#timage{
+  margin-top: 2%;
+  margin-right: 5%;
+  width: 60px;
+}
+
+#ttext{
+    font-size: 50px;
+}
+
+.title{
+    font-size: 20px;
+    float: left;
+    margin-left: 5%;
+    margin-right: 2%;
+    width: 20%;
+}
+
+/* #phone {
+  margin-left: 1%;
+}
+
+#name { margin-left: 66px;} */
+
+
+.content{
+
+    margin-left: 5%;
+}
+
+
+input{
+    border: 3px solid #91c788;
+    border-radius: 5px;
+    height: 50px;
+    width: 450px;
+    position: relative;
+    bottom: 14px;
+    padding-left: 2%;
+}
+
+.pwdCheck, .pwdCheck2 {
+    position: relative;
+    left: 28%;
+}
+
+.modal {
+    height: 150px;
+    top: 35%;
+    left: 40%;
+  }
+  
+  .titles {
+    position: relative;
+    margin: 0 auto;
+    top: 15%;
+    font-size: 20px;
+  }
+  
+  .re-modal-btn {
+    position: relative;
+    top: 20%;
+  }
+  
+  .btn {
+    position: relative;
+    top: 25px;
+    background-color: white !important;
+  }
+  
+  .contents {
+    height: 150px;
+    text-align: center;
+    background-color: #91c788 !important;
+  }
+
+  .emailbtn > button {
+    border-radius: 0.5rem;
+    font-size: 12px;
+    border-color: #91c788;
+    width: 80px;
+    height: 30px;
+    background-color: #91c788;
+    color: white;
+  }
+
+  #proof {
+    position: relative;
+    left: 2%;
+    bottom: 15px;
+    border-radius: 0.5rem;
+    font-size: 12px;
+    border-color: #91c788;
+    width: 85px;
+    height: 30px;
+    background-color: #91c788;
+    color: white;
+  }
+  

@@ -1,0 +1,282 @@
+@charset "UTF-8";
+
+*:focus {
+    outline: 0;
+}
+
+nav {
+  position: absolute;
+  height: 100px;
+  width: 100%;
+  top:0%;
+  margin-bottom: 20px;
+  background-color: #e3ffec;
+  z-index: 100;
+}
+.body {
+  line-height: 1.4285em;
+}	
+span {
+  font-size: 15px;
+}
+
+.nav-left {
+  float: left;
+  width: 15%;
+  height: 100%;
+}
+
+.nav-left div {
+  position: relative;
+  margin: 0 auto;
+  width: 50%;
+  height: 100%;
+}
+
+.nav-left img {
+  width: 100%;
+  height: 80%;
+  margin: 0 auto;
+  position: relative;
+  top: 15%;
+}
+
+.container-fluid {
+  padding-top: 70px;
+}
+
+.nav-menu {
+  position: relative;
+  float: right;
+  width: 80%;
+  height: 100%;
+  padding-right: 10px;
+  /* border: 1px solid black; */
+}
+
+.nav-menu > div {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-menu-item {
+  width: 55%;
+  height: 100%;
+  /* border: 1px solid black; */
+}
+
+.nav-menu-item > div {
+  position: relative;
+  float: left;
+  margin: 0 10px;
+  padding: 15px 15px;
+  top: 50%;
+  transform: translate(0, -50%);
+  font-size: 20px;
+  /* border: 1px solid black; */
+}
+.nav-menu-item a {
+  text-decoration: none;
+  font-size: 20px;
+  color: #49a66b;
+}
+
+.nav-right {
+  position: relative;
+  float: right;
+  width: 30%;
+  height: 100%;
+  /* border: 1px solid black; */
+}
+
+.nav-right > div {
+  float: left;
+  /* width: 49%; */
+  height: 100%;
+  /* border : 1px solid black; */
+}
+
+.nav-right-login {
+  /* border: 1px solid black; */
+  width: 75%;
+}
+
+.nav-right-login h5 {
+  text-align: center;
+  margin-top: 35px !important;
+  /* border: 1px solid black; */
+}
+
+.nav-right-regist {
+  border: 1px solid black;
+}
+
+.nav-right-login button {
+  background-color: #fff;
+  border-radius: 10px;
+  border: 4px solid #91c788;
+  font-size: 15px;
+  width: 100px;
+  height: 45px;
+  padding: 10px 10px;
+  margin: 0 10px;
+  position: relative;
+  top: 28%;
+  float: right;
+}
+
+.nav-right-regist button {
+  background-color: #91c788;
+  border-radius: 10px;
+  border: none;
+  font-size: 15px;
+  width: 90px;
+  height: 45px;
+  padding: 10px 10px;
+  margin: 0 20px;
+  position: relative;
+  top: 28%;
+}
+
+.nav-right-regist-manager button {
+  background-color: #91c788;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 10px;
+  font-size: 10px;
+  width: 90px;
+  height: 30px;
+  padding: 10px 10px;
+  position: relative;
+  top: -20px;
+  left: 50%;
+}
+
+.nav-right a {
+  position: relative;
+  float: left;
+  margin: auto auto;
+  text-decoration: none;
+  color: black;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.nav-right-sidebar {
+  width: 20%;
+  height: 100%;
+  /* border: 1px solid black; */
+}
+
+.nav-right-sidebar button {
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+
+.nav-right-sidebar img {
+  width: 100%;
+  height: 70%;
+}
+
+.background {
+  background-color: #e3ffec;
+  width: 100%;
+  height: 800px;
+  z-index: -10;
+  position: absolute;
+}
+
+/* 오른쪽 사이드바 시작 */
+/* =========================================== */
+.nav-sidebar {
+  position: fixed;
+  z-index: 9999;
+  width: 19%;
+  left: 100%;
+  height: 100vh;
+  background-color: #49a66b;
+  padding: 30px 40px;
+  top: 0%;
+  box-sizing: border-box;
+}
+
+.nav-sidebar hr {
+  border: none;
+  background: black;
+  height: 1px;
+  opacity: 0.75;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.nav-sidebar-exit {
+  position: absolute;
+  top: 0%;
+  left: 80%;
+  margin: 20px 20px 0 0;
+}
+
+.nav-sidebar-exit img {
+  width: 50%;
+  height: 50%;
+
+}
+
+.nav-sidebar-content {
+  width: 100%;
+  height: auto;
+  margin-top: 40px;
+}
+
+.nav-sidebar ul {
+  width: auto;
+  height: 30px;
+  padding: 0px 0px 5px 0;
+  margin: 0 auto 14px;
+  box-sizing: border-box;
+  line-height: 1.4285em;
+}
+.nav-sidebar li {
+  width: auto;
+  height: 30px;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-sidebar span {
+  width: auto;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-sidebar-inline {
+  /* border: 1px solid red; */
+  width: 100%;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-sidebar a {
+  list-style: none;
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+  margin: 50px auto;
+}
+
+.nav-sns2 {
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
+  /* border: 1px solid black; */
+}
+.nav-sns2 img {
+  margin: 0 3px;
+}
+iframe {
+  display: none;
+}

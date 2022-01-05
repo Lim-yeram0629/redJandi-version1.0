@@ -1,0 +1,22 @@
+.modifycategory-left {
+  width: 50%;
+  height: 500px;
+  float: left;
+  text-align: center;
+}
+
+.modifycategory-right {
+  width: 50%;
+  height: 500px;
+  float: right;
+  text-align: center;
+  /* border: 1px solid black; */
+}
+
+.category-table {
+  width: 100%;
+}
+
+.category-table td {
+  border: 1px solid black;
+}

@@ -1,0 +1,156 @@
+.faq-logo {
+  width: 100%;
+  margin-top: 80px;
+  margin-bottom: 60px;
+  /* border: 10px solid black; */
+}
+
+.test {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+.test img {
+  width: 100%;
+  height: 100%;
+}
+
+.faq-search {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 34%;
+  height: 30px;
+  background-color: white;
+  border-radius: 20px;
+  /* border: 1px solid black; */
+}
+
+.faq-search-input {
+  width: 90%;
+  height: auto;
+  /* border: 1px solid red; */
+  margin-left: 20px;
+}
+
+.faq-search > div {
+  position: relative;
+  float: left;
+}
+
+.faq-search input {
+  width: 100%;
+  height: 30px;
+  border: none;
+  outline: none;
+}
+
+.test2 {
+  width: 5%;
+  height: 100%;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.test2 button {
+  background-color: transparent;
+  border: none;
+}
+
+.test2 img {
+  width: 100%;
+  height: 100%;
+}
+
+.faq-1 {
+  width: 100%;
+  height: auto;
+  margin-bottom: 50px;
+  /* border: 1px solid brown; */
+}
+
+.faq-2 {
+  width: 100%;
+  height: 40px;
+  /* margin-bottom: 50px; */
+  /* border: 1px solid brown; */
+}
+
+.faq-2-1 {
+  float: left;
+  height: 100%;
+  margin-right: 35px;
+  /* color: #a3a3a3; */
+  font-weight: bold;
+  font-size: 20px;
+  padding-bottom: 5 px;
+  /* border: 1px solid brown; */
+  cursor: pointer;
+}
+
+#tutee {
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid black; */
+  /* display: none; */
+}
+
+#tutor {
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid black; */
+  display: none;
+}
+
+.tutee-que {
+  margin: 20px 10px;
+  overflow: auto;
+}
+
+.que-left {
+  position: relative;
+  width: 3%;
+  float: left;
+  font-size: 25px;
+  color: #49a66b;
+  margin-top: 23px;
+  text-align: center;
+}
+.que-right {
+  position: relative;
+  float: left;
+  width: 90%;
+  height: auto;
+}
+
+.que-title {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+#tuteetext {
+  text-decoration: underline;
+}
+
+#tutortext {
+  text-decoration: none;
+}
+
+.faq-2-tutee h4 {
+  margin-left: 40px;
+}
+.faq-2-tutee h3 {
+  padding-top: 5px;
+  margin-left: 20px;
+}
+
+.faq-2-tutee h1 {
+  padding-top: 20px;
+}
+
+.faq-2-tutee h5 {
+  margin-left: 50px;
+  font-weight: bold;
+}

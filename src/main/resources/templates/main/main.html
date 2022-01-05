@@ -1,102 +1,74 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
-	<meta charset="UTF-8">
+  	<meta charset="UTF-8">
+	
+    <title>숨은잔디</title>
 
-    <!-- <link th:href="${ pageContext.servletContext.contextPath }/static/css/main.css" rel="stylesheet" /> -->
+    <link href="css/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/modal.css" rel="stylesheet" />
+    <link href="css/swiper.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/semantic/semantic.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
    
-    <title>숨은잔디</title>
    
   </head>
 
   <body>
-  	<h1> 테스트! </h1>
-<!-- 	 <div th:replace="./nav.html" ></div>
+	<th:block th:replace="common/nav.html" ></th:block>
 
-    부트스트랩 캐러셀
+    <!-- 부트스트랩 캐러셀 -->
     <div class="main-logo">
       <div id="myCarousel" class="carousel slide" data-ride="carousel" style="overflow: auto" >
        
          <ol class="carousel-indicators">
-        	<li th:each="ad: ${ adClass }" data-target="#myCarousel" data-slide-to="${ ad.rnum }" class="active"></li>
          </ol>
          
         <div class="carousel-inner" role="listbox">
-	        <div class="item active" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[0].classCode }'">
-            <img class="first-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[0].imgPath}"/>
-          </div>	
-	        <div class="item" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[1].classCode }'">
-             <img class="second-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[1].imgPath}"/>
-        	</div>
-        	<c:if test="${ !empty adClass[2].imgPath}" >
-				<div class="item" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[2].classCode }'">
-            	 <img class="third-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[2].imgPath}"/>
-        		</div>	
-        	</c:if> 
-        	<c:if test="${ !empty adClass[3].imgPath}" >
-				<div class="item" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[3].classCode }'">
-            	 <img class="forth-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[3].imgPath}"/>
-        		</div>	
-        	</c:if> 
-        	<c:if test="${ !empty adClass[4].imgPath}" >
-				<div class="item" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[4].classCode }'">
-            	 <img class="fifth-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[4].imgPath}"/>
-        		</div>	
-        	</c:if> 
+          
 		</div>
         
         <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-          <span class="sr-only">Previous</span> </a>
+          <span class="sr-only">Previous</span>
+        </a>
         <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-          <span class="sr-only">Next</span> </a>
-    
+          <span class="sr-only">Next</span>
+        </a>
       </div>
     </div>
 
     <main class="container-fluid">
       <div class="main-search">
         <h4>숨어있는 잔디를 찾아보세요</h4>
-        <form class="main-searchbox" action="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain" method="get">
+        <form class="main-searchbox" action="findclass/findAllClassMain" method="get">
           <input type="text"id="searchValue" name="searchValue" placeholder="찾으시는 강의가 있으신가요?" />
           <button type="submit">
-            <img src="${ pageContext.servletContext.contextPath }/resources/images/research.png"/>
+            <img
+              src=" /images/research.png"
+            />
           </button>
         </form>
       </div>
       <div class="recommendclass">
-        <a th:each = "category: ${ category }" href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=${category.categoryCode}"><button class="btn-hover color-1">${category.categoryName}</button></a>
+        <a href="findclass/findAllClassMain?categoryCode=1"><button class="btn-hover color-1">프로그래밍</button></a>
+        <a href="findclass/findAllClassMain?categoryCode=2"><button class="btn-hover color-1">웹 개발</button></a>
+        <a href="findclass/findAllClassMain?categoryCode=3"><button class="btn-hover color-1">백엔드</button></a>
+        <a href="findclass/findAllClassMain?categoryCode=4"><button class="btn-hover color-1">풀 스택</button></a>
+        <a href="#"><button class="btn-hover color-1">백앤드</button></a>
       </div>
-      <br>
+      <br />
 
-      swiper 캐러셀
+      <!-- swiper 캐러셀 -->
      <div class="intro-board">
        <h1>이런 강의는 어때요??</h1>
        <h4>항상 인기 많은 잔디 수업 지금 소개합니다~!</h4>
         <br />
       </div>
       <div class="swiper-container">
-      
         <div class="swiper-wrapper">
-          <th:each="class1: ${ class2 }">
-          <div class="swiper-slide photo">
-          	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath }/findclass/class/viewsUp?classCode=${class1.classCode }'">
-				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${class1.filePath}"  />
-          	</div>
-          		 <div><h3 class="classinstructor">${ class1.jandiDTO.nickName }</h3></div>
-           		 <div><h4 class="classtitle">${ class1.title }</h4></div>	
-           		 <div><span class="classprice"><%-- ${ class1.price } --%>
-           		 <fmt:formatNumber value="${class1.price}" pattern="\#,###.##"/></span> </div>	
-           		 <c:if test="${ class1.avgReview eq null}">
-           		  <div><h4 class="classtitle">⭐ ️️0</h4></div>	
-           		 </c:if>
-           		 <c:if test="${ class1.avgReview ne null}">
-           		 <div><h4 class="classtitle">⭐ ️${ class1.avgReview }</h4></div>
-           		 </c:if>	
-           		 <span class="views">🔍${ class1.views }</span>
-          </div>
-          </th:each>
         </div>
         
         <div class="swiper-button-next">&gt;</div>
@@ -110,15 +82,15 @@
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <th:each var="jandi" items="${ jandi }" end="7">
+         <!--  <c:forEach var="jandi" items="${ jandi }" end="7">
           <div class="swiper-slide photo">
           	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/jandiProfile/${ jandi.email }'">
-				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${jandi.profile_path}"  />
+				<img  src=" /uploadFiles/profile/${jandi.profile_path}"  />
           	</div>
           		 <div><h3 class="classinstructor">${ jandi.nickName }</h3></div>
            		 <div><h4 class="classtitle">${ jandi.intro }</h4></div>	
           </div>
-          </th:each>
+          </c:forEach> -->
         </div>
         
         <div class="swiper-button-next">&gt;</div>
@@ -132,35 +104,16 @@
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <th:each var="viewClass" items="${ viewClass }" end="7">
-          <div class="swiper-slide photo">
-          	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath }/findclass/class/viewsUp?classCode=${viewClass.classCode }'">
-				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${viewClass.filePath}"  />
-          	</div>
-          		 <div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
-           		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>
-           		 <div><span class="classprice"><fmt:formatNumber value="${viewClass.price}" pattern="\#,###.##"/></span> </div>	
-           		  <c:if test="${ viewClass.avgReview eq null}">
-           		  <div><h4 class="classtitle">⭐ ️0</h4></div>	
-           		 </c:if>
-           		 <c:if test="${ viewClass.avgReview ne null}">
-           		 <div> <h4 class="classtitle">⭐ ${ viewClass.avgReview }<%-- <fmt:formatNumber value="️" pattern=".00"/> --%></h4> </div>
-           		 </c:if>
-           		 <span class="views">🔍${ viewClass.views }</span>
-          </div>
-          </th:each>
         </div>
         
         <div class="swiper-button-next">&gt;</div>
         <div class="swiper-button-prev">&lt;</div>
       </div>
       
-	중간 광고 타임
+	<!-- 중간 광고 타임 -->
       <div class="mainadvertisement">
         <div class="mainadvertisement-left">
           <h1>📬최근 공지사항</h1>
-          <span><h2>${lastestFaq.title }</h2></span><span> <h5>${lastestFaq.writeDate }</h5></span>
-          <h2 class="classtitle" onclick="location.href='${pageContext.servletContext.contextPath}/faq/noticeDetail/${ lastestFaq.postCode }'">${lastestFaq.contents }</h2>
         </div>
       </div>
 
@@ -171,23 +124,6 @@
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <th:each var="viewClass" items="${ latestClass }" end="7">
-          <div class="swiper-slide photo">
-          	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath }/findclass/class/viewsUp?classCode=${viewClass.classCode }'">
-				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${viewClass.filePath}"  />
-          	</div>
-          		<div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
-           		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>
-           		 <div><span class="classprice"><fmt:formatNumber value="${viewClass.price}" pattern="\#,###.##"/></span> </div>	
-           		  <c:if test="${ viewClass.avgReview eq null}">
-           		  <div><h4 class="classtitle">⭐ ️0</h4></div>	
-           		 </c:if>
-           		 <c:if test="${ viewClass.avgReview ne null}">
-           		 <div> <h4 class="classtitle">⭐ ️${ viewClass.avgReview }</h4> </div>
-           		 </c:if>
-           		 <span class="views">🔍${ viewClass.views }</span>	
-          </div>
-          </th:each>
         </div>
         <div class="swiper-button-next">&gt;</div>
         <div class="swiper-button-prev">&lt;</div>
@@ -200,17 +136,6 @@
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <th:each var="viewClass" items="${ almostfinish }" end="7">
-          <div class="swiper-slide photo">
-          	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath }/findclass/class/viewsUp?classCode=${viewClass.classCode }'">
-				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${viewClass.filePath}"  />
-          	</div>
-          		 <div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
-           		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>	
-           		 <div><span class="classprice"><fmt:formatNumber value="${viewClass.price}" pattern="\#,###.##"/></span> </div>	
-           		 <span class="views">🔍${ viewClass.views }</span>	
-          </div>
-          </th:each>
         </div>
         <div class="swiper-button-next">&gt;</div>
         <div class="swiper-button-prev">&lt;</div>
@@ -221,26 +146,8 @@
         <h4>새싹들이 인정한 믿고 듣는 좋은 수업!</h4>
         <br>
       </div>
-      
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <th:each var="viewClass" items="${ highScore }" end="7">
-          <div class="swiper-slide photo">
-          	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath }/findclass/class/viewsUp?classCode=${viewClass.classCode }'">
-				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${viewClass.filePath}"  />
-          	</div>
-          		 <div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
-           		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>
-           		 <div><span class="classprice"><fmt:formatNumber value="${viewClass.price}" pattern="\#,###.##"/></span> </div>	
-           		  <c:if test="${ viewClass.avgReview eq null}">
-           		  <div><h4 class="classtitle">⭐ ️0</h4></div>	
-           		 </c:if>
-           		 <c:if test="${ viewClass.avgReview ne null}">
-           		 <div> <h4 class="classtitle">⭐ ${ viewClass.avgReview }</h4> </div>
-           		 </c:if>
-           		 <span class="views">🔍${ viewClass.views }</span>	
-          </div>
-          </th:each>
         </div>
         <div class="swiper-button-next">&gt;</div>
         <div class="swiper-button-prev">&lt;</div>
@@ -258,20 +165,8 @@
           <strong>더 많은 고객을 만날 기회!</strong><br />
           가입 직후 <strong>내 조건에 맞는 요청서</strong>를<br />
           무료로 받아보고 만나고 싶은<br />
-          고객과 연락해보세요.<br />
-          
-          <c:if test="${ !empty sessionScope.loginMember }">
-          	<c:if test="${ sessionScope.isjandi eq 'Y' }">
-            	<button onclick="location.href='${ pageContext.servletContext.contextPath }/jandi/jandiProfile'">잔디로 가입하기</button>
-            </c:if>
-         	<c:if test="${ sessionScope.isjandi != 'Y' }">
-           		<button onclick="location.href='${ pageContext.servletContext.contextPath }/mypage/joinJandi'">잔디로 가입하기</button>
-           </c:if>
-          </c:if>
-          <c:if test="${ empty sessionScope.loginMember }">
-           		<button onclick="location.href='${ pageContext.servletContext.contextPath }/mypage/joinJandi'">잔디로 가입하기</button>
-          </c:if>
-          </div>
+          고객과 연락해보세요.<br />          
+         </div>
 
         <div class="swiper-container1">
           <div class="swiper-ljh">
@@ -286,7 +181,7 @@
             <div class="swiper-slide">
               <div class="carousel-img1">
                 <img
-                  src="${ pageContext.servletContext.contextPath }/resources/images/applymentor1.png"
+                  src="images/applymentor1.png"
                 />
               </div>
               <div class="classtitle">새싹의 요청서가 도착해요</div>
@@ -299,7 +194,7 @@
             <div class="swiper-slide">
               <div class="carousel-img1">
                 <img
-                  src="${ pageContext.servletContext.contextPath }/resources/images/applymentor2.png"
+                  src="images/applymentor2.png"
                 />
               </div>
               <div class="classtitle">잔디님의 견적을 발송하세요</div>
@@ -311,7 +206,7 @@
             <div class="swiper-slide">
               <div class="carousel-img1">
                 <img
-                  src="${ pageContext.servletContext.contextPath }/resources/images/applymentor3.png"
+                  src="images/applymentor3.png"
                 />
               </div>
               <div class="classtitle">새싹과 연락하세요</div>
@@ -324,7 +219,7 @@
             <div class="swiper-slide">
               <div class="carousel-img1">
                 <img
-                  src="${ pageContext.servletContext.contextPath }/resources/images/applymentor4.png"
+                  src="images/applymentor4.png"
                 />
               </div>
               <div class="classtitle">거래가 완료되었어요!</div>
@@ -337,17 +232,16 @@
         </div>
       </div>
     </div>
-    <jsp:include page="../common/footer.jsp" />
-    <jsp:include page="../main/modal.jsp" />
-
+    <th:block th:replace="common/footer.html" ></th:block>
+    <th:block th:replace="main/modal.html" ></th:block>
     <script>
-	    $(function(){
+	    /* $(function(){
 	  		if('${requestScope.authMessage}' != ''){
 	  			if(confirm('${requestScope.authMessage}')){
 	  				alert("잔디 신청페이지로 이동! (아직 구현 X)");
 	  			}
 	  		}
-	  	});
+	  	}); */
     
       new Swiper(".swiper-container", {
         slidesPerView: 4, // 동시에 보여줄 슬라이드 갯수
@@ -387,7 +281,7 @@
           prevEl: ".swiper-button-prev1", // 이번 버튼 클래스명
         },
       });
-    </script> -->
+    </script>
   </body>
 </html>
 

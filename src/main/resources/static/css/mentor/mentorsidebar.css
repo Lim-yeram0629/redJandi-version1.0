@@ -1,0 +1,77 @@
+@charset "UTF-8";
+
+.common-sidebar {
+  width: 70%;
+  overflow: auto;
+  margin: 150px auto 100px auto;
+  /* border: 1px solid purple; */
+}
+.common-sidebar > div {
+  display: inline-block;
+  float: left;
+}
+
+#sidebar {
+  display: block;
+  position: relative;
+  width: 20%;
+  height: auto;
+  margin: 0 50px;
+  height: 800px;
+  /* border: 1px solid blue; */
+}
+
+.sidebar-inner-name {
+  width: 100%;
+  height: auto;
+  /* border: 1px solid skyblue; */
+  text-align: center;
+}
+
+.sidebar-inner-name1 {
+  width: 80%;
+  margin: 0 auto;
+  height: auto;
+  /* border: 1px solid skyblue; */
+  text-align: center;
+}
+
+.sidebar-inner-name1 > ul {
+  text-decoration: none;
+  list-style: none;
+  padding: 0 10px;
+  font-size: 20px;
+  color: #91c788;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.sidebar-inner-name1 li {
+  font-size: 15px;
+  color: #91c788;
+  padding: 10px 0;
+  text-decoration: none;
+}
+
+.sidebar-inner-name1 a {
+  text-decoration: none;
+  color: #000;
+  padding-left: 15px;
+}
+
+.border-1px-black {
+  border: 1px solid #91c788;
+  border-radius: 200px;
+}
+
+iframe {
+  display: none;
+}
+
+.btn-primary{color:#fff;background-color:#91C788;border-color:#91C788}
+.btn-primary.active,.btn-primary.focus,.btn-primary:active,.btn-primary:focus,.btn-primary:hover,.open>.dropdown-toggle.btn-primary{color:#fff;background-color:#599A4E;border-color:#599A4E}
+.btn-primary:hover{background-color:#599A4E;border-color:#599A4E}
+
+/* ************ 남은 페이지 잡는 css ************** */
+

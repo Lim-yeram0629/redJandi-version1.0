@@ -13,8 +13,8 @@ spring:
   
   # thymeleaf 설정
   thymeleaf: 
-    prefix: classpath:templates/
-    suffix: .html
+    prefix: classpath:/templates/
+    cache: false
     
 # mybatis config (mappers/**/*.xml -> 매퍼스 밑에 모든 이름의 xml을 사용)
 mybatis:

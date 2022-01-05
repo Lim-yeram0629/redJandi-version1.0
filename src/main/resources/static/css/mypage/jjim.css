@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+/* jjim 페이지 */
+
+.jjimtable{border: hidden !important; text-align: center;}
+.jjimtable thead tr th {border-bottom: 4px solid #E3FFEC !important; background-color: #E3FFEC !important;}
+.jjimtable thead tr th a {float: right; padding-right: 5%;}
+.jjimtable tbody tr td img {width: 100%;}
+.jjimtable thead tr th:first {text-align: left !important;}
+.check {width: 17px; height: 17px;}
+.imgtd {width: 20%; height: 100px;}
+.class-title {font-weight: 700;}
+.date{font-size: 12px;}
+
+#deleteClass {
+  border-radius: 0.5rem;
+  font-size: 12px;
+  border-color: #91c788;
+  width: 80px;
+  height: 30px;
+  background-color: #91c788;
+  color: white;
+}
+
+
+
+/* 삭제 모달창 */
+
+  .deletecontent{
+    height: 150px;
+    text-align: center;
+    background-color: #91C788 !important;
+  }
+  
+  .delete-content-title {
+    position: relative;
+    top: 8%;
+  }
+
+  .re-modal-btn {
+    position: relative;
+    top: 10%;
+  }
+
+  .btn {
+    background-color: white !important;
+  }
+
+  #deletemodal {
+    height: 150px;
+    top: 40%;
+    left: 47%;
+  }
