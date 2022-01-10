@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>find All Jandi</title>
+
+    <link th:href="@{/css/bootstrap/bootstrap.css}"  rel="stylesheet" />
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <link th:href="@{/css/mypage.css}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/semantic/semantic.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/findJandi/findJandiMain.css}">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  </head>
+  
+  <script>
+  
+  	 $(function(){
+  		
+  		/* 셀렉트박스 선택 시 페이지 리로드 */
+  		/* $("#searchCondition").on("change", function(){
+  			$("#searchform").submit();
+  		}); */
+
+  		/* 페이지 리로드 시 셀렉트 박스 값 유지하기 */
+  		/* $("#searchCondition").val("${ selectCriteria.searchCondition }"); */
+
+  		/* 페이지 리로드 시 검색값 유지하기 */
+  		/* $("#searchValue").val("${ selectCriteria.searchValue }"); */
+  		
+  	});
+  	
+ 	
+  
+  </script>
+  
+  <body>
+
+    <th:block th:replace="common/nav.html" ></th:block>
+    <div class="common-sidebar">
+    <th:block th:replace="common/findJandisidebar.html" ></th:block>
+      
+      <div class="container" style="width:75%; margin-top:150px">
+
+  <!-- Page Heading -->
+  <h1 class="my-4">멘토 보기 | 
+    <small>전체 멘토</small>
+  </h1>
+
+  	<div class="row">
+		<div class="row" style="margin-bottom:10px;">
+			<div class="dropsearch">
+			<!-- <form id="searchform" action="/findJandi/findAllJandiMain" method="get" >
+				<select class="ui dropdown" id="searchCondition" name="searchCondition" style="margin-left:120px; float:left; border-radius: 1.5rem;">
+					<option value="1">최신순</option>
+					<option value="2">인기순</option>
+				</select>
+		       	<div class="main-searchbox" style="width:350px;">
+			        <input type="search" id="searchValue" name="searchValue" placeholder="찾으시는 잔디가 있으신가요?" value="<c:out value="${
+						selectCriteria.searchValue }" />">
+		          	<button type="submit">
+		           		<img src="images/research.png"/>
+		         	</button>
+				</div>
+			</form> -->
+		       	</div>
+			  <br><br><br><br><br>
+		</div>
+		
+	   <th:block th:each="findJandi : ${findJandiList}" >
+		    <div class="col-lg-4 col-sm-6 mb-4">
+			      <div class="card">
+			            <div class="card-body little-profi text-center">
+			                <div class="intmentor-img"><img th:src="@{/uploadFiles/profile/}+${ findJandi.profile_path }" alt="user"  
+			                	onclick="location.href='findJandi/jandiProfile/${ findJandi.email }'"></div>
+			                <p th:text="${ findJandi.nickname }" ></p>
+			            </div>
+			      </div>
+		    </div> 
+	   </th:block>
+
+  </div>
+  <!-- /.row -->
+
+  <!-- Pagination -->
+</div>
+    </div>
+	
+<!-- /.container -->
+
+  </body>
+  <th:block th:replace="common/footer.html" ></th:block>
+</html>
