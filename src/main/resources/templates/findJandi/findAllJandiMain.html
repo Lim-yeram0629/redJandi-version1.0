@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8" />
 
@@ -39,9 +36,9 @@ pageEncoding="UTF-8"%>
   
   <body>
 
-    <jsp:include page="../common/nav.jsp" />
+    <th:block th:replace="common/nav.html"></th:block>
     <div class="common-sidebar">
-    <jsp:include page="../common/findJandisidebar.jsp" />
+    <th:block th:replace="common/findJandisidebar.html"></th:block>
       
       <div class="container" style="width:75%; margin-top:150px">
 
@@ -53,7 +50,7 @@ pageEncoding="UTF-8"%>
   	<div class="row">
 		<div class="row" style="margin-bottom:10px;">
 			<div class="dropsearch">
-			<form id="searchform" action="${ pageContext.servletContext.contextPath }/findJandi/findAllJandiMain" method="get" >
+			<form id="searchform" action="findJandi/findAllJandiMain" method="get" >
 				<select class="ui dropdown" id="searchCondition" name="searchCondition" style="margin-left:120px; float:left; border-radius: 1.5rem;">
 					<option value="1">최신순</option>
 					<option value="2">인기순</option>
@@ -62,15 +59,14 @@ pageEncoding="UTF-8"%>
 			        <input type="search" id="searchValue" name="searchValue" placeholder="찾으시는 잔디가 있으신가요?" value="<c:out value="${
 						selectCriteria.searchValue }" />">
 		          	<button type="submit">
-		           		<img src="${ pageContext.servletContext.contextPath }/resources/images/research.png"/>
+		           		<img src="images/search.png"/>
 		         	</button>
 				</div>
 			</form>
 		       	</div>
 			  <br><br><br><br><br>
 		</div>
-		
-	   <c:forEach var="jandi" items="${ jandiList }"> 
+		 
 		    <div class="col-lg-4 col-sm-6 mb-4">
 			      <div class="card">
 			            <div class="card-body little-profi text-center">
@@ -80,18 +76,17 @@ pageEncoding="UTF-8"%>
 			            </div>
 			      </div>
 		    </div> 
-	   </c:forEach>
 
   </div>
   <!-- /.row -->
 
   <!-- Pagination -->
-	<jsp:include page="../common/Paging.jsp" />
+<!-- 			<th:block th:replace="common/Paging.html"></th:block> -->
 </div>
     </div>
 	
 <!-- /.container -->
 
   </body>
-  <jsp:include page="../common/footer.jsp" />
+  <th:block th:replace="common/footer.html"></th:block>
 </html>

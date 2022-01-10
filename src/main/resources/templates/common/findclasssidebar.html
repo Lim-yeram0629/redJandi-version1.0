@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+   
+    <title>클래스 찾기 사이드 바</title>
+
+  </head>
+  <body>
+    <div id="sidebar">
+      <div class="sidebar-inner-name">
+        <h1>클래스</h1>
+        <hr class="border-1px-black" />
+      </div>
+      <div class="sidebar-inner-name1">
+        <ul>
+          <li><a href="findclass/findAllClassMain">전체 클래스</a></li>
+          <li><a href="findclass/findTopClassMain">인기 클래스</a></li>
+        </ul>
+        <ul>
+<!--           <c:if test="${ not empty findClassList }">
+            <hr class="border-1px-black" />
+            <c:forEach var="categoryList" items="${ categoryList }"> -->
+              <li><a style="color:#117800;"
+                href="findclass/findAllClassMain?categoryCode=${ categoryList.categoryCode }"></a></li>
+<!--             </c:forEach>
+            <hr class="border-1px-black" /> 
+          </c:if> -->
+
+<!--           <c:if test="${ not empty topClassList }">
+            <hr class="border-1px-black" />
+            <c:forEach var="categoryList" items="${ categoryList }">
+              <li><a style="color:#117800;" 
+                href="findclass/findTopClassMain?categoryCode=${ categoryList.categoryCode }">${ categoryList.categoryName }</a></li>
+            </c:forEach>
+            <hr class="border-1px-black" />
+          </c:if> -->
+        </ul>
+      </div>
+    </div>
+  </body>
+
+</html>

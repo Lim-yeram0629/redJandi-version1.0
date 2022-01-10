@@ -11,4 +11,6 @@ public interface MainDAO {
 
 	List<ClassDTO> selectAllClassList();
 
+/*	List<ClassDTO> selectPopularClass(); */
+
 }

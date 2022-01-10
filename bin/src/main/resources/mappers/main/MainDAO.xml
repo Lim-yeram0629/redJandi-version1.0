@@ -25,5 +25,4 @@
 			  , C.EMAIL
 		  FROM CLASS_TBL C
 	</select>
-
 </mapper>

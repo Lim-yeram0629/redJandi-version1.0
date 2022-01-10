@@ -7,14 +7,48 @@
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	
-    <link href="css/footer.css?" rel="stylesheet" />
-    <link href="css/main.css" rel="stylesheet" />
+    <link href="/css/footer.css?" rel="stylesheet" />
+    <link href="/css/main.css" rel="stylesheet" />
   </head>
+  <style>
+  	.bar-list > li::after {
+  		content: "｜";
+	}
+	
+	.bar-list > .last-li::after {
+	content: "" !important;
+	}
+	ul {
+		list-style: none;
+	}
+	
+	.bar-list > li {
+		float: left;
+		margin-right: 5px;
+	}
+	
+	.bar-list {
+		display: block;
+    	font-size: 15px;
+    	color: darkgray;
+    	float : right;
+    	position: relative;
+    	top: 50%;
+	}
+	
+	.footer_logo { 
+		float: left; 
+		position: relative;
+    	top: 20%;
+	}
+	
+  </style>
   <body>
     <footer>
       <div class="footer">
+    	<!-- <hr style="height: 1.2px; background-color: darkgray; border:0;"> -->
         <div class="footer-up">
-          <div>
+<!--           <div>
             <h3>Company</h3>
             <div>
               <a href="faq/test"><p>회사 소개</p></a>
@@ -44,10 +78,21 @@
             <h3>1234-5678</h3>
             <h6>평일 10:00 ~ 18:00</h6>
             <h6>(점심시간 13:00 - 14:00 제외 · 주말/공휴일 제외)</h6>
+          </div> -->
+          <div class="top-area">
+          <a href="#" class="footer_logo"><img src="/images/footer_logo.png" style="width: 50%;"></a>
+          <ul class="bar-list">
+          <li><a href="faq/test">블로그&nbsp</a></li>
+          <li><a href="faq/test">이용약관&nbsp</a></li>
+          <li><a href="faq/test">개인정보처리방침&nbsp</a></li>
+          <li><a href="faq/test">운영정책&nbsp</a></li>
+          <li class="last-li"><a href="faq/test">고객 문의</a></li>
+          </ul>
           </div>
+          
         </div>
 
-        <hr />
+        <hr style="border:0; background-color: darkgray; height: 1px;">
 
         <div class="footer-down">
           <div class="footer-down-left">
@@ -55,29 +100,29 @@
               상호 : (주)숨은잔디 | 주소 : 서울특별시 서초구 강남대로 441 5층
               503호 | 사업자등록번호 : 767-88-00630 | 대표자명 : 유승제 <br />
               통신판매업 신고번호 : 제 2017-서울서-02964 <br />
-              Copyright ⓒ2020 SoomJan inc, ltd. All rights reserved
+              대표번호 : 1588-8585(평일 오전 9시 ~ 오후 6시) | 이메일 : redjandi@jandi.com
             </div>
           </div>
           <div class="footer-down-right">
             <div class="nav-sns">
               <a href="https://www.naver.com">
                 <img
-                  src="images/facebook3.png"
+                  src="/images/facebook3.png"
                   class="navi-face"
                   style="width: 50px"
               /></a>
               <img
-                src="images/youtube3.png"
+                src="/images/youtube3.png"
                 class="navi-insta"
                 style="width: 50px"
               />
               <img
-                src="images/instagram3.png"
+                src="/images/instagram3.png"
                 class="navi-tw"
                 style="width: 50px"
               />
               <img
-                src="images/twitter3.png"
+                src="/images/twitter3.png"
                 class="navi-you"
                 style="width: 50px"
               />
