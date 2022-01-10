@@ -26,7 +26,7 @@ public class MainController {
 	public String main() {
 				List<ClassDTO> classDTOList = mainService.selectAllClassList();
 		
-		System.out.println(classDTOList);
+		System.out.println("classDTOList : " + classDTOList);
 		
 	/*	List<ClassDTO> popularClass = mainService.popularClass();
 		Collections.shuffle(popularClass); */
