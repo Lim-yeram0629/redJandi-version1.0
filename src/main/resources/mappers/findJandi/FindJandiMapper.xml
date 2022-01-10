@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jandiFactoring.redJandi.findJandi.model.dao.FindJandiMapper">
+    
+<!--    <resultMap type="FindJandiDTO" id="jandiResultMap">
+    	<id column="EMAIL" property="email"/>
+    	<result column="NICKNAME" property="nickname"/>
+    	<result column="PROFILE_PATH" property="profile_path"/>
+    	<result column="SUMVIEWS" property="sumviews"/>
+    </resultMap>
+    
+     <resultMap type="FindClassDTO" id="findClassResultMap">
+    	<result column="CLASS_CODE" property="classCode"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="TAG" property="tag"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="PRICE" property="price"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="PROFILE_PATH" property="profilePath"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="CATEGORY_NAME" property="categoryName"/>
+    	<result column="AVGSTAR" property="avgStar"/>
+    	<result column="RVCOUNT" property="rvCount"/>
+    </resultMap> -->
+    
+    <select id="selectAllFindJandiList" resultMap="jandiResultMap">
+    	SELECT
+		       B.RNUM
+		     , B.EMAIL
+		     , B.SUMVIEWS
+		     , B.NICKNAME
+		     , B.PROFILE_PATH
+		  FROM 
+			(SELECT 
+			       ROWNUM RNUM
+			     , A.EMAIL
+			     , A.SUMVIEWS
+				 , A.NICKNAME 
+			     , A.PROFILE_PATH	
+			FROM
+				(SELECT SUM(CL.VIEWS) SUMVIEWS
+				     , jt.EMAIL
+					 , jt.NICKNAME 
+					 , jt.PROFILE_PATH	
+				  FROM JANDI_TBL jt
+			     JOIN CLASS_TBL CL ON (jt.EMAIL = CL.EMAIL)
+			     WHERE CL.IS_DELETED = 'N'	
+			     GROUP BY jt.EMAIL, jt.NICKNAME, jt.PROFILE_PATH, jt.ENROLL_DATE 
+			 	) A
+			 ) B
+    </select>
+    
+
+</mapper>

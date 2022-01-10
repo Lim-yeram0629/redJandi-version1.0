@@ -1,6 +1,11 @@
 
+<<<<<<< HEAD
 # Created by https://www.toptal.com/developers/gitignore/api/eclipse,java,maven
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,java,maven
+=======
+# Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,maven
+# Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,maven
+>>>>>>> refs/remotes/origin/master
 
 ### Eclipse ###
 .metadata
@@ -113,4 +118,8 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+<<<<<<< HEAD
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java,maven
+=======
+# End of https://www.toptal.com/developers/gitignore/api/java,eclipse,maven
+>>>>>>> refs/remotes/origin/master
