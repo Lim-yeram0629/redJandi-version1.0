@@ -1,16 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>마이페이지 슬라이더바</title>
 
     <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css"
+      href="css/mypage/mypagesidebar.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
-    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/semantic/semantic.css">
+    <script src="css/semantic/semantic.js"></script>
     <style>
       /* 회원탈퇴 모달창 */
     #endmodal { height: 603px; left: 40%; top: 20%; }
@@ -59,18 +57,18 @@ pageEncoding="UTF-8"%>
         <ul>
           <h3>클래스 관리</h3>
           <!-- <hr class="border-1px-black" /> -->
-          <li><a href="${ pageContext.servletContext.contextPath }/mypage/taking">수강중인 클래스</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/mypage/finish">수강완료 클래스</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/mypage/jjim">찜한 클래스</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/mypage/buy">구매내역</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/mypage/review">클래스 후기</a></li>
+          <li><a href="mypage/taking">수강중인 클래스</a></li>
+          <li><a href="mypage/finish">수강완료 클래스</a></li>
+          <li><a href="mypage/jjim">찜한 클래스</a></li>
+          <li><a href="mypage/buy">구매내역</a></li>
+          <li><a href="mypage/review">클래스 후기</a></li>
         </ul>
         <ul>
           <h3>설정</h3>
           <!-- <hr class="border-1px-black" /> -->
-          <li><a href="${ pageContext.servletContext.contextPath }/mypage/main">내정보</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/mypage/modify">정보수정</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/mypage/modifyPwd">비밀번호 변경</a></li>
+          <li><a href="mypage/main">내정보</a></li>
+          <li><a href="mypage/modify">정보수정</a></li>
+          <li><a href="mypage/modifyPwd">비밀번호 변경</a></li>
           <li><a href="#" id="endbtn">회원탈퇴</a></li>
         </ul>
       </div>

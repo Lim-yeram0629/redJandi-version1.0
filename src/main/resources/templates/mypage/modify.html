@@ -1,12 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
 
     <title>회원정보수정</title>
 
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/modify.css" rel="stylesheet"/>
+    <link href="css/mypage/modify.css" rel="stylesheet"/>
 
     <style>
     .warningtable tbody {text-align: center;} /* 누적 경고 테이블 */
@@ -30,15 +28,15 @@ pageEncoding="UTF-8"%>
     </style>
   </head>
   <body>
-    <jsp:include page="../common/nav.jsp" />
+     <th:block th:raplace="common/nav.html" ></th:block>
 
     <div class="common-sidebar">
-      <jsp:include page="../common/mypagesidebar.jsp" />
+      <th:block th:raplace="common/mypagesidebar.html" ></th:block>
       <div class="sidebar-content">
         <div class="introduce">
           <div class="introduce-detail">
             <img
-              src="${ pageContext.servletContext.contextPath }/resources/images/join2.png"
+              src="images/join2.png"
             />
           </div>
           <div class="introduce-detail1">
@@ -208,7 +206,7 @@ pageEncoding="UTF-8"%>
     </div>
 
   </body>
-  <jsp:include page="../common/footer.jsp" />
+   <th:block th:raplace="common/footer.html" ></th:block>
 </html>
 
 <!-- 모달창 모아두는 곳 -->
