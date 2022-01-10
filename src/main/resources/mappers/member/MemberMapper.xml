@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.jandiFactoring.redJandi.member.model.dao.MemberMapper">
+
+	<resultMap id="memberResultSet" type="com.jandiFactoring.redJandi.member.model.dto.MemberDTO">
+		<id column="EMAIL" property="email" />
+		<result column="NICKNAME" property="nickName" />
+		<result column="PASSWORD" property="password" />
+		<result column="PHONE" property="phone" />
+		<result column="IS_JANDI" property="isJandi" />
+		<result column="WARNING" property="warning" />
+		<result column="IS_BLACK" property="isBlack" />
+		<result column="ENROLL_DATE" property="enrollDate" />
+		<result column="IS_EXIT" property="isExit" />
+		<result column="NAME" property="name" />
+		<result column="BLACK_END_DATE" property="blackEndDate" />
+	</resultMap>
+
+
+	<!-- 이메일의 존재 유무 확인하기 by 권순표 -->
+	<select id="isSsackEmailDup" resultType="_int" parameterType="com.jandiFactoring.redJandi.member.model.dto.MemberDTO">
+		SELECT COUNT(*)
+	      FROM SSACK_TBL A
+		 WHERE A.EMAIL = #{ email }
+	  	   AND IS_EXIT = 'N'
+	</select>
+
+
+
+
+
+</mapper>

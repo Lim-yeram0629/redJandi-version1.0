@@ -1,18 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>숨은잔디 회원가입</title>
 
     <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/join.css"
+      href="css/join.css"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"
+      href="css/semantic/semantic.css"
     />
   </head>
   <style>
@@ -22,13 +20,13 @@ pageEncoding="UTF-8"%>
   </style>
 
   <body>
-    <jsp:include page="../common/nav.jsp" />
+     <th:block th:raplace="common/nav.html" ></th:block>
 
     <main class="fullJoin">
       <div class="head">
         <div id="timage">
           <img
-            src="${ pageContext.servletContext.contextPath }/resources/images/join.png"
+            src="images/join.png"
             style="width: 70px; height: 70px;" 
           />
         </div>
@@ -55,7 +53,7 @@ pageEncoding="UTF-8"%>
         <div class="content">
             <div class="title">이메일</div>
             <input type="text" placeholder="이메일을 입력하세요" name="email" id="email">
-            <button type="button" class="onButton" onclick="return duplicationCheck()">중복확인</button>
+            <button type="button" class="onButton" onclick="return emailDuplicationCheck()">중복확인</button>
             <button type="button" class="onButton" id="proofButton" onclick="return sendMail()" style="display: none;">이메일 인증</button>
             <div class="emailCheck" style="margin-top: 1%;"></div>
             <input type="checkbox" id="emailBoolean" style="display: none;">
@@ -145,14 +143,14 @@ pageEncoding="UTF-8"%>
         });
 
         /* 이메일 중복 체크 */
-        function duplicationCheck() {
+        function emailDuplicationCheck() {
           let email = $("#email").val();
 
           if (!email) {
             showModal("이메일을 입력해주세요.");
           } else {
             $.ajax({
-              url: "${ pageContext.servletContext.contextPath }/member/idDupCheck",
+              url: "${ pageContext.servletContext.contextPath }/member/emailDupCheck",
               type: "post",
               data: { email: email },
               success: function (data) {
@@ -414,7 +412,7 @@ pageEncoding="UTF-8"%>
       </script>
     </main>
 
-    <jsp:include page="../common/footer.jsp" />
+     <th:block th:raplace="common/footer.html" ></th:block>
 
   </body>
 </html>

@@ -1,13 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 
     <title>비밀번호 변경</title>
 
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/modify.css" rel="stylesheet"/>
+    <link href="css/mypage.css" rel="stylesheet"/>
+    <link href="css/mypage/modify.css" rel="stylesheet"/>
 
     <style>
       .inputpwd {width: 300px; height: 50px; border: 3px solid #91c788; border-radius: 10px; padding-left: 2%; margin-top: 5%;} /* 비밀번호 input */
@@ -26,9 +24,9 @@
     </style>
 </head>
 <body>
-	 <jsp:include page="../common/nav.jsp" />
+	<th:block th:raplace="common/nav.html" ></th:block>
     <div class="common-sidebar">
-      <jsp:include page="../common/mypagesidebar.jsp" />
+      <th:block th:raplace="common/mypagesidebar.html" ></th:block>
       <div class="sidebar-content">
         <p class="taking-title">비밀번호 변경</p>
         <div class="input-pwd">
@@ -170,7 +168,7 @@
       );      
     </script>
 </body>
-<jsp:include page="../common/footer.jsp" />
+<th:block th:raplace="common/footer.html" ></th:block>
 </html>
 <!-- 모달 창-->
 

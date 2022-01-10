@@ -1,15 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>숨은 잔디 이용 약관</title>
 
-   <link href="${ pageContext.servletContext.contextPath }/resources/css/userAgreement.css" rel="stylesheet" />
+   <link href="css/userAgreement.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       type="text/css"
-      href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"
+      href="css/semantic/semantic.css"
     />
     <style>
       input[type="checkbox"]{
@@ -23,7 +21,7 @@ pageEncoding="UTF-8"%>
   </head>
 
   <body>
-    <jsp:include page="../common/nav.jsp" />
+    <th:block th:raplace="common/nav.html" ></th:block>
 
     <main class="mainPage" style="padding-top:40px;">
 
@@ -408,14 +406,14 @@ pageEncoding="UTF-8"%>
           $("#Modal").fadeOut();
         });
       } else {
-        location.href="${ pageContext.servletContext.contextPath }/member/regist";
+        location.href="${ pageContext.servletContext.contextPath }/member/join";
       }
     });
   });
 
   </script>
     </main>
-    <jsp:include page="../common/footer.jsp" />
+    <th:block th:raplace="common/footer.html" ></th:block>
   </body>
 </html>
 
