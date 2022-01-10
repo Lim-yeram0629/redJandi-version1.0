@@ -6,6 +6,8 @@ import com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO;
 
 public interface MainService {
 
-	List<ClassDTO> selectAllClassList();
+	List<ClassDTO> selectAllClassList(); 
+
+/*	List<ClassDTO> popularClass(); */
 
 }

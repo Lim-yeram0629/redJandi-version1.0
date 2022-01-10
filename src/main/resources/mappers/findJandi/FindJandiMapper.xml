@@ -25,7 +25,7 @@
     	<result column="RVCOUNT" property="rvCount"/>
     </resultMap> -->
     
-    <select id="selectAllFindJandiList" resultMap="jandiResultMap">
+    <!-- <select id="selectAllFindJandiList" resultMap="jandiResultMap">
     	SELECT
 		       B.RNUM
 		     , B.EMAIL
@@ -50,7 +50,7 @@
 			     GROUP BY jt.EMAIL, jt.NICKNAME, jt.PROFILE_PATH, jt.ENROLL_DATE 
 			 	) A
 			 ) B
-    </select>
+    </select> -->
     
 
 </mapper>

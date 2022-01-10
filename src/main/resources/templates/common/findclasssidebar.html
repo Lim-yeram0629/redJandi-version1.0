@@ -18,23 +18,23 @@
           <li><a href="findclass/findTopClassMain">인기 클래스</a></li>
         </ul>
         <ul>
-          <c:if test="${ not empty findClassList }">
+<!--           <c:if test="${ not empty findClassList }">
             <hr class="border-1px-black" />
-            <c:forEach var="categoryList" items="${ categoryList }">
+            <c:forEach var="categoryList" items="${ categoryList }"> -->
               <li><a style="color:#117800;"
-                href="findclass/findAllClassMain?categoryCode=${ categoryList.categoryCode }">${ categoryList.categoryName }</a></li>
-            </c:forEach>
+                href="findclass/findAllClassMain?categoryCode=${ categoryList.categoryCode }"></a></li>
+<!--             </c:forEach>
             <hr class="border-1px-black" /> 
-          </c:if>
+          </c:if> -->
 
-          <c:if test="${ not empty topClassList }">
+<!--           <c:if test="${ not empty topClassList }">
             <hr class="border-1px-black" />
             <c:forEach var="categoryList" items="${ categoryList }">
               <li><a style="color:#117800;" 
                 href="findclass/findTopClassMain?categoryCode=${ categoryList.categoryCode }">${ categoryList.categoryName }</a></li>
             </c:forEach>
             <hr class="border-1px-black" />
-          </c:if>
+          </c:if> -->
         </ul>
       </div>
     </div>
