@@ -18,15 +18,15 @@ public class MainServiceImpl implements MainService{
 		this.mainDAO = mainDAO;
 	}
 
-/*	@Override
+	@Override
 	public List<ClassDTO> popularClass() {
 		return mainDAO.selectPopularClass();
-	} */
+	} 
 
-	@Override
+/*	@Override
 	public List<ClassDTO> selectAllClassList() {
 		return mainDAO.selectAllClassList();
-	} 
+	} */
 	
 	
 

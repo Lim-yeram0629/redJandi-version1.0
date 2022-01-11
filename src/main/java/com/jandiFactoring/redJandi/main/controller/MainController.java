@@ -24,12 +24,14 @@ public class MainController {
 	
 	@GetMapping(value = {"/", "/main"})
 	public String main() {
-				List<ClassDTO> classDTOList = mainService.selectAllClassList();
 		
-		System.out.println("classDTOList : " + classDTOList);
 		
-	/*	List<ClassDTO> popularClass = mainService.popularClass();
-		Collections.shuffle(popularClass); */
+	/*	List<ClassDTO> classDTOList = mainService.selectAllClassList();
+		
+		System.out.println("classDTOList : " + classDTOList); */
+		
+		List<ClassDTO> popularClass = mainService.popularClass();
+		Collections.shuffle(popularClass); 
 		
 		return "main/main";
 	}
