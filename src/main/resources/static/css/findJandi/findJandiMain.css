@@ -174,3 +174,45 @@ p {
     font-weight: bold;
     font-size: 20px;
     }
+    
+.main-searchbox {
+  width: 30%;
+  height: auto;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 20px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.main-searchbox input {
+  width: 80%;
+  height: 40px;
+  padding: 0 10px;
+  font-size: 15px;
+  border: none;
+  outline: none;
+}
+
+.main-searchbox button {
+  width: 10%;
+  height: 30px;
+  border: none;
+  background-color: #fff;
+}
+.main-searchbox img {
+  width: 100%;
+  height: 100%;
+}
+
+.main-search > div {
+  position: relative;
+  margin: 10px auto;
+  width: 30%;
+}
+
+.main-search input[type="search"] {
+  width: 100%;
+  height: 40px;
+  border-radius: 30px;
+  border: 1px solid rgb(200, 200, 200);
+}
