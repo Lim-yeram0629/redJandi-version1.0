@@ -20,15 +20,19 @@
   	 $(function(){
   		
   		/* 셀렉트박스 선택 시 페이지 리로드 */
-  		/* $("#searchCondition").on("change", function(){
+  		$("#sortValueSelect").on("change", function(){
   			$("#searchform").submit();
-  		}); */
+  		});
 
   		/* 페이지 리로드 시 셀렉트 박스 값 유지하기 */
-  		/* $("#searchCondition").val("${ selectCriteria.searchCondition }"); */
+  		$("#sortValueSelect").val("[[${ selectCriteria.sortValue }]]");
 
   		/* 페이지 리로드 시 검색값 유지하기 */
-  		/* $("#searchValue").val("${ selectCriteria.searchValue }"); */
+  		$("#searchValue").val("[[${ selectCriteria.searchValue }]]");
+  		
+  		if("[[${ selectCriteria.sortValue }]]" == ""){
+  			$("#sortValueSelect option:eq(0)").prop("selected", "true");
+  		}
   		
   	});
   	
@@ -52,19 +56,20 @@
   	<div class="row">
 		<div class="row" style="margin-bottom:10px;">
 			<div class="dropsearch">
-			<!-- <form id="searchform" action="/findJandi/findAllJandiMain" method="get" >
-				<select class="ui dropdown" id="searchCondition" name="searchCondition" style="margin-left:120px; float:left; border-radius: 1.5rem;">
-					<option value="1">최신순</option>
-					<option value="2">인기순</option>
+			<form id="searchform" action="/findJandi/findAllJandiMain" method="get" >
+				<select class="ui dropdown" id="sortValueSelect" name="sortValue" style="margin-left:120px; float:left; border-radius: 1.5rem;">
+					<option value="NICKNAME_ASC">이름순</option>
+					<option value="ENROLL_DATE_DESC">최신순</option>
+					<option value="SUMVIEWS_DESC">인기순</option>
 				</select>
 		       	<div class="main-searchbox" style="width:350px;">
-			        <input type="search" id="searchValue" name="searchValue" placeholder="찾으시는 잔디가 있으신가요?" value="<c:out value="${
-						selectCriteria.searchValue }" />">
+			        <input type="search" id="searchValue" name="searchValue" 
+			        	placeholder="찾으시는 잔디가 있으신가요?" value="[[${ selectCriteria.searchValue }]]">
 		          	<button type="submit">
-		           		<img src="images/research.png"/>
+		           		<img src="/images/research.png"/>
 		         	</button>
 				</div>
-			</form> -->
+			</form>
 		       	</div>
 			  <br><br><br><br><br>
 		</div>
@@ -81,12 +86,11 @@
 		    </div> 
 	   </th:block>
 
-  </div>
-  <!-- /.row -->
-
-  <!-- Pagination -->
+  	</div>
+	 <!-- Pagination -->
+	 <th:block th:replace="common/paging.html" ></th:block>
 </div>
-    </div>
+</div>
 	
 <!-- /.container -->
 

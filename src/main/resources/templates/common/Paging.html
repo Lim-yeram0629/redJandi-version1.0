@@ -50,116 +50,121 @@
 <body>
 
 	<div style="text-align : center">
-	<div class="manager-paging">
-	  <ul class="ui pagination menu">
-	  
-		<!-- 이전 페이지 버튼 -->
-		<c:if test="${ selectCriteria.pageNo <= 1 }">
-	 	<li >
-			<a aria-label="Previous" style="cursor:pointer;" >
-			 <span aria-hidden="true">&laquo;</span>
-	  	    </a>
-		</li>
-		</c:if>
-		<c:if test="${ selectCriteria.pageNo > 1 }">
-	 	<li id="prevPage">
-			<a aria-label="Previous" style="cursor:pointer;" class="bg_a">
-			 <span aria-hidden="true">&laquo;</span>
-	  	    </a>
-		</li>
-		</c:if>
-		
-		<!-- 숫자 버튼 -->
-	    <c:forEach var="p" begin="${ selectCriteria.startPage }" end="${ selectCriteria.endPage }" step="1">
-		
-		<c:if test="${ selectCriteria.pageNo eq p }">
-			<li><a disabled style="cursor:pointer;"><c:out value="${ p }"/></a></li>
-		</c:if>
-	      
-	    <c:if test="${ selectCriteria.pageNo ne p }">
-	   		<li><a onclick="pageButtonAction(this.innerText);" style="cursor:pointer;"><c:out value="${ p }"/></a></li>
-		</c:if>
-		</c:forEach> 
-		
-		
-	    
-	    <!-- 다음 페이지 버튼 -->
-	    <c:if test="${ selectCriteria.pageNo >= selectCriteria.maxPage }">
-	    <li>  
-	      <a aria-label="Next" style="cursor:pointer;">
-	        <span aria-hidden="true">&raquo;</span>
-	      </a>
-	    </li>    
-	    </c:if>
-		<c:if test="${ selectCriteria.pageNo < selectCriteria.maxPage }">
-		<li>
-		 <a aria-label="Next" style="cursor:pointer;">
-	        <span aria-hidden="true" id="nextPage">&raquo;</span>
-	     </a> 
-	     </li>  
-		</c:if>
-	  </ul>  
-	  </div>      
-  	</div>
+		<div class="manager-paging">
+		  <ul class="ui pagination menu">
+		  
+			<!-- 이전 페이지 버튼 -->
+			<th:block th:if="${ selectCriteria.pageNo <= 1 }">
+			 	<li>
+					<a aria-label="Previous" style="cursor:pointer;" >
+					 <span aria-hidden="true">&laquo;</span>
+			  	    </a>
+				</li>
+			</th:block>
+			<th:block th:if="${ selectCriteria.pageNo > 1 }">
+			 	<li id="prevPage">
+					<a aria-label="Previous" style="cursor:pointer;" class="bg_a">
+					 <span aria-hidden="true">&laquo;</span>
+			  	    </a>
+				</li>
+			</th:block>
+			
+			<!-- 숫자 버튼 -->
+			
+		    <th:block th:each="pageNo : ${#numbers.sequence(selectCriteria.startPage, selectCriteria.endPage)}">
+			
+				<th:block th:if="${selectCriteria.pageNo == pageNo}">
+					<li><a disabled style="cursor:pointer;"><th:block th:text="${ pageNo }"/></a></li>
+				</th:block>
+		      
+			    <th:block th:if="${selectCriteria.pageNo != pageNo}">
+			   		<li><a onclick="pageButtonAction(this.innerText);" style="cursor:pointer;">
+			   			<th:block th:text="${ pageNo }"/></a></li>
+				</th:block>
+			</th:block>
+			
+			
+		    
+		    <!-- 다음 페이지 버튼 -->
+		    <th:block th:if="${ selectCriteria.pageNo >= selectCriteria.maxPage }">
+			    <li>  
+			      <a aria-label="Next" style="cursor:pointer;">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>    
+		    </th:block>
+			<th:block th:if="${ selectCriteria.pageNo < selectCriteria.maxPage }">
+				<li>
+					 <a aria-label="Next" style="cursor:pointer;">
+				        <span aria-hidden="true" id="nextPage">&raquo;</span>
+				     </a> 
+			    </li>  
+			</th:block>
+		  </ul>  
+	 	</div>      
+	</div>
 						
 	<script>
+		
 	
 		const link = window.location.pathname;
 		let searchText = "";
 		
 		let mappingurl = link.substring(link.lastIndexOf('/'));
 		if(mappingurl == '/classRoom'){
-			searchText += "&classCode=${ classCode }";
+			searchText += "&classCode=[[${ classCode }]]";
 		}
-		
-		/* if(${ !empty selectCriteria.searchCondition? true: false }) {
-			searchText += "&searchCondition=${ selectCriteria.searchCondition }";
-		}
-		
-		if(${ !empty selectCriteria.searchValue? true: false }) {
-			searchText += "&searchValue=${ selectCriteria.searchValue }";
-		} */
 
 		/* 클래스 찾기 페이지 카테고리 조건 추가 */
-		/* if(${ !empty categoryCode? true: false }) {
-			searchText += "&categoryCode=${ categoryCode }";
-		} */
-
-		/* 마이페이지 구매내역 페이지 정렬 조건 추가 */
-		/* if(${ !empty sort? true: false }) {
-			searchText += "&sort=${ sort }";
-		} */
+		if("[[${ categoryCode }]]" != "") {
+			searchText += "&categoryCode=[[${ categoryCode }]]";
+		}
+		
+		/* sortValue 카테고리 조건 추가 */
+		if("[[${ selectCriteria.sortValue }]]" != "") {
+			searchText += "&sortValue=[[${ selectCriteria.sortValue }]]";
+		}
+		
+		/* searchCondition 조건 추가 */
+		if("[[${ selectCriteria.searchCondition }]]" != "") {
+			searchText += "&searchCondition=[[${ selectCriteria.searchCondition }]]";
+		}
+		
+		/* searchValue 조건 추가 */
+		if("[[${ selectCriteria.searchValue }]]" != "") {
+			searchText += "&searchValue=[[${ selectCriteria.searchValue }]]";
+		}
 			
 		if(document.getElementById("startPage")) {
 			const $startPage = document.getElementById("startPage");
 			$startPage.onclick = function() {
-				location.href = link + "?currentPage=1" + searchText;
+				location.href = link + "?pageNo=1" + searchText;
 			}
 		}
 		
 		if(document.getElementById("prevPage")) {
 			const $prevPage = document.getElementById("prevPage");
 			$prevPage.onclick = function() {
-				location.href = link + "?currentPage=${ selectCriteria.pageNo - 1 }" + searchText;
+				location.href = link + "?pageNo=[[${ selectCriteria.pageNo - 1 }]]" + searchText;
 			}
 		}
 		
 		if(document.getElementById("nextPage")) {
 			const $nextPage = document.getElementById("nextPage");
 			$nextPage.onclick = function() {
-				location.href = link + "?currentPage=${ selectCriteria.pageNo + 1 }" + searchText;
+				location.href = link + "?pageNo=[[${ selectCriteria.pageNo + 1 }]]" + searchText;
 			}
 		}
 		
 		if(document.getElementById("maxPage")) {
 			const $maxPage = document.getElementById("maxPage");
 			$maxPage.onclick = function() {
-				location.href = link + "?currentPage=${ selectCriteria.maxPage }" + searchText;
+				location.href = link + "?pageNo=[[${ selectCriteria.maxPage }]]" + searchText;
 			}
 		}
 		
 		function pageButtonAction(text) {
-			location.href = link + "?currentPage=" + text + searchText;
+			location.href = link + "?pageNo=" + text + searchText;
 		}
 	</script>
 </body>

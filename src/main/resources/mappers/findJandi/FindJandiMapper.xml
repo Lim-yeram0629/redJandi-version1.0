@@ -25,7 +25,15 @@
     	<result column="RVCOUNT" property="rvCount"/>
     </resultMap>
     
-    <select id="selectAllFindJandiList" resultMap="jandiResultMap">
+    <select id="selectFindAllJandiTotalCount" resultType="_int" parameterType="SelectCriteria" >
+    	 SELECT COUNT(jt.EMAIL)
+		   FROM JANDI_TBL jt
+	     <if test='searchValue != null and searchValue != ""'>
+	      WHERE jt.NICKNAME LIKE '%' || #{ searchValue } || '%' 
+	     </if>
+    </select>
+    
+    <select id="selectFindAllJandiList" resultMap="jandiResultMap" parameterType="SelectCriteria">
     	SELECT
 		       B.RNUM
 		     , B.EMAIL
@@ -46,11 +54,21 @@
 					 , jt.PROFILE_PATH	
 				  FROM JANDI_TBL jt
 			     JOIN CLASS_TBL CL ON (jt.EMAIL = CL.EMAIL)
-			     WHERE CL.IS_DELETED = 'N'	
-			     GROUP BY jt.EMAIL, jt.NICKNAME, jt.PROFILE_PATH, jt.ENROLL_DATE 
+			     WHERE CL.IS_DELETED = 'N'
+			     <if test='searchValue != null and searchValue != ""'>
+			      AND jt.NICKNAME LIKE '%' || #{ searchValue } || '%' 
+			     </if>
+			     GROUP BY jt.EMAIL, jt.NICKNAME, jt.PROFILE_PATH, jt.ENROLL_DATE
+			     <choose>
+			     	<when test="sortValue == null and sortValue ==''">ORDER BY jt.NICKNAME ASC</when>
+			     	<when test="sortValue == 'NICKNAME_ASC'">ORDER BY jt.NICKNAME ASC</when>
+			     	<when test="sortValue == 'ENROLL_DATE_DESC'">ORDER BY ENROLL_DATE DESC</when>
+			     	<when test="sortValue == 'SUMVIEWS_DESC'">ORDER BY SUMVIEWS DESC</when>
+			     </choose>
 			 	) A
+			 <![CDATA[ WHERE ROWNUM <= #{ endRow } ]]>
 			 ) B
+		<![CDATA[ WHERE B.RNUM >= #{ startRow } ]]>
     </select>
     
-
 </mapper>
