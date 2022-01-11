@@ -49,7 +49,7 @@ body {
   overflow: hidden;
 }
 
-.main-search {
+ .main-search {
   width: 100%;
   height: auto;
   /* border: 1px solid black; */
@@ -57,25 +57,39 @@ body {
   margin-bottom: 40px;
 }
 
-.main-searchbox {
+/* .main-searchbox {
   width: 30%;
   height: auto;
   border: 1px solid rgb(200, 200, 200);
   border-radius: 20px;
   margin: 0 auto;
   text-align: center;
+} */
+
+.input-text {
+  width: 500px;
+  height: 50px;
+  border-radius: 30px !important;
+  background-color: #FFE6E6 !important;
+  border: 2px solid #FFE6E6 !important;
+  color: #B61A1A !important;
 }
 
-.main-searchbox input {
+.input-search {
+  position: relative;
+  margin-left: 3%;	
+}
+
+/* .main-searchbox input {
   width: 80%;
   height: 40px;
   padding: 0 10px;
   font-size: 15px;
   border: none;
   outline: none;
-}
+} */
 
-.main-searchbox button {
+/* .main-searchbox button {
   width: 10%;
   height: 30px;
   border: none;
@@ -97,7 +111,7 @@ body {
   height: 40px;
   border-radius: 30px;
   border: 1px solid rgb(200, 200, 200);
-}
+} */
 /* ========== 추천 클래스 강의 ================ */
 .recommendclass {
   width: 100%;
@@ -116,13 +130,13 @@ body {
 } */
 
 .btn-hover {
-  width: 12%;
-  font-size: 18px;
+  width: 8%;
+  font-size: 14px;
   font-weight: 600;
   color: #fff;
   cursor: pointer;
-  margin: 20px;
-  height: 55px;
+  margin: 5px;
+  height: 40px;
   text-align: center;
   border: none;
   background-size: 300% 100%;
@@ -141,15 +155,20 @@ body {
   transition: all 0.4s ease-in-out;
 }
 
-.btn-hover.color-1 {
-  background-image: linear-gradient(
+ .btn-hover.color-1 {
+   background-image: linear-gradient(
     to right,
-    #3dbe86,
-    #3cba92,
-    #30dd8a,
-    #2bb673
-  );
+    #B61A1A,
+    #D42222,
+    #DF4949,
+    #FF2626
+  ); 
+  /* background-color: #B61A1A; */
 }
+
+/* .btn-hover.color-1 {
+  background-color: #B61A1A;
+} */
 
 /* ========== 메인 로고 & 서치 박스 =========== */
 
@@ -228,11 +247,11 @@ body {
   height: 400px;
 }
 
-.classinstructor {
+.classNickname {
   color: rgb(107, 107, 107);
   font-size: 20px;
 }
-.classtitle {
+.classTitle {
   margin: 10px 0 0;
   height: 20px;
   font-size: 15px;
@@ -243,15 +262,15 @@ body {
   
 }
 
-.classprice {
+.classPrice {
 	
   margin-top : 5px;	
   font-size: 19px;
-  color: rgb(58, 61, 211);
+  color: #B61A1A;
   font-weight: bold;
 }
-.views {
-	background-color : rgb(255,204,255);
+.classViews {
+	background-color : #FFE6E6;
 	padding : 0 10px 0 ;
 	color : black;
 	font-size: 13px; 
@@ -367,7 +386,7 @@ body {
 .swiper-ljh {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 102%;
   float: left;
   overflow: auto;
   padding: 10px 50px;

@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jandiFactoring.redJandi.findJandi.model.dao.FindJandiMapper">
     
-<!--    <resultMap type="FindJandiDTO" id="jandiResultMap">
+ <!--    <resultMap type="FindJandiDTO" id="jandiResultMap">
     	<id column="EMAIL" property="email"/>
     	<result column="NICKNAME" property="nickname"/>
     	<result column="PROFILE_PATH" property="profile_path"/>
@@ -23,9 +23,9 @@
     	<result column="CATEGORY_NAME" property="categoryName"/>
     	<result column="AVGSTAR" property="avgStar"/>
     	<result column="RVCOUNT" property="rvCount"/>
-    </resultMap> -->
+    </resultMap>
     
-    <!-- <select id="selectAllFindJandiList" resultMap="jandiResultMap">
+     <select id="selectAllFindJandiList" resultMap="jandiResultMap">
     	SELECT
 		       B.RNUM
 		     , B.EMAIL

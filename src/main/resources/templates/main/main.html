@@ -7,14 +7,28 @@
     <title>숨은잔디</title>
 
     <link href="/css/bootstrap/bootstrap.css" rel="stylesheet" />
-    <link href="/css/main.css" rel="stylesheet" />
+    <link href="/css/main.css?" rel="stylesheet" />
     <link href="/css/modal.css" rel="stylesheet" />
-    <link href="/css/swiper.css" rel="stylesheet" />
+     <link href="/css/swiper.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="/css/semantic/semantic.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
-   
-   
+     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+<!--     swiper CSS
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+    swiper jQuery
+    <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    -->
+   <style>
+   	::placeholder {
+  		color: #B61A1A !important;
+	}
+	
+	.swiper-button-next, .swiper-button-prev {color: #FF6C6C; }
+   </style>
   </head>
 
   <body>
@@ -41,17 +55,27 @@
     </div>
 
     <main class="container-fluid">
-      <div class="main-search">
+<!--       <div class="main-search">
         <h4>숨어있는 잔디를 찾아보세요</h4>
         <form class="main-searchbox" action="findclass/findAllClassMain" method="get">
-          <input type="text"id="searchValue" name="searchValue" placeholder="찾으시는 강의가 있으신가요?" />
-          <button type="submit">
+          <input type="text"id="searchValue" name="searchValue" placeholder="찾으시는 강의가 있으신가요?" style="background-color: #FFE6E6;" />
+          <button type="submit" style="position: relative; bottom: 2px; background-color: #FFE6E6; ">
             <img
-              src="images/research.png"
+              src="images/search.png"
             />
           </button>
         </form>
-      </div>
+      </div> -->
+      <div class="ui search main-search">
+       	<h3>숨어있는 잔디를 찾아보세요</h3>
+       	<form class="main-searchbox" action="findclass/findAllClassMain" method="get">
+  			<div class="ui icon input input-search">
+    			<input class="input-text" type="search" id="searchValue" name="searchValue" placeholder="찾으시는 강의가 있으신가요?">
+    			<button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="/images/search.png" style="width:25px;"></button>
+  			</div>
+  		</form>
+ 			<div class="results"></div>
+	 </div>
       <div class="recommendclass">
         <a href="findclass/findAllClassMain?categoryCode=1"><button class="btn-hover color-1">프로그래밍</button></a>
         <a href="findclass/findAllClassMain?categoryCode=2"><button class="btn-hover color-1">웹 개발</button></a>
@@ -67,14 +91,140 @@
        <h4>항상 인기 많은 잔디 수업 지금 소개합니다~!</h4>
         <br />
       </div>
+      
+      <!-- swiper슬라이더 메인컨테이너 --> 
       <div class="swiper-container">
+      
+	       <!-- 보여지는 영역 --> 
+	       <div class="swiper-wrapper"> 
+		       <!-- <div class="swiper-slide">내용</div> 를 추가하면된다 --> 
+		       <div class="swiper-slide photo">
+		       		<div class="title-image carousel-img">
+		       			<img src="uploadFiles/classImage/00d5934c49f944d28d3882fc65273d53.png"/>
+		       		</div><br>
+		       		<div><h3 class="classNickname">클래스잔디닉네임</h3></div>
+		       		<div><h4 class="classTitle">클래스제목</h4></div>
+		       		<div><span class="classPrice">클래스가격</span></div>
+		       		<span class="classAvgReview" style="color:#FF6C6C;"><i class="star icon"></i>5.0</span><br>
+		       		<span class="classViews">🔍78</span>
+		       </div> 
+		       
+		       <div class="swiper-slide photo">
+		       		<div class="title-image carousel-img">
+		       			<img src="uploadFiles/classImage/20e207134ed54b158ddfe7cb121d342e.PNG"/>
+		       		</div><br>
+		       		<div><h3 class="classNickname">클래스잔디닉네임</h3></div>
+		       		<div><h4 class="classTitle">클래스제목</h4></div>
+		       		<div><span class="classPrice">클래스가격</span></div>
+		       		<span class="classAvgReview" style="color:#FF6C6C;"><i class="star icon"></i>5.0</span><br>
+		       		<span class="classViews">🔍78</span>
+		       </div>
+		       
+		       <div class="swiper-slide photo">
+		       		<div class="title-image carousel-img">
+		       			<img src="uploadFiles/classImage/0276c1b4988246c781a72bf511ef0883.png"/>
+		       		</div><br>
+		       		<div><h3 class="classNickname">클래스잔디닉네임</h3></div>
+		       		<div><h4 class="classTitle">클래스제목</h4></div>
+		       		<div><span class="classPrice">클래스가격</span></div>
+		       		<span class="classAvgReview" style="color:#FF6C6C;"><i class="star icon"></i>5.0</span><br>
+		       		<span class="classViews">🔍78</span>
+		       </div>
+		       
+		       <div class="swiper-slide photo">
+		       		<div class="title-image carousel-img">
+		       			<img src="uploadFiles/classImage/033e0441f0e64d1babb4e737ff12dad9.png"/>
+		       		</div><br>
+		       		<div><h3 class="classNickname">클래스잔디닉네임</h3></div>
+		       		<div><h4 class="classTitle">클래스제목</h4></div>
+		       		<div><span class="classPrice">클래스가격</span></div>
+		       		<span class="classAvgReview" style="color:#FF6C6C;"><i class="star icon"></i>5.0</span><br>
+		       		<span class="classViews">🔍78</span>
+		       </div>
+		       
+		       <div class="swiper-slide photo">
+		       		<div class="title-image carousel-img">
+		       			<img src="uploadFiles/classImage/10772ba2293047c1800de19088ba87f8.png"/>
+		       		</div><br>
+		       		<div><h3 class="classNickname">클래스잔디닉네임</h3></div>
+		       		<div><h4 class="classTitle">클래스제목</h4></div>
+		       		<div><span class="classPrice">클래스가격</span></div>
+		       		<span class="classAvgReview" style="color:#FF6C6C;"><i class="star icon"></i>5.0</span><br>
+		       		<span class="classViews">🔍78</span>
+		       </div>
+		       
+		       <div class="swiper-slide photo">
+		       		<div class="title-image carousel-img">
+		       			<img src="uploadFiles/classImage/1f8c93a06eda4a5595f46f05f404c51d.png"/>
+		       		</div><br>
+		       		<div><h3 class="classNickname">클래스잔디닉네임</h3></div>
+		       		<div><h4 class="classTitle">클래스제목</h4></div>
+		       		<div><span class="classPrice">클래스가격</span></div>
+		       		<span class="classAvgReview" style="color:#FF6C6C;"><i class="star icon"></i>5.0</span><br>
+		       		<span class="classViews">🔍78</span>
+		       </div>
+ 
+		   </div> 
+		   <!-- 페이징 버튼 처리 상황에 따라 추가 삭제가능--> 
+		   <div class="swiper-pagination"></div> 
+		   
+	       <!-- 방향 버튼 상황에 따라 추가 삭제가능 --> 
+	       <div class="swiper-button-prev">&lt;</div>
+	        <div class="swiper-button-next">&gt;</div> 
+	        
+        </div>
+
+<!--        <div class="swiper-container">
         <div class="swiper-wrapper">
+          <div class="swiper-slide photo" th:each="popClass, sta : ${ popularClass }" >
+          <th:block th:if="${ sta.index } > 8">
+          	<div class="carousel-img" onclick="location.href='findclass/class/viewsUp?classCode=${class1.classCode }'">
+				<img  src="uploadFiles/classImage/${popClass.filePath}"  />
+          	</div>
+          		 <div><h3 class="classinstructor" th:text="${ popClass.jandiDTO.nickName }"></h3></div>
+           		 <div><h4 class="classtitle" th:text="${ popClass.title }"></h4></div>	
+           		 <div><span class="classprice" th:text="${#numbers.formatCurrency(${ popClass.price })}"></span></div>	
+           		 <span th:if="${ popClass.avgReview eq null}"></span>
+           		  <div><h4 class="classtitle">⭐ ️️0</h4></div>	
+           		 <span th:if="${ popClass.avgReview ne null}"></span>
+           		 <div><h4 class="classtitle" th:text="⭐ ️${ popClass.avgReview }"></h4></div>
+           		 <span class="views" th:text="🔍${ popClass.views }"></span>
+           	</th:block>	 
+          </div>
+
         </div>
         
         <div class="swiper-button-next">&gt;</div>
         <div class="swiper-button-prev">&lt;</div>
-      </div>
+        
+      </div>  -->
       
+      <!-- swiper슬라이더 메인컨테이너 -->
+<!-- <div class="swiper-container">
+  보여지는 영역
+  <div class="swiper-wrapper">
+    div class="swiper-slide" 를 추가하면된다
+    <div class="swiper-slide">
+      <img src="/images/mainclass1.png" alt="이미지를 지원하지 않습니다." />
+    </div>
+    <div class="swiper-slide">
+      <img src="/images/ray.jpeg" alt="이미지를 지원하지 않습니다." />
+    </div>
+    <div class="swiper-slide">
+      <img src="/images/mainclass3.png" alt="이미지를 지원하지 않습니다." />
+    </div>
+    <div class="swiper-slide">
+      <img src="/images/mainclass4.png" alt="이미지를 지원하지 않습니다." />
+    </div>
+   </div>
+  페이징 버튼 처리
+  <div class="swiper-pagination"></div>
+
+  방향 버튼 상황에 따라 추가 삭제가능
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+       -->
       <div class="intro-board">
       	<h1>열혈 잔디🌿</h1>
         <h4>최근 일주일간 가장 많이 검색된 잔디를 소개합니다.</h4>
@@ -243,7 +393,7 @@
 	  		}
 	  	}); */
     
-      new Swiper(".swiper-container", {
+	  	const swiper = new Swiper(".swiper-container", {
         slidesPerView: 4, // 동시에 보여줄 슬라이드 갯수
         spaceBetween: 1, // 슬라이드간 간격
         slidesPerGroup: 4, // 그룹으로 묶을 수, slidesPerView 와 같은 값을 지정하는게 좋음
@@ -260,7 +410,58 @@
           nextEl: ".swiper-button-next", // 다음 버튼 클래스명
           prevEl: ".swiper-button-prev", // 이번 버튼 클래스명
         },
-      });
+      }); 
+	  	
+/*   	$(function(){
+  	  $('.btn-hover.color-1').hover(function(){
+  	    $('.btn-hover.color-1').css("background-color", "#FF6C6C");
+  	  }, function() {
+  		$('.btn-hover.color-1').css("background-color", "#B61A1A");
+  	  }
+  	  
+  	  );
+  	}); */
+      
+/*       const swiper = new Swiper('.swiper-container', {
+          //기본 셋팅
+          //방향 셋팅 vertical 수직, horizontal 수평 설정이 없으면 수평
+          direction : 'horizontal',
+          //한번에 보여지는 페이지 숫자
+          slidesPerView : 1,
+          //페이지와 페이지 사이의 간격
+          spaceBetween : 30,
+          //드레그 기능 true 사용가능 false 사용불가
+          debugger : true,
+          //마우스 휠기능 true 사용가능 false 사용불가
+          mousewheel : true,
+          //반복 기능 true 사용가능 false 사용불가
+          loop : true,
+          //선택된 슬라이드를 중심으로 true 사용가능 false 사용불가 djqt
+          centeredSlides : true,
+          // 페이지 전환효과 slidesPerView효과와 같이 사용 불가
+          // effect: 'fade',
+          speed : 1000,
+          //자동 스크를링
+          autoplay : {
+              //시간 1000 이 1초
+              delay : 3500,
+              disableOnInteraction : false,
+          },
+          //페이징
+          pagination : {
+              //페이지 기능
+              el : '.swiper-pagination',
+              //클릭 가능여부
+              clickable : true,
+          },
+          //방향표
+          navigation : {
+              //다음페이지 설정
+              nextEl : '.swiper-button-next',
+              //이전페이지 설정
+              prevEl : '.swiper-button-prev',
+          },
+      }); */
     </script>
     <script>
       new Swiper(".swiper-container1", {
@@ -280,7 +481,7 @@
           nextEl: ".swiper-button-next1", // 다음 버튼 클래스명
           prevEl: ".swiper-button-prev1", // 이번 버튼 클래스명
         },
-      });
+      }); 
     </script>
   </body>
 </html>
