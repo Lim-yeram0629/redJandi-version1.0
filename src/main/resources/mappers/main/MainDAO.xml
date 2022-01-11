@@ -17,13 +17,44 @@
     	<result column="FILE_PATH" property="filePath"/>
     	<result column="ORG_FILE_PATH" property="orgFilePath"/>
     	<result column="NICKNAME" property="nickName" />
+    	<result column="AVG(CR.star)" property="avgReview"/>
 	</resultMap>
 	
-	<select id="selectAllClassList" resultMap="classResultMap">
+	<resultMap type="com.jandiFactoring.redJandi.jandi.model.dto.JandiDTO" id="jandiResultMap">
+    	<id column="EMAIL" property="email"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="CAREER" property="career"/>
+    	<result column="INTRO" property="intro"/>
+    	<result column="PROFILE_PATH" property="profile_path"/>
+    	<result column="ENROLL_DATE" property="enroll_date"/>
+    	<result column="ACCOUNT" property="account"/>
+    	<result column="BANK" property="bank"/>
+    	<result column="ACC_NAME" property="acc_name"/>
+    </resultMap>
+	
+<!-- 	<select id="selectAllClassList" resultMap="classResultMap">
 		SELECT 
 				C.CLASS_CODE
 			  , C.EMAIL
 		  FROM CLASS_TBL C
+	</select> -->
+	
+	<select id="selectPopularClass" resultMap="classResultMap">
+		SELECT
+		       C.CLASS_CODE
+		     , C.FILE_PATH
+		     , C.TITLE
+		     , C.PRICE
+		     , C.VIEWS
+		     , J.NICKNAME
+		     , AVG(CR.STAR)
+   	  	  FROM CLASS_TBL C 
+   	      JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+          LEFT JOIN (SELECT STAR
+                          , CLASS_CODE
+               FROM CLASS_REVIEW_TBL) CR ON (CR.CLASS_CODE = C.CLASS_CODE)
+   	     WHERE C.IS_DELETED = 'N'  
+         GROUP BY C.CLASS_CODE,C.FILE_PATH, C.TITLE, C.PRICE, C.VIEWS, J.NICKNAME                      
 	</select>
 
 </mapper>

@@ -32,7 +32,7 @@ public class MemberController {
 	 * @author 권순표
 	 * 이용 약관 조회
 	 */
-	@GetMapping("terms")
+	@GetMapping("userAgreement")
 	public String userAgreement() {
 		
 		return "join/userAgreement";

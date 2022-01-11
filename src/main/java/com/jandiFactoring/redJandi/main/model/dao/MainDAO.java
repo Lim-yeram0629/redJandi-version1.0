@@ -9,8 +9,8 @@ import com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO;
 @Mapper
 public interface MainDAO {
 
-	List<ClassDTO> selectAllClassList();
+/*	List<ClassDTO> selectAllClassList(); */
 
-/*	List<ClassDTO> selectPopularClass(); */
+	List<ClassDTO> selectPopularClass(); 
 
 }

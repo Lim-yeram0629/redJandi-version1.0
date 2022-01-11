@@ -4,13 +4,13 @@
     <title>숨은잔디 회원가입</title>
 
     <link
-      href="css/join.css"
+      href="/css/join.css"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="css/semantic/semantic.css"
+      href="/css/semantic/semantic.css"
     />
   </head>
   <style>
@@ -20,13 +20,13 @@
   </style>
 
   <body>
-     <th:block th:raplace="common/nav.html" ></th:block>
+     <th:block th:replace="common/nav.html" ></th:block>
 
     <main class="fullJoin">
       <div class="head">
         <div id="timage">
           <img
-            src="images/join.png"
+            src="/images/join.png"
             style="width: 70px; height: 70px;" 
           />
         </div>
@@ -150,7 +150,7 @@
             showModal("이메일을 입력해주세요.");
           } else {
             $.ajax({
-              url: "${ pageContext.servletContext.contextPath }/member/emailDupCheck",
+              url: "/member/emailDupCheck",
               type: "post",
               data: { email: email },
               success: function (data) {
@@ -177,7 +177,7 @@
             let email = $("#email").val();
 
             $.ajax({
-              url: "${ pageContext.servletContext.contextPath }/member/sendMail/join",
+              url: "/member/sendMail/emailCheck",
               type: "post",
               data: {email : email},
               success: function(data) {
@@ -412,7 +412,7 @@
       </script>
     </main>
 
-     <th:block th:raplace="common/footer.html" ></th:block>
+     <th:block th:replace="common/footer.html" ></th:block>
 
   </body>
 </html>
