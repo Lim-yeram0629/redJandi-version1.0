@@ -19,7 +19,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean isSsackEmailDup(MemberDTO member) {
 		
-		return memberMapper.isSsackEmailDup() > 0? true:false;
+		return memberMapper.isSsackEmailDup(member) > 0? true:false;
 	}
 
 }

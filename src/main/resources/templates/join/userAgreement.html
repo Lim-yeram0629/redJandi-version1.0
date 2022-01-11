@@ -3,11 +3,11 @@
   <head>
     <title>숨은 잔디 이용 약관</title>
 
-   <link href="css/userAgreement.css" rel="stylesheet" />
+   <link href="/css/userAgreement.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       type="text/css"
-      href="css/semantic/semantic.css"
+      href="/css/semantic/semantic.css"
     />
     <style>
       input[type="checkbox"]{
@@ -21,7 +21,7 @@
   </head>
 
   <body>
-    <th:block th:raplace="common/nav.html" ></th:block>
+    <th:block th:replace="common/nav.html" ></th:block>
 
     <main class="mainPage" style="padding-top:40px;">
 
@@ -406,14 +406,14 @@
           $("#Modal").fadeOut();
         });
       } else {
-        location.href="${ pageContext.servletContext.contextPath }/member/join";
+        location.href="/member/join";
       }
     });
   });
 
   </script>
     </main>
-    <th:block th:raplace="common/footer.html" ></th:block>
+   <th:block th:replace="common/footer.html" ></th:block>
   </body>
 </html>
 

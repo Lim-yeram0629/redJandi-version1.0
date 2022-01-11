@@ -3,7 +3,7 @@
 <mapper
 	namespace="com.jandiFactoring.redJandi.member.model.dao.MemberMapper">
 
-	<resultMap id="memberResultSet" type="com.jandiFactoring.redJandi.member.model.dto.MemberDTO">
+	<resultMap id="memberResultSet" type="MemberDTO">
 		<id column="EMAIL" property="email" />
 		<result column="NICKNAME" property="nickName" />
 		<result column="PASSWORD" property="password" />
@@ -19,7 +19,7 @@
 
 
 	<!-- 이메일의 존재 유무 확인하기 by 권순표 -->
-	<select id="isSsackEmailDup" resultType="_int" parameterType="com.jandiFactoring.redJandi.member.model.dto.MemberDTO">
+	<select id="isSsackEmailDup" resultType="_int" parameterType="MemberDTO">
 		SELECT COUNT(*)
 	      FROM SSACK_TBL A
 		 WHERE A.EMAIL = #{ email }
