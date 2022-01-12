@@ -9,8 +9,12 @@ import com.jandiFactoring.redJandi.jandi.model.dto.JandiDTO;
 
 public interface JandiService {
 
-	JandiDTO selectJandiInformation(String email);
+	JandiDTO selectJandiInformation(JandiDTO jandi);
 
-	List<FindClassDTO> selectJandiClassList(String email);
+	List<FindClassDTO> selectJandiClassList(JandiDTO jandi);
+
+	boolean modifyJandiNickName(JandiDTO jandi);
+
+
 
 }

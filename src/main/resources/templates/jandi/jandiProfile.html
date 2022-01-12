@@ -116,7 +116,11 @@ p {
 
 		});
 
-		// 닉네임 성공 여부를 반환하는 리다이렉트 메세지
+		// 정보 수정 성공 여부를 반환하는 리다이렉트 메세지
+		let modifyMessage = "[[${ modifyMessage }]]";
+		if(modifyMessage != ""){
+			alert(modifyMessage);
+		}
 		
 		// 해당 html의 글자 수 넣어주기
 		$('#careerCheck').html($('#careeaText').val().length);
@@ -153,12 +157,14 @@ p {
 							class="imgStyle" id="profile" onclick="modifyProfile();">
 					</div>
 					<br>
-					<!-- <form id="modifyNickForm" th:action="@{/jandi/nickName}" th:method="patch"> -->
+					<form id="modifyNickForm" action="/jandi/nickName" method="post">
 						<h3>
+							<input type="hidden" name="_method" value="PATCH">
+							<input type="hidden" name="email" th:value="${ jandi.email }">
 							<input id="nickNameInput" type="text" name="nickName"
 								class="inputStyle" th:value="${ jandiInfo.nickName }">
 						</h3>
-					<!-- </form> -->
+					</form>
 				</div>
 			</div>
 			<br>

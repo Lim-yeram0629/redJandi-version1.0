@@ -16,7 +16,7 @@
     	<result column="RVCOUNT" property="rvCount"/>
     </resultMap>
 	
-	<select id="selectJandiInformation" resultType="JandiDTO">
+	<select id="selectJandiInformation" resultType="JandiDTO" parameterType="JandiDTO">
 		SELECT JAN.EMAIL
 			 , JAN.NICKNAME
 			 , JAN.CAREER
@@ -26,7 +26,7 @@
 		 WHERE JAN.EMAIL = #{ email }
 	</select>	
 
-	<select id="selectJandiClassList" resultMap="findClassResultMap">
+	<select id="selectJandiClassList" resultMap="findClassResultMap" parameterType="JandiDTO">
 		 SELECT V.CLASS_CODE
 		      , V.CREATE_DATE 
 		      , V.TAG 
@@ -64,5 +64,11 @@
 		     )V
 		 WHERE ROWNUM BETWEEN 1 AND 3
 	</select>
+	
+	<update id="modifyJandiNickName" parameterType="JandiDTO">
+		UPDATE JANDI_TBL JAN
+		   SET JAN.NICKNAME = #{ nickName }
+		 WHERE JAN.EMAIL = #{ email }
+	</update>
 
 </mapper>
