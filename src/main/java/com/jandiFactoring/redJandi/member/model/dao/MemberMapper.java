@@ -9,4 +9,13 @@ public interface MemberMapper {
 
 	int isSsackEmailDup(MemberDTO member);
 
+	int isInsertCheckNum(String authNum);
+
+	int selectTrueNumber();
+
+	int isSsackNickNameDup(MemberDTO member);
+
+	int registMember(MemberDTO member);
+
+
 }

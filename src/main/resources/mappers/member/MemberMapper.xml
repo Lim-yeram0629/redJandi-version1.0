@@ -25,6 +25,75 @@
 		 WHERE A.EMAIL = #{ email }
 	  	   AND IS_EXIT = 'N'
 	</select>
+	
+	<!-- 회원가입 단에서 인증번호 발송 시 인증번호 등록 by 권순표 -->
+    <insert id="isInsertCheckNum" parameterType="java.lang.String">
+        INSERT
+		  INTO EMAIL_CHECK_TBL 
+		(
+		  CHECK_CODE
+		, EMAIL
+		, CHECK_NUMBER
+		)
+		VALUES
+		(
+		  SEQ_MAIL_CHECK_TBL.NEXTVAL
+		, NULL
+		, #{ value }
+		)
+    </insert>
+    
+     <!-- 가장 최근에 등록된 인증번호 조회 by 권순표 -->
+    <select id="selectTrueNumber" resultType="_int">
+        SELECT V2.CHECK_NUMBER
+		  FROM (SELECT ROWNUM RNUM
+		            ,  V.CHECK_NUMBER
+				  FROM (SELECT A.CHECK_NUMBER
+						  FROM EMAIL_CHECK_TBL A
+						 ORDER BY CHECK_CODE DESC
+		               )V
+		         WHERE ROWNUM = 1
+		       )V2
+    </select>
+    
+     <!-- 닉네임 중복 체크 by 권순표 -->
+    <select id="isSsackNickNameDup" resultType="_int" parameterType="MemberDTO">
+        SELECT
+		       COUNT(*)
+		  FROM SSACK_TBL A
+		 WHERE A.NICKNAME= #{ nickName }
+    </select>
+    
+     <!-- 회원 정보 등록하기 by 권순표 -->
+    <insert id="registMember" parameterType="MemberDTO">
+        INSERT
+		  INTO SSACK_TBL
+		(
+		  EMAIL
+		, NICKNAME
+		, PASSWORD
+		, PHONE
+		, IS_JANDI
+		, WARNING
+		, IS_BLACK
+		, ENROLL_DATE
+		, IS_EXIT
+		, NAME
+		)
+		VALUES
+		(
+		  #{ email }
+		, #{ nickName }
+		, #{ password }
+		, #{ phone }
+		, DEFAULT
+		, DEFAULT
+		, DEFAULT
+		, SYSDATE
+		, DEFAULT
+		, #{ name }
+		)
+    </insert>
 
 
 
