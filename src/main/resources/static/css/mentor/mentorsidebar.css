@@ -41,7 +41,7 @@
   list-style: none;
   padding: 0 10px;
   font-size: 20px;
-  color: #91c788;
+  color: #ff9566;
   font-weight: bold;
   margin-bottom: 30px;
   text-align: left;
@@ -49,7 +49,7 @@
 
 .sidebar-inner-name1 li {
   font-size: 15px;
-  color: #91c788;
+  color: #B61A1A;
   padding: 10px 0;
   text-decoration: none;
 }
@@ -61,7 +61,7 @@
 }
 
 .border-1px-black {
-  border: 1px solid #91c788;
+  border: 1px solid #B61A1A;
   border-radius: 200px;
 }
 
@@ -69,9 +69,8 @@ iframe {
   display: none;
 }
 
-.btn-primary{color:#fff;background-color:#91C788;border-color:#91C788}
-.btn-primary.active,.btn-primary.focus,.btn-primary:active,.btn-primary:focus,.btn-primary:hover,.open>.dropdown-toggle.btn-primary{color:#fff;background-color:#599A4E;border-color:#599A4E}
-.btn-primary:hover{background-color:#599A4E;border-color:#599A4E}
+.btn-primary{color:black;background-color:#FDD2BF;border-color:#FDD2BF}
+.btn-primary.active,.btn-primary.focus,.btn-primary:active,.btn-primary:focus,.btn-primary:hover,.open>.dropdown-toggle.btn-primary{color:black;background-color:#ffefe9;border-color:#FDD2BF}
 
 /* ************ 남은 페이지 잡는 css ************** */
 

@@ -26,6 +26,11 @@
 	  	   AND IS_EXIT = 'N'
 	</select>
 
+	<select id="selectCountJandiNickName" resultType="_int">
+		SELECT COUNT(JAN.EMAIL)
+		  FROM JANDI_TBL JAN
+		 WHERE JAN.NICKNAME = #{ nickName }
+	</select>
 
 
 

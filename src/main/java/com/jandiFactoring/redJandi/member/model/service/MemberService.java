@@ -5,6 +5,8 @@ import com.jandiFactoring.redJandi.member.model.dto.MemberDTO;
 public interface MemberService {
 
 	boolean isSsackEmailDup(MemberDTO member);
+
+	int isJandiNickNameDup(String nickName);
 	
 	
 

@@ -22,4 +22,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.isSsackEmailDup(member) > 0? true:false;
 	}
 
+	@Override
+	public int isJandiNickNameDup(String nickName) {
+		
+		return memberMapper.selectCountJandiNickName(nickName);
+	}
+
 }
