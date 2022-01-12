@@ -153,12 +153,12 @@ p {
 							class="imgStyle" id="profile" onclick="modifyProfile();">
 					</div>
 					<br>
-					<form id="modifyNickForm" action="/jandi/modifyNickName">
+					<!-- <form id="modifyNickForm" th:action="@{/jandi/nickName}" th:method="patch"> -->
 						<h3>
 							<input id="nickNameInput" type="text" name="nickName"
 								class="inputStyle" th:value="${ jandiInfo.nickName }">
 						</h3>
-					</form>
+					<!-- </form> -->
 				</div>
 			</div>
 			<br>

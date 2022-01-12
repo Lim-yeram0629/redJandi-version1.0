@@ -1,7 +1,5 @@
 package com.jandiFactoring.redJandi.findJandi.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jandiFactoring.redJandi.common.paging.Pagenation;
 import com.jandiFactoring.redJandi.common.paging.dto.SelectCriteria;
-import com.jandiFactoring.redJandi.findJandi.model.dto.FindJandiDTO;
 import com.jandiFactoring.redJandi.findJandi.model.service.FindJandiService;
 
 @Controller
@@ -40,5 +37,6 @@ public class FindJandiController {
 		model.addAttribute("findJandiList", findJandiService.searchFindAllJandiList(selectCriteria));	
 		model.addAttribute("selectCriteria", selectCriteria);
 	}
+	
 
 }

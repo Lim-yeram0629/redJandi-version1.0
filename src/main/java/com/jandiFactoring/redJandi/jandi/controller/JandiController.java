@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.jandiFactoring.redJandi.jandi.model.service.JandiService;
-import com.jandiFactoring.redJandi.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/jandi/*")
