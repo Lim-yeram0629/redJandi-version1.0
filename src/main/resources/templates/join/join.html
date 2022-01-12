@@ -65,7 +65,7 @@
 
         <div class="content">
           <div class="title">인증번호</div>
-          <input type="text" name="proof" id="proof" placeholder="인증 번호를 입력하세요">
+          <input type="text" name="checkNum" id="proof" placeholder="인증 번호를 입력하세요">
           <div class="proofCheck" style="margin-top: 1%;"></div>
           <input type="checkbox" id="proofBoolean" style="display: none" />
         </div>
@@ -200,12 +200,12 @@
           $(function(){
             $("#proof").keyup(function(){
 
-              let number = $(this).val();
+              let checkNum = $(this).val();
 
               $.ajax({
-                url: "${ pageContext.servletContext.contextPath }/member/mailCheck",
+                url: "/member/compareCheckNum",
                 type: "post",
-                data: { number : number },
+                data: { checkNum : checkNum },
                 success: function(data) {
                   if(data == "true") {
                     $(".proofCheck").html("인증 번호가 일치합니다.")
@@ -319,7 +319,7 @@
             showModal("닉네임을 입력해주세요.");
           } else {
             $.ajax({
-              url: "${ pageContext.servletContext.contextPath }/member/nickDupCheck",
+              url: "/member/nickDupCheck",
               type: "post",
               data: { nickName: nickName },
               success: function (data) {
@@ -379,7 +379,7 @@
                 $("#submitForm")
                   .attr(
                     "action",
-                    "${ pageContext.servletContext.contextPath }/member/regist"
+                    "/member/regist"
                   )
                   .submit();
               });

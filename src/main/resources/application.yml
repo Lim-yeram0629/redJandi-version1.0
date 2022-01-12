@@ -10,6 +10,18 @@ spring:
     url: jdbc:log4jdbc:oracle:thin:@125.132.252.115:1521:xe
     username: C##JANDI
     password: JANDI
+ #이메일 설정    
+  mail: 
+    host: smtp.gmail.com
+    port: 587
+    username: tnsvy2004@gmail.com
+    password: gsp0221!
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   
   # thymeleaf 설정
   thymeleaf: 
@@ -22,17 +34,6 @@ mybatis:
   # type-alias 설정
   type-aliases-package: com.jandiFactoring.redJandi.**.*.dto
  
- #이메일 설정
-  spring:
-  mail: 
-    host: smtp.gmail.com
-    port: 587
-    username: 'tnsvy2004@gmail.com'
-    password: 'gsp0221!'
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+
+ 
   
