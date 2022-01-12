@@ -216,3 +216,8 @@ p {
   border-radius: 30px;
   border: 1px solid rgb(200, 200, 200);
 }
+
+.border-1px-b61a1a {
+    border: 1px solid #b61a1a;
+    border-radius: 200px;
+}

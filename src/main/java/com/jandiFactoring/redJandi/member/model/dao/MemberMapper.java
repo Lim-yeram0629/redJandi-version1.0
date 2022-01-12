@@ -9,6 +9,8 @@ public interface MemberMapper {
 
 	int isSsackEmailDup(MemberDTO member);
 
+	int selectCountJandiNickName(String nickName);
+	
 	int isInsertCheckNum(String authNum);
 
 	int selectTrueNumber();

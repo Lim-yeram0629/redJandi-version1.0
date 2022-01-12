@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -89,6 +90,7 @@ public class MemberController {
 		} else {
 			response.getWriter().write("false");
 		}
+		
 	}
 	
 	/** 
@@ -148,7 +150,17 @@ public class MemberController {
 		}
 	}
 
+	/**
+	 * @author 임예람
+	 * 잔디 닉네임 중복 체크
+	 * @param member 사용자가 입력한 닉네임
+	 * @param boolean 닉네임 중복 여부
+	 */
+	@GetMapping("jandiNickNameDupCheck")
+	public @ResponseBody boolean emailDupCheck(String nickName) throws IOException {
 	
+		return (memberService.isJandiNickNameDup(nickName) > 0)? true : false;
+	}
 
 	
 

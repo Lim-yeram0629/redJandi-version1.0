@@ -8,6 +8,8 @@ public interface MemberService {
 
 	boolean isSsackEmailDup(MemberDTO member);
 
+	int isJandiNickNameDup(String nickName);
+	
 	int selectTrueNumber();
 
 	boolean isSsackNickNameDup(MemberDTO member);

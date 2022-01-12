@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jandiFactoring.redJandi.jandi.model.dao.JandiMapper">
+	
+	<resultMap type="FindClassDTO" id="findClassResultMap">
+    	<result column="CLASS_CODE" property="classCode"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="TAG" property="tag"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="PRICE" property="price"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="PROFILE_PATH" property="profilePath"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="CATEGORY_NAME" property="categoryName"/>
+    	<result column="AVGSTAR" property="avgStar"/>
+    	<result column="RVCOUNT" property="rvCount"/>
+    </resultMap>
+	
+	<select id="selectJandiInformation" resultType="JandiDTO">
+		SELECT JAN.EMAIL
+			 , JAN.NICKNAME
+			 , JAN.CAREER
+			 , JAN.INTRO
+			 , JAN.PROFILE_PATH
+		  FROM JANDI_TBL JAN
+		 WHERE JAN.EMAIL = #{ email }
+	</select>	
+
+	<select id="selectJandiClassList" resultMap="findClassResultMap">
+		 SELECT V.CLASS_CODE
+		      , V.CREATE_DATE 
+		      , V.TAG 
+		      , V.TITLE 
+		      , V.PRICE 
+		      , V.FILE_PATH
+		      , V.VIEWS
+		      , V.PROFILE_PATH
+		      , V.NICKNAME 
+		      , V.CATEGORY_NAME
+		      , V.AVGSTAR
+		      , V.RVCOUNT
+		      , ROWNUM
+		 FROM (SELECT A.CLASS_CODE
+				     , A.CREATE_DATE 
+				     , A.TAG 
+				     , A.TITLE 
+				     , A.PRICE 
+				     , A.FILE_PATH
+				     , A.VIEWS
+				     , B.PROFILE_PATH
+				     , B.NICKNAME 
+				     , C.CATEGORY_NAME
+				     , NVL(AVG(D.STAR), 0) AVGSTAR
+				     , COUNT(D.REVIEW_CODE) RVCOUNT
+				  FROM CLASS_TBL A
+				  JOIN JANDI_TBL B ON (A.EMAIL = B.EMAIL)
+				  JOIN CATEGORY_TBL C ON (A.CATEGORY_CODE = C.CATEGORY_CODE)
+				  LEFT JOIN CLASS_REVIEW_TBL D ON (A.CLASS_CODE = D.CLASS_CODE)
+				 WHERE A.IS_DELETED = 'N'
+				   AND A.EMAIL = #{ email }
+			  GROUP BY A.CLASS_CODE , A.CREATE_DATE , A.TAG , A.TITLE , A.PRICE , A.VIEWS 
+			         , A.FILE_PATH , B.PROFILE_PATH , B.NICKNAME , C.CATEGORY_NAME
+			  ORDER BY A.VIEWS DESC
+		     )V
+		 WHERE ROWNUM BETWEEN 1 AND 3
+	</select>
+
+</mapper>

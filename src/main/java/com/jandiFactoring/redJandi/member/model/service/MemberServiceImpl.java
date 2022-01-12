@@ -28,6 +28,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public int isJandiNickNameDup(String nickName) {
+		
+		return memberMapper.selectCountJandiNickName(nickName);
+	}
+	
+	@Override
 	public int selectTrueNumber() {
 		
 		return memberMapper.selectTrueNumber();

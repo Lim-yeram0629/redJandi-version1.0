@@ -4,7 +4,12 @@ import com.jandiFactoring.redJandi.common.paging.dto.SelectCriteria;
 
 public class Pagenation {
 	
-	/* 검색어가 존재하는 경우 검색 조건으로 select 후 페이징 처리를 하기 위한 용도 */
+	/**
+	 * 페이징 처리 리팩토링 적용
+	 * @author 임예람
+	 * @param selectCriteria
+	 * @return
+	 */
 	public static SelectCriteria getSelectCriteria(SelectCriteria selectCriteria) {
 
 		/* pageNo와 totalCount가 넘어온 상태이기 때문에

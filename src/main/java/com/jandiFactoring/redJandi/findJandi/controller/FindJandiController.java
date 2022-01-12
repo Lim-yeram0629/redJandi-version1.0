@@ -1,7 +1,5 @@
 package com.jandiFactoring.redJandi.findJandi.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jandiFactoring.redJandi.common.paging.Pagenation;
 import com.jandiFactoring.redJandi.common.paging.dto.SelectCriteria;
-import com.jandiFactoring.redJandi.findJandi.model.dto.FindJandiDTO;
 import com.jandiFactoring.redJandi.findJandi.model.service.FindJandiService;
 
 @Controller
@@ -24,20 +21,22 @@ public class FindJandiController {
 		this.findJandiService = findJandiService;
 	}
 	
+	/**
+	 * @author 임예람
+	 * @param model
+	 * @param selectCriteria
+	 */
 	@GetMapping("findAllJandiMain")
 	public void findAllJandiMain(Model model, SelectCriteria selectCriteria) {
 		
-		System.out.println(selectCriteria);
+		selectCriteria.setLimit(9);		// 한 페이지에 보여줄 갯수
+		selectCriteria.setButtonAmount(5);		// 버튼 갯수
+		selectCriteria.setTotalCount(findJandiService.selectFindAllJandiTotalCount(selectCriteria));	// 총 갯수
+		selectCriteria = Pagenation.getSelectCriteria(selectCriteria);	// 페이지네이션을 적용 시킨 selectCriteria
 		
-		selectCriteria.setLimit(9);
-		selectCriteria.setButtonAmount(5);
-		selectCriteria.setTotalCount(findJandiService.selectFindAllJandiTotalCount(selectCriteria));
-		
-		selectCriteria = Pagenation.getSelectCriteria(selectCriteria);
-		List<FindJandiDTO> findJandiList = findJandiService.searchFindAllJandiList(selectCriteria);
-		
-		model.addAttribute("findJandiList", findJandiList);
+		model.addAttribute("findJandiList", findJandiService.searchFindAllJandiList(selectCriteria));	
 		model.addAttribute("selectCriteria", selectCriteria);
 	}
+	
 
 }

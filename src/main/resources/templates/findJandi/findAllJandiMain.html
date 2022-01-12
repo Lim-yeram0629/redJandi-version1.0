@@ -71,14 +71,14 @@
 				</div>
 			</form>
 		       	</div>
-			  <br><br><br><br><br>
+			  <br><br>
 		</div>
 		
 	   <th:block th:each="findJandi : ${findJandiList}" >
 		    <div class="col-lg-4 col-sm-6 mb-4">
 			      <div class="card">
 			            <div class="card-body little-profi text-center">
-			                <div class="intmentor-img"><img th:src="@{/uploadFiles/profile/}+${ findJandi.profile_path }" alt="user"  
+			                <div class="intmentor-img"><img th:src="@{/uploadFiles/profile/}+${findJandi.profile_path}" alt="user"  
 			                	onclick="location.href='findJandi/jandiProfile/${ findJandi.email }'"></div>
 			                <p th:text="${ findJandi.nickname }" ></p>
 			            </div>
@@ -87,6 +87,7 @@
 	   </th:block>
 
   	</div>
+  	<br><br>
 	 <!-- Pagination -->
 	 <th:block th:replace="common/paging.html" ></th:block>
 </div>
