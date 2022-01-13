@@ -1,5 +1,7 @@
 package com.jandiFactoring.redJandi.member.model.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.jandiFactoring.redJandi.member.model.dao.MemberMapper;
 import com.jandiFactoring.redJandi.member.model.dto.MailDTO;
+import com.jandiFactoring.redJandi.member.model.dto.MemberDTO;
 
 @Service
 public class SendMailServiceImpl implements SendMailService {
@@ -38,5 +41,18 @@ public class SendMailServiceImpl implements SendMailService {
 		
 		return memberMapper.isInsertCheckNum(authNum) > 0? true:false;
 	}
+
+	@Override
+	public boolean isExistCheckNum(MemberDTO member) {
+		
+		return memberMapper.isExistCheckNum(member) > 0? true:false;
+	}
+
+	@Override
+	public boolean isUpdateCheckNum(Map<String, String> checkNumMap) {
+		
+		return memberMapper.isUpdateCheckNum(checkNumMap) > 0? true:false;
+	}
+
 
 }

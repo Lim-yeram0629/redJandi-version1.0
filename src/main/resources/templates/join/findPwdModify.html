@@ -13,12 +13,12 @@
   </head>
 
   <body>
-    <th:block th:raplace="common/nav.html" ></th:block>
+    <th:block th:replace="common/nav.html" ></th:block>
 
     <main class="fullJoin">
        
         <div class="head">
-            <div id="timage"><img src="images/join.png" style="width: 70px; height: 70px; "></div>
+            <div id="timage"><img src="/images/join.png" style="width: 70px; height: 70px; "></div>
             <div class="thumbnail" id="ttext">비밀번호 찾기 </div>
         </div>
  
@@ -101,7 +101,7 @@
             let pwd = $("#pwdBoolean").prop("checked");
             let pwd2 = $("#pwdBoolean2").prop("checked");
             let password = $("#password").val();
-            let email = "${ email }";
+            let email = "[[${ email }]]";
 
             if(!pwd || !pwd2) {
               showModal("비밀번호를 다시 확인해주세요.")
@@ -109,14 +109,14 @@
             } else {
               
               $.ajax({
-                url: "${ pageContext.servletContext.contextPath }/member/updatePwd",
+                url: "/member/updatePwd",
                 type: "post",
-                data: {email : email, pwd : password},
+                data: {email : email, password : password},
                 success: function(data) {
-                  if(data == "true") {
+                  if(data) {
                     $("#nextModal").fadeIn();
                     $(".btn").click(function(){
-                      location.href="${ pageContext.servletContext.contextPath }/member/login";
+                      location.href="/member/login";
                     });
                   } else {
                     showModal("비밀번호 수정에 실패하셨습니다.")
@@ -151,7 +151,7 @@
 
         </script>
     </main>
-    <th:block th:raplace="common/footer.html" ></th:block>
+    <th:block th:replace="common/footer.html" ></th:block>
   </body>
 </html>
 

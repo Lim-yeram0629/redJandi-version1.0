@@ -154,7 +154,7 @@
               type: "post",
               data: { email: email },
               success: function (data) {
-                if (data == "true") {
+                if (data) {
                   showModal("중복된 이메일입니다.");
                   $("#emailBoolean").prop("checked", false);
                 } else {
@@ -181,7 +181,7 @@
               type: "post",
               data: {email : email},
               success: function(data) {
-                if(data == "true") {
+                if(data) {
                   showModal("인증번호가 전송되었습니다.");
                   $("#emailBoolean3").prop("checked", true);
                 } else {
@@ -207,7 +207,7 @@
                 type: "post",
                 data: { checkNum : checkNum },
                 success: function(data) {
-                  if(data == "true") {
+                  if(data) {
                     $(".proofCheck").html("인증 번호가 일치합니다.")
                     .css("color", "blue");
                     $(this).focus().css("background", "palegreen");
@@ -323,7 +323,7 @@
               type: "post",
               data: { nickName: nickName },
               success: function (data) {
-                if (data == "true") {
+                if (data) {
                   showModal("중복된 닉네임입니다.");
                   $("#nickBoolean").prop("checked", false);
                 } else {
@@ -379,7 +379,7 @@
                 $("#submitForm")
                   .attr(
                     "action",
-                    "/member/regist"
+                    "/member/registMember"
                   )
                   .submit();
               });

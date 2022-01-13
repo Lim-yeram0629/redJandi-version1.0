@@ -16,14 +16,14 @@
   </head>
   
   <body>
-    <th:block th:raplace="common/nav.html" ></th:block>
+    <th:block th:replace="common/nav.html" ></th:block>
 
     <main class="login">
       <table id="login-table">
         <tr>
           <td style="text-align: center;">
               <img
-              src="images/join3.png"
+              src="/images/join3.png"
               style="width: 40%"
             />
           </td>
@@ -36,13 +36,13 @@
 				<br><br>
                 <div class="loginbtnGroup">
                 <input type="button" id="submit" value="로그인" style="background-color: #91C788; cursor:pointer;" />
-                <input type="button" value="회원가입" onclick="location.href='member/terms'" style="background-color: lightgray; cursor:pointer;" />
+                <input type="button" value="회원가입" onclick="location.href='/member/userAgreement'" style="background-color: lightgray; cursor:pointer;" />
                 </div>
                 <br />
                 <div>
-                  <a href="member/findEmail" style="color: #005E23 !important;">이메일찾기</a>
+                  <a href="/member/findEmail" style="color: #005E23 !important;">이메일찾기</a>
                   &nbsp;&nbsp;&nbsp;
-                  <a href="member/findPwd" style="color: #005E23 !important;">비밀번호찾기</a>
+                  <a href="/member/findPwd" style="color: #005E23 !important;">비밀번호찾기</a>
                 </div>
               </div>
             </form>
@@ -75,7 +75,7 @@
 
             /* 전체 조건 체크 */
             $.ajax({
-              url: "${ pageContext.servletContext.contextPath }/member/login",
+              url: "/member/login",
               type: "post",
               data: {email : email , password : password},
               success: function(data) {
@@ -84,7 +84,7 @@
                 } else if(data == "emailFalse") {
                   showModal("존재하지 않는 이메일입니다.");
                 } else if (data == "true"){
-                  location.href="${ pageContext.servletContext.contextPath }/";
+                  location.href="/";
                 }else {
                   showModal(data);
                 }
@@ -109,7 +109,7 @@
 
     </script>
 
-   <th:block th:raplace="common/footer.html" ></th:block>
+   <th:block th:replace="common/footer.html" ></th:block>
   </body>
 </html>
 
