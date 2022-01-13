@@ -22,6 +22,12 @@ spring:
           auth: true
           starttls:
             enable: true
+  # 정적소스(html, js, css) 변경 바로 적용하기
+  devtools: 
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
   
   # thymeleaf 설정
   thymeleaf: 

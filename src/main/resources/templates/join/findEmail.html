@@ -12,12 +12,12 @@
   </head>
 
   <body>
-    <th:block th:raplace="common/nav.html" ></th:block>
+    <th:block th:replace="common/nav.html" ></th:block>
 
     <main class="fullJoin">
        
         <div class="head">
-            <div id="timage"><img src="images/join.png" style="width: 70px; height: 70px; "></div>
+            <div id="timage"><img src="/images/join.png" style="width: 70px; height: 70px; "></div>
             <div class="thumbnail" id="ttext">이메일 찾기 </div>
         </div>
  
@@ -59,7 +59,7 @@
             } else {
               
               $.ajax({
-                url: "${ pageContext.servletContext.contextPath }/member/findEmail",
+                url: "/member/findEmail",
                 type: "post",
                 data: {name : name, phone : phone},
                 success: function(data) {
@@ -101,7 +101,7 @@
 
       </script>
     </main>
-     <th:block th:raplace="common/footer.html" ></th:block>
+     <th:block th:replace="common/footer.html" ></th:block>
   </body>
 </html>
 

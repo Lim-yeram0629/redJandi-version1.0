@@ -13,12 +13,12 @@
   </head>
 
   <body>
-    <th:block th:raplace="common/nav.html" ></th:block>
+    <th:block th:replace="common/nav.html" ></th:block>
 
     <main class="fullJoin">
        
         <div class="head">
-            <div id="timage"><img src="images/join.png" style="width: 70px; height: 70px; "></div>
+            <div id="timage"><img src="/images/join.png" style="width: 70px; height: 70px; "></div>
             <div class="thumbnail" id="ttext">비밀번호 찾기 </div>
         </div>
  
@@ -26,9 +26,9 @@
         <form method="post" id="submitForm">
         <div class="content">
             <div class="title" style="width: 15%;">인증번호</div>
-            <input type="text" name="proof" id="num1">
+            <input type="text" name="checkNum" id="num1">
             <button type="button" id="proof" onclick="return sendMail()">인증번호 전송</button>
-            <input type="hidden" name="email" id="email" value="${ email }">
+            <input type="hidden" name="email" id="email" th:value="${ email }">
         </div>
 
         <br><br><br><br><br><br>
@@ -45,14 +45,14 @@
           /* 인증번호 보내는 함수 */
           function sendMail() {
 
-            let email = "${ email }";
+            let email = "[[${ email }]]";
 
             $.ajax({
-              url: "${ pageContext.servletContext.contextPath }/member/sendMail/findPwd",
+              url: "/member/sendMail/emailCheck",
               type: "post",
               data: {email : email},
               success: function(data) {
-                if(data == "true") {
+                if(data) {
                   showModal("인증번호가 전송되었습니다.");
                 } else {
                   showModal("인증번호 전송에 실패하였습니다.");
@@ -68,19 +68,19 @@
           /* 인증번호 확인 */
           function confirm() {
 
-            let email = "${ email }";
-            let number = $("#num1").val();
+            let email = "[[${ email }]]";
+            let checkNum = $("#num1").val();
 
             $.ajax({
-              url: "${ pageContext.servletContext.contextPath }/member/pwdCheck",
+              url: "/member/comparePwdCheckNum",
               type: "post",
-              data: {number : number, email : email},
+              data: {checkNum : checkNum, email : email},
               success: function(data) {
-                if(data == "true") {
+                if(data) {
                     $("#nextModal").fadeIn();
                     $(".btn").click(function () {
                       $("#submitForm")
-                      .attr("action", "${ pageContext.servletContext.contextPath }/member/findPwd3").submit();
+                      .attr("action", "/member/findPwdModify").submit();
                     });
                 } else {
                   showModal("인증번호가 일치하지 않습니다.");
@@ -127,7 +127,7 @@
 
     </main>
 
-     <th:block th:raplace="common/footer.html" ></th:block>
+     <th:block th:replace="common/footer.html" ></th:block>
   </body>
 </html>
 

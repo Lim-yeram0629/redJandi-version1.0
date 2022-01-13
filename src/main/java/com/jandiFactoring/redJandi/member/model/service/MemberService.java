@@ -6,19 +6,34 @@ import com.jandiFactoring.redJandi.member.model.dto.MemberDTO;
 
 public interface MemberService {
 
-	boolean isSsackEmailDup(MemberDTO member);
+	int isSsackEmailDup(MemberDTO member);
 
 	int isJandiNickNameDup(String nickName);
 	
 	int selectTrueNumber();
 
-	boolean isSsackNickNameDup(MemberDTO member);
+	int isSsackNickNameDup(MemberDTO member);
 
 	String encodingPwd(String password);
 
-	boolean registMember(MemberDTO member);
+	boolean isRegistMember(MemberDTO member);
 
-	boolean checkUpdate(Map<String, String> map);
+	boolean isUpdateCheckHis(Map<String, String> checkNumMap);
+
+	boolean isExistEmail(MemberDTO member);
+
+	boolean isMatchesPwd(MemberDTO member);
+
+	MemberDTO loginMember(MemberDTO member);
+
+	String findEmail(MemberDTO member);
+
+	int isExistPwd(MemberDTO member);
+
+	int selectPwdTrueNumber(MemberDTO member);
+
+	int isUpdatePwd(MemberDTO member);
+
 	
 	
 

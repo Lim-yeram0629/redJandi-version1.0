@@ -12,12 +12,12 @@
   </head>
 
   <body>
-     <th:block th:raplace="common/nav.html" ></th:block>
+     <th:block th:replace="common/nav.html" ></th:block>
 
     <main class="fullJoin">
        
         <div class="head">
-            <div id="timage"><img src="images/join.png" style="width: 70px; height: 70px; "></div>
+            <div id="timage"><img src="/images/join.png" style="width: 70px; height: 70px; "></div>
             <div class="thumbnail" id="ttext">비밀번호 찾기 </div>
         </div>
  
@@ -60,15 +60,15 @@
             } else {
               
               $.ajax({
-                url: "${ pageContext.servletContext.contextPath }/member/findPwd",
+                url: "/member/findPwd",
                 type: "post",
                 data: {name : name, email : email},
                 success: function(data) {
-                  if(data == "true") {
+                  if(data) {
                     $("#nextModal").fadeIn();
                     $(".btn").click(function () {
                       $("#submitForm")
-                      .attr("action", "${ pageContext.servletContext.contextPath }/member/findPwd2").submit();
+                      .attr("action", "/member/findPwdSendMail").submit();
                     });
                   } else {
                     showModal("찾으시는 이메일이 존재하지 않습니다.");
@@ -106,7 +106,7 @@
 
     </main>
 
-    <th:block th:raplace="common/footer.html" ></th:block>
+    <th:block th:replace="common/footer.html" ></th:block>
   </body>
 </html>
 
