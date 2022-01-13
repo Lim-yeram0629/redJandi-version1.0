@@ -22,18 +22,23 @@ public class JandiServiceImpl implements JandiService{
 	}
 	
 	@Override
-	public JandiDTO selectJandiInformation(JandiDTO jandi) {
-		return jandiMapper.selectJandiInformation(jandi);
+	public JandiDTO selectJandiInformation(JandiDTO jandiDTO) {
+		return jandiMapper.selectJandiInformation(jandiDTO);
 	}
 
 	@Override
-	public List<FindClassDTO> selectJandiClassList(JandiDTO jandi) {
-		return jandiMapper.selectJandiClassList(jandi);
+	public List<FindClassDTO> selectJandiClassList(JandiDTO jandiDTO) {
+		return jandiMapper.selectJandiClassList(jandiDTO);
 	}
 
 	@Override
-	public boolean modifyJandiNickName(JandiDTO jandi) {
-		return jandiMapper.modifyJandiNickName(jandi);
+	public boolean modifyJandiNickName(JandiDTO jandiDTO) {
+		return jandiMapper.modifyJandiNickName(jandiDTO);
+	}
+
+	@Override
+	public boolean modifyProfile(JandiDTO jandiDTO) {
+		return jandiMapper.modifyProfile(jandiDTO);
 	}
 
 }

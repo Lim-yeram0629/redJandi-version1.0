@@ -16,5 +16,7 @@ public interface JandiMapper {
 
 	boolean modifyJandiNickName(JandiDTO jandi);
 
+	boolean modifyProfile(JandiDTO jandiDTO);
+
 
 }

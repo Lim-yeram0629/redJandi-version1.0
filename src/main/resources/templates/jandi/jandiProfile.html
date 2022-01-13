@@ -139,6 +139,16 @@ p {
 			spanItem.html($item.val().length);
 		}
 	}
+	
+	function modifyProfileImage(){
+		let profileImg = $('#profileImage').val();
+		console.log(profileImg);
+		if(profileImg != null){
+			alert("바꿀 프로필 이미지를 선택해 주세요.");
+		}else{
+			$('#changeImgForm').submit();
+		}
+	}
 </script>
 
 </head>
@@ -219,7 +229,8 @@ p {
 												<small> </small>
 											</div>
 											<div class="col-lg-10 col-md-4 m-t-20">
-												<h3 class="m-b-0 font-light">₩ <th:block th:text="${ jandClass.price }"/> <br>등록일 : <th:block th:text="${ jandClass.createDate }"/></h3>
+												<h3 class="m-b-0 font-light">₩ <th:block th:text="${ jandClass.price }"/> 
+													<br>등록일 : <th:block th:text="${ jandClass.createDate }"/></h3>
 												<small> 
 													<th:block th:if="${ jandClass.avgStar == 0}">
 														<span style="color:lightgray;"><i class="star icon"></i></span>
@@ -248,7 +259,7 @@ p {
 		</div>
 	</div>
 	<!-- Modal -->
-<!-- 	<div class="modal fade" id="profileModal" tabindex="-1" role="dialog"
+	<div class="modal fade" id="profileModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -259,61 +270,29 @@ p {
 					</button>
 					<h4 class="modal-title" id="myModalLabel">프로필 사진 변경</h4>
 				</div>
-				<form action="jandiProfile1" method="post" id="modalForm"
-					enctype="multipart/form-data">
+				<form action="/jandi/profile" method="post" id="changeImgForm" enctype="multipart/form-data" accept="image/*">
 					<div class="modal-body" align="center">
-						<br> <b>변경할 프로필 사진을 선택해 주세요.</b> <br> <br> <input
-							type="file" name="profileImage" id="profileImage"> <br>
-						<br>
-						<button class="btn btn-default btnBD" style="margin-right: 80%;">프로필
-							사진 초기화</button>
-						<input type="text" name="defaultImage" hidden="true"> <br>
+						<br><b>변경할 프로필 사진을 선택해 주세요.</b> 
+						<br><br> 
+						<input type="file" name="profileImage" id="profileImage">
+						<br><br>
+						<button type="button" class="btn btn-default" style="margin-right: 80%;" 
+							th:onclick="'location.href=\''+ @{/jandi/profile(email=${jandi.email}, profile_path=sprout.png)} + '\''">
+							프로필 사진 초기화</button>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btnBD" id="closeBtn"
 							data-dismiss="modal">취소</button>
-						<button type="button" class="btn btnStyle" id="okBtn"
+						<button type="button" class="btn btn-primary" id="okBtn"
 							onclick="modifyProfileImage();">변경</button>
 					</div>
 				</form>
-				<script>
-					function modifyProfileImage() {
-						console.log("전");
-						const profileImage = $('#modalForm')[0];
-						//파일이 여러개인걸 방지
-						const formData = new FormData(profileImage);
-						formData.append("profileImage",
-								$('#profileImage')[0].files[0]);
-						console.log("중");
-
-						$
-								.ajax({
-									type : "POST",
-									url : "${ pageContext.servletContext.contextPath }/jandi/jandiProfile1",
-									processData : false,
-									contentType : false,
-									data : formData,
-									success : function(data) {
-										$('#profile').attr(
-												"src",
-												"${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/"
-														+ data);
-										$('#profileImage').val('');
-										$('#closeBtn').click();
-									},
-									error : function(err) {
-										console.log(err);
-									}
-
-								});
-					}
-				</script>
 			</div>
 		</div>
 	</div> 
 
 	<button type="button" id="openModalBtn" data-toggle="modal"
-		data-target="#profileModal" hidden="true"></button> -->
+		data-target="#profileModal" hidden="true"></button>
 		
 </body>
 <th:block th:replace="common/footer.html" ></th:block>

@@ -9,11 +9,13 @@ import com.jandiFactoring.redJandi.jandi.model.dto.JandiDTO;
 
 public interface JandiService {
 
-	JandiDTO selectJandiInformation(JandiDTO jandi);
+	JandiDTO selectJandiInformation(JandiDTO jandiDTO);
 
-	List<FindClassDTO> selectJandiClassList(JandiDTO jandi);
+	List<FindClassDTO> selectJandiClassList(JandiDTO jandiDTO);
 
-	boolean modifyJandiNickName(JandiDTO jandi);
+	boolean modifyJandiNickName(JandiDTO jandiDTO);
+
+	boolean modifyProfile(JandiDTO jandiDTO);
 
 
 

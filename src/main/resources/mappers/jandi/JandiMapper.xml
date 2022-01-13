@@ -70,5 +70,11 @@
 		   SET JAN.NICKNAME = #{ nickName }
 		 WHERE JAN.EMAIL = #{ email }
 	</update>
+	
+	<update id="modifyProfile" parameterType="JandiDTO">
+		UPDATE JANDI_TBL JAN
+		   SET JAN.PROFILE_PATH = #{ profile_path }
+		 WHERE JAN.EMAIL = #{ email }
+	</update>
 
 </mapper>
