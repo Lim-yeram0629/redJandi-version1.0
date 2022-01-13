@@ -14,14 +14,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
-<!--     swiper CSS
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
-    swiper jQuery
-    <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    -->
    <style>
    	::placeholder {
   		color: #B61A1A !important;
@@ -29,6 +21,7 @@
 	
 	.swiper-button-next, .swiper-button-prev {color: #FF6C6C; }
    </style>
+   
   </head>
 
   <body>
@@ -55,17 +48,7 @@
     </div>
 
     <main class="container-fluid">
-<!--       <div class="main-search">
-        <h4>숨어있는 잔디를 찾아보세요</h4>
-        <form class="main-searchbox" action="findclass/findAllClassMain" method="get">
-          <input type="text"id="searchValue" name="searchValue" placeholder="찾으시는 강의가 있으신가요?" style="background-color: #FFE6E6;" />
-          <button type="submit" style="position: relative; bottom: 2px; background-color: #FFE6E6; ">
-            <img
-              src="images/search.png"
-            />
-          </button>
-        </form>
-      </div> -->
+
       <div class="ui search main-search">
        	<h3>숨어있는 잔디를 찾아보세요 </h3>
        	<form class="main-searchbox" action="findclass/findAllClassMain" method="get">
@@ -85,10 +68,12 @@
       </div>
       <br />
 
+<!-- ================================================================================================================ -->
+
       <!-- swiper 캐러셀 -->
      <div class="intro-board">
-       <h1>이런 강의는 어때요??</h1>
-       <h4>항상 인기 많은 잔디 수업 지금 소개합니다~!</h4>
+       <h1>이런 클래스는 어때요 💡</h1>
+       <h4>MD 추천 클래스를 지금 소개합니다.</h4>
         <br />
       </div>
       
@@ -97,211 +82,241 @@
       
 	       <!-- 보여지는 영역 --> 
 	       <div class="swiper-wrapper"> 
-		       <!-- <div class="swiper-slide">내용</div> 를 추가하면된다 --> 
-		       <div class="swiper-slide photo">
-		       		<div class="title-image carousel-img">
-		       			<img src="uploadFiles/classImage/00d5934c49f944d28d3882fc65273d53.png"/>
+		       <!-- <div class="swiper-slide">내용</div> 를 추가하면된다 -->
+		       <th:block th:each="num : ${#numbers.sequence(1,7)}">
+		       <div class="swiper-slide photo" th:each="popClass : ${ popularClass }">
+		       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${popClass.classCode}|}'|">
+		       			<img th:src="@{uploadFiles/classImage/} + ${popClass.filePath}"/>
 		       		</div><br>
-		       		<div><h3 class="classNickname">클래스잔디닉네임</h3></div>
-		       		<div><h4 class="classTitle">클래스제목</h4></div>
-		       		<div><span class="classPrice">클래스가격</span></div>
-		       		<span class="classAvgReview" style="color:#FF6C6C;"><i class="star icon"></i>5.0</span><br>
-		       		<span class="classViews">🔍78</span>
+		       		<div><h4 class="classNickname" th:text="${ popClass.nickName }"></h4></div>
+		       		<div><h5 class="classTitle" th:text="${ popClass.title }"></h5></div>
+		       		<div><span class="classPrice" th:text="${ popClass.price }"></span></div>
+		       		<i class="star icon" style="color:#FF6C6C;"></i>
+		       		<th:block th:if="${popClass.avgReview eq null}">
+		       		<span class="classAvgReview" style="color:#FF6C6C;" th:text="0.0"></span><br>
+		       		</th:block>
+		       		<th:block th:if="${popClass.avgReview ne null}">
+		       		<span class="classAvgReview" style="color:#FF6C6C;" th:text="${ popClass.avgReview }"></span><br>
+		       		</th:block>
+		       		<span class="classViews" th:text="@{🔍} + ${ popClass.views }"></span>
 		       </div> 
-		       
-		       <div class="swiper-slide photo">
-		       		<div class="title-image carousel-img">
-		       			<img src="uploadFiles/classImage/20e207134ed54b158ddfe7cb121d342e.PNG"/>
-		       		</div><br>
-		       		<div><h3 class="classNickname">클래스잔디닉네임</h3></div>
-		       		<div><h4 class="classTitle">클래스제목</h4></div>
-		       		<div><span class="classPrice">클래스가격</span></div>
-		       		<span class="classAvgReview" style="color:#FF6C6C;"><i class="star icon"></i>5.0</span><br>
-		       		<span class="classViews">🔍78</span>
-		       </div>
-		       
-		       <div class="swiper-slide photo">
-		       		<div class="title-image carousel-img">
-		       			<img src="uploadFiles/classImage/0276c1b4988246c781a72bf511ef0883.png"/>
-		       		</div><br>
-		       		<div><h3 class="classNickname">클래스잔디닉네임</h3></div>
-		       		<div><h4 class="classTitle">클래스제목</h4></div>
-		       		<div><span class="classPrice">클래스가격</span></div>
-		       		<span class="classAvgReview" style="color:#FF6C6C;"><i class="star icon"></i>5.0</span><br>
-		       		<span class="classViews">🔍78</span>
-		       </div>
-		       
-		       <div class="swiper-slide photo">
-		       		<div class="title-image carousel-img">
-		       			<img src="uploadFiles/classImage/033e0441f0e64d1babb4e737ff12dad9.png"/>
-		       		</div><br>
-		       		<div><h3 class="classNickname">클래스잔디닉네임</h3></div>
-		       		<div><h4 class="classTitle">클래스제목</h4></div>
-		       		<div><span class="classPrice">클래스가격</span></div>
-		       		<span class="classAvgReview" style="color:#FF6C6C;"><i class="star icon"></i>5.0</span><br>
-		       		<span class="classViews">🔍78</span>
-		       </div>
-		       
-		       <div class="swiper-slide photo">
-		       		<div class="title-image carousel-img">
-		       			<img src="uploadFiles/classImage/10772ba2293047c1800de19088ba87f8.png"/>
-		       		</div><br>
-		       		<div><h3 class="classNickname">클래스잔디닉네임</h3></div>
-		       		<div><h4 class="classTitle">클래스제목</h4></div>
-		       		<div><span class="classPrice">클래스가격</span></div>
-		       		<span class="classAvgReview" style="color:#FF6C6C;"><i class="star icon"></i>5.0</span><br>
-		       		<span class="classViews">🔍78</span>
-		       </div>
-		       
-		       <div class="swiper-slide photo">
-		       		<div class="title-image carousel-img">
-		       			<img src="uploadFiles/classImage/1f8c93a06eda4a5595f46f05f404c51d.png"/>
-		       		</div><br>
-		       		<div><h3 class="classNickname">클래스잔디닉네임</h3></div>
-		       		<div><h4 class="classTitle">클래스제목</h4></div>
-		       		<div><span class="classPrice">클래스가격</span></div>
-		       		<span class="classAvgReview" style="color:#FF6C6C;"><i class="star icon"></i>5.0</span><br>
-		       		<span class="classViews">🔍78</span>
-		       </div>
+		       </th:block>
  
 		   </div> 
 		   <!-- 페이징 버튼 처리 상황에 따라 추가 삭제가능--> 
 		   <div class="swiper-pagination"></div> 
 		   
 	       <!-- 방향 버튼 상황에 따라 추가 삭제가능 --> 
-	       <div class="swiper-button-prev">&lt;</div>
-	        <div class="swiper-button-next">&gt;</div> 
+	       <div class="swiper-button-prev"><i class="chevron circle left icon" style="width: 40px;"></i></div>
+	        <div class="swiper-button-next"><i class="chevron circle right icon" style="width: 40px;"></i></div>  
 	        
         </div>
+<!-- ================================================================================================================ -->
 
-<!--        <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide photo" th:each="popClass, sta : ${ popularClass }" >
-          <th:block th:if="${ sta.index } > 8">
-          	<div class="carousel-img" onclick="location.href='findclass/class/viewsUp?classCode=${class1.classCode }'">
-				<img  src="uploadFiles/classImage/${popClass.filePath}"  />
-          	</div>
-          		 <div><h3 class="classinstructor" th:text="${ popClass.jandiDTO.nickName }"></h3></div>
-           		 <div><h4 class="classtitle" th:text="${ popClass.title }"></h4></div>	
-           		 <div><span class="classprice" th:text="${#numbers.formatCurrency(${ popClass.price })}"></span></div>	
-           		 <span th:if="${ popClass.avgReview eq null}"></span>
-           		  <div><h4 class="classtitle">⭐ ️️0</h4></div>	
-           		 <span th:if="${ popClass.avgReview ne null}"></span>
-           		 <div><h4 class="classtitle" th:text="⭐ ️${ popClass.avgReview }"></h4></div>
-           		 <span class="views" th:text="🔍${ popClass.views }"></span>
-           	</th:block>	 
-          </div>
-
-        </div>
-        
-        <div class="swiper-button-next">&gt;</div>
-        <div class="swiper-button-prev">&lt;</div>
-        
-      </div>  -->
-      
-      <!-- swiper슬라이더 메인컨테이너 -->
-<!-- <div class="swiper-container">
-  보여지는 영역
-  <div class="swiper-wrapper">
-    div class="swiper-slide" 를 추가하면된다
-    <div class="swiper-slide">
-      <img src="/images/mainclass1.png" alt="이미지를 지원하지 않습니다." />
-    </div>
-    <div class="swiper-slide">
-      <img src="/images/ray.jpeg" alt="이미지를 지원하지 않습니다." />
-    </div>
-    <div class="swiper-slide">
-      <img src="/images/mainclass3.png" alt="이미지를 지원하지 않습니다." />
-    </div>
-    <div class="swiper-slide">
-      <img src="/images/mainclass4.png" alt="이미지를 지원하지 않습니다." />
-    </div>
-   </div>
-  페이징 버튼 처리
-  <div class="swiper-pagination"></div>
-
-  방향 버튼 상황에 따라 추가 삭제가능
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
-</div>
-       -->
       <div class="intro-board">
-      	<h1>열혈 잔디🌿</h1>
-        <h4>최근 일주일간 가장 많이 검색된 잔디를 소개합니다.</h4>
+      	<h1>깜짝 잔디 🎁</h1>
+        <h4>MD 추천 잔디를 소개합니다.</h4>
         <br />
       </div>
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-         <!--  <c:forEach var="jandi" items="${ jandi }" end="7">
-          <div class="swiper-slide photo">
-          	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/jandiProfile/${ jandi.email }'">
-				<img  src=" /uploadFiles/profile/${jandi.profile_path}"  />
-          	</div>
-          		 <div><h3 class="classinstructor">${ jandi.nickName }</h3></div>
-           		 <div><h4 class="classtitle">${ jandi.intro }</h4></div>	
-          </div>
-          </c:forEach> -->
+      
+		<!-- swiper슬라이더 메인컨테이너 --> 
+      <div class="swiper-container swiper-j">
+      
+	       <!-- 보여지는 영역 --> 
+	       <div class="swiper-wrapper"> 
+		       <!-- <div class="swiper-slide">내용</div> 를 추가하면된다 -->
+		       <th:block th:each="num : ${#numbers.sequence(1,7)}">
+		       <div class="swiper-slide photo-jandi" th:each="popJandi : ${ popularJandi }">
+		       		<div class="title-image carousel-img-jandi">
+		       			<img class="ui Mini circular image" th:src="@{uploadFiles/profile/} + ${popJandi.profile_path}"/>
+		       		</div><br>
+		       		<div><h4 class="jandiNickname" th:text="${ popJandi.nickName }"></h4></div>
+<!-- 		       		<div><h5 class="jandiIntro" th:text="${ popJandi.intro }"></h5></div> -->
+		       </div> 
+		       </th:block>
+ 
+		   </div> 
+		   <!-- 페이징 버튼 처리 상황에 따라 추가 삭제가능--> 
+		   <div class="swiper-pagination"></div> 
+		   
+	       <!-- 방향 버튼 상황에 따라 추가 삭제가능 --> 
+	       <div class="swiper-button-prev"><i class="chevron circle left icon" style="width: 40px;"></i></div>
+	        <div class="swiper-button-next"><i class="chevron circle right icon" style="width: 40px;"></i></div> 
+	        
         </div>
         
-        <div class="swiper-button-next">&gt;</div>
-        <div class="swiper-button-prev">&lt;</div>
-      </div>
+<!-- ================================================================================================================ -->
       
       <div class="intro-board">
-      	<h1>모두가 좋아하는 수업</h1>
-        <h4>검색 순위가 제일 높은 수업들만 모아봤어요!</h4>
+      	<h1>뷰 클래스 👀</h1>
+        <h4>새싹이 가장 많이 클릭한 클래스를 소개합니다.</h4>
         <br />
       </div>
+	
       <div class="swiper-container">
-        <div class="swiper-wrapper">
-        </div>
+     
+       <!-- 보여지는 영역 --> 
+       <div class="swiper-wrapper"> 
+	       <!-- <div class="swiper-slide">내용</div> 를 추가하면된다 -->
+	       <th:block th:each="num : ${#numbers.sequence(1,7)}">
+	       <div class="swiper-slide photo" th:each="view : ${ viewClass }">
+	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${popClass.classCode}|}'|">
+	       			<img th:src="@{uploadFiles/classImage/} + ${view.filePath}"/>
+	       		</div><br>
+	       		<div><h4 class="classNickname" th:text="${ view.nickName }"></h4></div>
+	       		<div><h5 class="classTitle" th:text="${ view.title }"></h5></div>
+	       		<div><span class="classPrice" th:text="${ view.price }"></span></div>
+	       		<i class="star icon" style="color:#FF6C6C;"></i>
+	       		<th:block th:if="${view.avgReview eq null}">
+		       	<span class="classAvgReview" style="color:#FF6C6C;" th:text="0.0"></span><br>
+		       	</th:block>
+		       	<th:block th:if="${view.avgReview ne null}">
+		       	<span class="classAvgReview" style="color:#FF6C6C;" th:text="${ view.avgReview }"></span><br>
+		       	</th:block>
+	       		<span class="classViews" th:text="@{🔍} + ${ view.views }"></span>
+	       </div> 
+	       </th:block>
+
+	   </div> 
+	   <!-- 페이징 버튼 처리 상황에 따라 추가 삭제가능--> 
+	   <div class="swiper-pagination"></div> 
+	   
+       <!-- 방향 버튼 상황에 따라 추가 삭제가능 --> 
+       <div class="swiper-button-prev"><i class="chevron circle left icon" style="width: 40px;"></i></div>
+       <div class="swiper-button-next"><i class="chevron circle right icon" style="width: 40px;"></i></div>  
         
-        <div class="swiper-button-next">&gt;</div>
-        <div class="swiper-button-prev">&lt;</div>
-      </div>
-      
-	<!-- 중간 광고 타임 -->
+       </div>
+ <!-- ================================================================================================================ -->
+     
+<!-- 	<!-- 중간 광고 타임 
       <div class="mainadvertisement">
         <div class="mainadvertisement-left">
           <h1>📬최근 공지사항</h1>
         </div>
-      </div>
+      </div> -->
+      
+<!-- ================================================================================================================ -->
 
       <div class="intro-board">
-       <h1>가장 최근에 나온 강의!!</h1>
-        <h4>따끈한 신작 강의 입니다~</h4>
+       <h1>최근 클래스 ✨</h1>
+        <h4>따끈따끈한 신규 클래스입니다.</h4>
          <br>
       </div>
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-        </div>
-        <div class="swiper-button-next">&gt;</div>
-        <div class="swiper-button-prev">&lt;</div>
-      </div>
+        <div class="swiper-container">
+     
+<!--        보여지는 영역  -->
+       <div class="swiper-wrapper"> 
+<!-- 	       <div class="swiper-slide">내용</div> 를 추가하면된다 -->
+	       <th:block th:each="num : ${#numbers.sequence(1,7)}">
+	       <div class="swiper-slide photo" th:each="newest : ${ newestClass }">
+	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${popClass.classCode}|}'|">
+	       			<img th:src="@{uploadFiles/classImage/} + ${ newest.filePath }"/>
+	       		</div><br>
+	       		<div><h4 class="classNickname" th:text="${ newest.nickName }"></h4></div>
+	       		<div><h5 class="classTitle" th:text="${ newest.title }"></h5></div>
+	       		<div><span class="classPrice" th:text="${ newest.price }"></span></div>
+	       		<i class="star icon" style="color:#FF6C6C;"></i>
+	       		<th:block th:if="${newest.avgReview eq null}">
+		       	<span class="classAvgReview" style="color:#FF6C6C;" th:text="0.0"></span><br>
+		       	</th:block>
+		       	<th:block th:if="${newest.avgReview ne null}">
+		       	<span class="classAvgReview" style="color:#FF6C6C;" th:text="${ newest.avgReview }"></span><br>
+		       	</th:block>
+	       		<span class="classViews" th:text="@{🔍} + ${ newest.views }"></span>
+	       </div> 
+	       </th:block>
+
+	   </div>
+<!-- 	   페이징 버튼 처리 상황에 따라 추가 삭제가능 --> 
+	   <div class="swiper-pagination"></div> 
+	   
+<!--        방향 버튼 상황에 따라 추가 삭제가능  -->
+       <div class="swiper-button-prev"><i class="chevron circle left icon" style="width: 40px;"></i></div>
+       <div class="swiper-button-next"><i class="chevron circle right icon" style="width: 40px;"></i></div>  
+        
+       </div>
       
+<!-- ================================================================================================================ -->
+ 
       <div class="intro-board">
-        <h1>곧 마감될 강의</h1>
-        <h4>자리가 얼마 남지 않은 강의입니다~</h4>
+        <h1>곧 마감될 클래스 ⏳</h1>
+        <h4>자리가 얼마 남지 않은 클래스입니다.</h4>
          <br>
       </div>
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-        </div>
-        <div class="swiper-button-next">&gt;</div>
-        <div class="swiper-button-prev">&lt;</div>
-      </div>
+        <div class="swiper-container">
+     
+<!--        보여지는 영역  -->
+       <div class="swiper-wrapper"> 
+<!-- 	       <div class="swiper-slide">내용</div> 를 추가하면된다 -->
+	       <th:block th:each="num : ${#numbers.sequence(1,7)}">
+	       <div class="swiper-slide photo" th:each="deadline : ${ deadlineClass }">
+	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${popClass.classCode}|}'|">
+	       			<img th:src="@{uploadFiles/classImage/} + ${ deadline.filePath }"/>
+	       		</div><br>
+	       		<div><h4 class="classNickname" th:text="${ deadline.nickName }"></h4></div>
+	       		<div><h5 class="classTitle" th:text="${ deadline.title }"></h5></div>
+	       		<div><span class="classPrice" th:text="${ deadline.price }"></span></div>
+	       		<i class="star icon" style="color:#FF6C6C;"></i>
+	       		<th:block th:if="${deadline.avgReview eq null}">
+		       	<span class="classAvgReview" style="color:#FF6C6C;" th:text="0.0"></span><br>
+		       	</th:block>
+		       	<th:block th:if="${deadline.avgReview ne null}">
+		       	<span class="classAvgReview" style="color:#FF6C6C;" th:text="${ deadline.avgReview }"></span><br>
+		       	</th:block>
+	       		<span class="classViews" th:text="@{🔍} + ${ deadline.views }"></span>
+	       </div> 
+	       </th:block>
+
+	   </div>
+<!-- 	   페이징 버튼 처리 상황에 따라 추가 삭제가능 --> 
+	   <div class="swiper-pagination"></div> 
+	   
+<!--        방향 버튼 상황에 따라 추가 삭제가능  -->
+       <div class="swiper-button-prev"><i class="chevron circle left icon" style="width: 40px;"></i></div>
+       <div class="swiper-button-next"><i class="chevron circle right icon" style="width: 40px;"></i></div>  
+        
+       </div>
       
+<!-- ================================================================================================================ -->   
+   
       <div class="intro-board">
-        <h1>평점이 높은 강의!</h1>
-        <h4>새싹들이 인정한 믿고 듣는 좋은 수업!</h4>
+        <h1>평점 높은 클래스 👍</h1>
+        <h4>새싹들이 인정한 믿고 듣는 클래스입니다.</h4>
         <br>
       </div>
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-        </div>
-        <div class="swiper-button-next">&gt;</div>
-        <div class="swiper-button-prev">&lt;</div>
-      </div>
+        <div class="swiper-container">
+     
+<!--        보여지는 영역  -->
+       <div class="swiper-wrapper"> 
+<!-- 	       <div class="swiper-slide">내용</div> 를 추가하면된다 -->
+	       <th:block th:each="num : ${#numbers.sequence(1,7)}">
+	       <div class="swiper-slide photo" th:each="high : ${ highScoreClass }">
+	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${popClass.classCode}|}'|">
+	       			<img th:src="@{uploadFiles/classImage/} + ${ high.filePath }"/>
+	       		</div><br>
+	       		<div><h4 class="classNickname" th:text="${ high.nickName }"></h4></div>
+	       		<div><h5 class="classTitle" th:text="${ high.title }"></h5></div>
+	       		<div><span class="classPrice" th:text="${ high.price }"></span></div>
+	       		<i class="star icon" style="color:#FF6C6C;"></i>
+	       		<th:block th:if="${high.avgReview eq null}">
+		       	<span class="classAvgReview" style="color:#FF6C6C;" th:text="0.0"></span><br>
+		       	</th:block>
+		       	<th:block th:if="${high.avgReview ne null}">
+		       	<span class="classAvgReview" style="color:#FF6C6C;" th:text="${ high.avgReview }"></span><br>
+		       	</th:block>
+	       		<span class="classViews" th:text="@{🔍} + ${ high.views }"></span>
+	       </div> 
+	       </th:block>
+
+	   </div>
+<!-- 	   페이징 버튼 처리 상황에 따라 추가 삭제가능 --> 
+	   <div class="swiper-pagination"></div> 
+	   
+<!--        방향 버튼 상황에 따라 추가 삭제가능  -->
+       <div class="swiper-button-prev"><i class="chevron circle left icon" style="width: 40px;"></i></div>
+       <div class="swiper-button-next"><i class="chevron circle right icon" style="width: 40px;"></i></div>  
+        
+       </div>
       
     </main>
 
@@ -411,6 +426,25 @@
           prevEl: ".swiper-button-prev", // 이번 버튼 클래스명
         },
       }); 
+	  	
+	  	const swiperJandi = new Swiper(".swiper-j", {
+	        slidesPerView: 6, // 동시에 보여줄 슬라이드 갯수
+	        spaceBetween: 1, // 슬라이드간 간격
+	        slidesPerGroup: 6, // 그룹으로 묶을 수, slidesPerView 와 같은 값을 지정하는게 좋음
+
+	        loopFillGroupWithBlank: true,
+
+	        loop: false, // 무한 반복
+
+	        pagination: {
+	          el: ".swiper-pagination",
+	          clickable: true, // 페이징을 클릭하면 해당 영역으로 이동, 필요시 지정해 줘야 기능 작동
+	        },
+	        navigation: {
+	          nextEl: ".button-next", // 다음 버튼 클래스명
+	          prevEl: ".button-prev", // 이번 버튼 클래스명
+	        },
+	      }); 
 	  	
 /*   	$(function(){
   	  $('.btn-hover.color-1').hover(function(){
