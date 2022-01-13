@@ -17,7 +17,7 @@
     	<result column="FILE_PATH" property="filePath"/>
     	<result column="ORG_FILE_PATH" property="orgFilePath"/>
     	<result column="NICKNAME" property="nickName" />
-    	<result column="AVG(CR.star)" property="avgReview"/>
+    	<result column="AVGSTAR" property="avgReview"/>
 	</resultMap>
 	
 	<resultMap type="com.jandiFactoring.redJandi.jandi.model.dto.JandiDTO" id="jandiResultMap">
@@ -42,20 +42,32 @@
 	
 	<select id="selectPopularClass" resultMap="classResultMap">
 		SELECT
-		       C.CLASS_CODE
-		     , C.FILE_PATH
-		     , C.TITLE
-		     , C.PRICE
-		     , C.VIEWS
-		     , J.NICKNAME
-		     , AVG(CR.STAR)
-   	  	  FROM CLASS_TBL C 
-   	      JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
-          LEFT JOIN (SELECT STAR
-                          , CLASS_CODE
-               FROM CLASS_REVIEW_TBL) CR ON (CR.CLASS_CODE = C.CLASS_CODE)
-   	     WHERE C.IS_DELETED = 'N'  
-         GROUP BY C.CLASS_CODE,C.FILE_PATH, C.TITLE, C.PRICE, C.VIEWS, J.NICKNAME                      
+			   ROWNUM
+		     , V.CLASS_CODE
+		     , V.FILE_PATH
+		     , V.TITLE
+		     , V.PRICE
+		     , V.VIEWS
+		     , V.NICKNAME
+		     , V.AVGSTAR
+		FROM (SELECT 
+				      C.CLASS_CODE
+				    , C.FILE_PATH
+				    , C.TITLE
+				    , C.PRICE
+				    , C.VIEWS
+				    , J.NICKNAME
+				    , AVG(CR.STAR) AVGSTAR
+		   	    FROM CLASS_TBL C 
+		   	    JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+		        LEFT JOIN (SELECT STAR
+		                          , CLASS_CODE
+	               			FROM CLASS_REVIEW_TBL) CR ON (CR.CLASS_CODE = C.CLASS_CODE)
+		   	     WHERE C.IS_DELETED = 'N'
+		         GROUP BY C.CLASS_CODE,C.FILE_PATH, C.TITLE, C.PRICE, C.VIEWS, J.NICKNAME  
+			)V
+		WHERE ROWNUM BETWEEN 1 AND 7                      
+			
 	</select>
 	
 	<select id="selectPupularJandi" resultMap="jandiResultMap">
@@ -114,7 +126,7 @@
             , C.VIEWS
             , J.NICKNAME
             , COUNT(PT.CLASS_CODE)
-            , pt.CLASS_CODE 
+            , PT.CLASS_CODE 
 		  FROM CLASS_TBL C
 		  JOIN PURCHASE_CLASS_TBL PT ON (PT.CLASS_CODE = C.CLASS_CODE)
 		  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 

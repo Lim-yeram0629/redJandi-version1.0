@@ -23,7 +23,6 @@
    </style>
    
   </head>
-
   <body>
 	<th:block th:replace="common/nav.html" ></th:block>
 
@@ -48,7 +47,7 @@
     </div>
 
     <main class="container-fluid">
-
+	
       <div class="ui search main-search">
        	<h3>숨어있는 잔디를 찾아보세요 </h3>
        	<form class="main-searchbox" action="findclass/findAllClassMain" method="get">
@@ -83,7 +82,6 @@
 	       <!-- 보여지는 영역 --> 
 	       <div class="swiper-wrapper"> 
 		       <!-- <div class="swiper-slide">내용</div> 를 추가하면된다 -->
-		       <th:block th:each="num : ${#numbers.sequence(1,7)}">
 		       <div class="swiper-slide photo" th:each="popClass : ${ popularClass }">
 		       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${popClass.classCode}|}'|">
 		       			<img th:src="@{uploadFiles/classImage/} + ${popClass.filePath}"/>
@@ -100,7 +98,6 @@
 		       		</th:block>
 		       		<span class="classViews" th:text="@{🔍} + ${ popClass.views }"></span>
 		       </div> 
-		       </th:block>
  
 		   </div> 
 		   <!-- 페이징 버튼 처리 상황에 따라 추가 삭제가능--> 
@@ -238,17 +235,17 @@
       
 <!-- ================================================================================================================ -->
  
-      <div class="intro-board">
+      <!-- <!-- <div class="intro-board">
         <h1>곧 마감될 클래스 ⏳</h1>
         <h4>자리가 얼마 남지 않은 클래스입니다.</h4>
          <br>
       </div>
-        <div class="swiper-container">
+        <div class="swiper-container"> --> -->
      
 <!--        보여지는 영역  -->
        <div class="swiper-wrapper"> 
 <!-- 	       <div class="swiper-slide">내용</div> 를 추가하면된다 -->
-	       <th:block th:each="num : ${#numbers.sequence(1,7)}">
+	       <!-- <th:block th:each="num : ${#numbers.sequence(1,7)}">
 	       <div class="swiper-slide photo" th:each="deadline : ${ deadlineClass }">
 	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${deadLine.classCode}|}'|">
 	       			<img th:src="@{uploadFiles/classImage/} + ${ deadline.filePath }"/>
@@ -265,7 +262,7 @@
 		       	</th:block>
 	       		<span class="classViews" th:text="@{🔍} + ${ deadline.views }"></span>
 	       </div> 
-	       </th:block>
+	       </th:block> -->
 
 	   </div>
 <!-- 	   페이징 버튼 처리 상황에 따라 추가 삭제가능 --> 

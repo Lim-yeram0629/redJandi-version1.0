@@ -33,6 +33,8 @@ public class MainController {
 		System.out.println("classDTOList : " + classDTOList); */
 		
 		List<ClassDTO> popularClass = mainService.popularClass();
+		System.out.println("=========================================================");
+		System.out.println("popularClass : " + popularClass);
 		Collections.shuffle(popularClass); 
 		
 		List<JandiDTO> popularJandi = mainService.popularJandi();
