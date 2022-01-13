@@ -160,7 +160,7 @@
 	       <!-- <div class="swiper-slide">내용</div> 를 추가하면된다 -->
 	       <th:block th:each="num : ${#numbers.sequence(1,7)}">
 	       <div class="swiper-slide photo" th:each="view : ${ viewClass }">
-	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${popClass.classCode}|}'|">
+	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${view.classCode}|}'|">
 	       			<img th:src="@{uploadFiles/classImage/} + ${view.filePath}"/>
 	       		</div><br>
 	       		<div><h4 class="classNickname" th:text="${ view.nickName }"></h4></div>
@@ -209,7 +209,7 @@
 <!-- 	       <div class="swiper-slide">내용</div> 를 추가하면된다 -->
 	       <th:block th:each="num : ${#numbers.sequence(1,7)}">
 	       <div class="swiper-slide photo" th:each="newest : ${ newestClass }">
-	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${popClass.classCode}|}'|">
+	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${newest.classCode}|}'|">
 	       			<img th:src="@{uploadFiles/classImage/} + ${ newest.filePath }"/>
 	       		</div><br>
 	       		<div><h4 class="classNickname" th:text="${ newest.nickName }"></h4></div>
@@ -250,7 +250,7 @@
 <!-- 	       <div class="swiper-slide">내용</div> 를 추가하면된다 -->
 	       <th:block th:each="num : ${#numbers.sequence(1,7)}">
 	       <div class="swiper-slide photo" th:each="deadline : ${ deadlineClass }">
-	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${popClass.classCode}|}'|">
+	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${deadLine.classCode}|}'|">
 	       			<img th:src="@{uploadFiles/classImage/} + ${ deadline.filePath }"/>
 	       		</div><br>
 	       		<div><h4 class="classNickname" th:text="${ deadline.nickName }"></h4></div>
@@ -291,7 +291,7 @@
 <!-- 	       <div class="swiper-slide">내용</div> 를 추가하면된다 -->
 	       <th:block th:each="num : ${#numbers.sequence(1,7)}">
 	       <div class="swiper-slide photo" th:each="high : ${ highScoreClass }">
-	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${popClass.classCode}|}'|">
+	       		<div class="title-image carousel-img" th:onclick="|location.href='@{|findclass/class/viewsUp?classCode=${high.classCode}|}'|">
 	       			<img th:src="@{uploadFiles/classImage/} + ${ high.filePath }"/>
 	       		</div><br>
 	       		<div><h4 class="classNickname" th:text="${ high.nickName }"></h4></div>
