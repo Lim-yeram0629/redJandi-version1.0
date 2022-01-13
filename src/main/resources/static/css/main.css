@@ -282,6 +282,12 @@ body {
   border-radius: 7px;
   
 }
+
+.swiper-j {
+  height: 300px;
+  border-radius: 7px;
+}
+
 .swiper-slide {
   padding: 0 0;
   text-align: center;
@@ -294,6 +300,12 @@ body {
   /* width: ; */
   /* overflow: auto; */
 }
+
+.photo-jandi {
+  height: 200px !important;
+  border-radius: 7px;
+}
+
 .swiper-slide img {
   max-width: 100%; /* 이미지 최대너비를 제한, 슬라이드에 이미지가 여러개가 보여질때 필요 */
 }
@@ -301,6 +313,12 @@ body {
 .carousel-img {
   width: 90%;
   height: 100%;
+  margin : 0 auto;
+}
+
+.carousel-img-jandi {
+  width: 50%;
+  height: 65%;
   margin : 0 auto;
 }
 
@@ -314,6 +332,12 @@ body {
   width: 100%;
   height: 100%;
 }
+
+.carousel-img-jandi img {
+  width: 100%;
+  height: 70%;
+}
+
 .carousel-img1 img {
   width: 100%;
   height: 100%;
@@ -333,6 +357,11 @@ body {
   display: block;
   transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
   margin-top: -10px;
+}
+
+.photo-jandi img {
+  display: block;
+  transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .photo:hover img {
