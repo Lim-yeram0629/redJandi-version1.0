@@ -45,8 +45,9 @@ public class FileWrapper {
 	 * @param dir
 	 * @return filePath
 	 */
-	public String checkFilePath(String rootPath, String dir) {
-		
+	public String checkFilePath(String dir) {
+		// 파일이 저장될 루트 경로
+		final String rootPath = new File("").getAbsolutePath() + "/src/main/resources/static";
 		String filePath = rootPath + dir;
 		
 		// 해당 경로가 있는지 체크하여 경로가 없으면 폴더를 생성한다.
@@ -65,25 +66,26 @@ public class FileWrapper {
 	 * @return 성공시 true, 실패시 false
 	 * 
 	 * @author 임예람
+	 * @throws Exception 
 	 */
-	public boolean uploadSingleFile(MultipartFile file, String savedName, String filePath) {
+	public String uploadSingleFile(MultipartFile file, String dir) throws Exception {
 		
-		// 성공 여부를 판단할 return값 설정
-		boolean result = false;
+		String savedName = changeFileNameByRandomUUID(file.getOriginalFilename());
+		String filePath = checkFilePath(dir);
 		
 		// multipartFile을 매개변수로 받은 경로에 지정한 이름으로 저장
 		try {
 			file.transferTo(new File(filePath + "/" + savedName));
-			result = true;
 		
 			System.out.println("파일 업로드 성공");
 			
 		} catch (IllegalStateException | IOException e) {	// 오류 발생시 해당 파일 삭제
 			e.printStackTrace();
 			new File(filePath + "/" + savedName).delete();
+			throw new Exception();
 		}
 		
-		return result;
+		return savedName;
 	}
 	
 	

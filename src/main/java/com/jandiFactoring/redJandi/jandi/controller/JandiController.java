@@ -1,12 +1,16 @@
 package com.jandiFactoring.redJandi.jandi.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -65,17 +69,35 @@ public class JandiController {
 	}
 	
 	@PostMapping("profile")
-	public String modifyJandiProfile(JandiDTO jandiDTO, MultipartFile profileImage, RedirectAttributes rttr) {
+	@ResponseBody
+	public JandiDTO modifyJandiProfile(JandiDTO jandiDTO, MultipartFile profileImage) throws Exception {
 		
-		rttr.addFlashAttribute("modifyMessage", "프로필 변경에 실패했습니다.");
+		System.out.println("modifyProfile Jandi: " + jandiDTO);
+		String originFilePath = jandiDTO.getProfile_path();
 		
 		FileWrapper fileWrapper = new FileWrapper();
+		String savedName = fileWrapper.uploadSingleFile(profileImage, "/uploadFiles/profile");
+		jandiDTO.setProfile_path(savedName);
 		
-		if(jandiService.modifyProfile(jandiDTO)) {
-			rttr.addFlashAttribute("modifyMessage", "프로필이 변경 되었습니다."); 
+		if(!jandiService.modifyProfile(jandiDTO)) {
+			jandiDTO.setProfile_path(originFilePath);
 		}
 		
-		return "redirect:/jandi/jandiProfile";
+		return jandiDTO;
+	}
+	
+	@PostMapping("careerAndIntro")
+	@ResponseBody
+	public String modifyJandiCareerAndIntro(JandiDTO jandiDTO) {
+		
+		if(!jandiService.modifyJandiCareerAndIntro(jandiDTO)) {
+			return "저장에 실패했습니다.";
+		}
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String lastSaveDate =  dateFormat.format(new Date(System.currentTimeMillis()));
+		
+		return lastSaveDate + ", 저장";
 	}
 	
 	
