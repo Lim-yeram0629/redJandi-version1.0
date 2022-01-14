@@ -1,10 +1,10 @@
 package com.jandiFactoring.redJandi.member.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -128,12 +128,12 @@ public class MemberController {
 			if(memberService.isUpdateCheckHis(checkNumMap)) {
 				return "redirect:/";
 			} else {
-				throw new Exception(); // 오류페이지
+				throw new Exception(); // 오류 페이지
 			}
 
 		} else {
 			
-			throw new Exception(); // 오류페이지
+			throw new Exception(); // 오류 페이지
 			
 		}
 	}
@@ -152,9 +152,10 @@ public class MemberController {
 	 * @author 권순표 
 	 * 사용자 로그인
 	 * @param member 사용자 입력 이메일과 패스워드를 담은 DTO
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "login" , method = RequestMethod.POST , produces="text/plain;charset=UTF-8")
-	public @ResponseBody String login(SessionStatus status, @ModelAttribute MemberDTO member, Model model) {
+	public @ResponseBody String login(SessionStatus status, @ModelAttribute MemberDTO member, Model model) throws Exception {
 		
 		System.out.println("로그인할 이메일 : " + member.getEmail());
 	    System.out.println("로그인할 패스워드 : " + member.getPassword());
@@ -174,37 +175,51 @@ public class MemberController {
 	    	MemberDTO loginMember = memberService.loginMember(member);
 	    	model.addAttribute("loginMember", loginMember);
 	    	
-	    	/*
-	    	 * 로그인 한 회원 잔디 여부 및 블랙리스 관련 로직
-	    	 * 임예람
-	    	 * */
+	    	/* 로그인 한 회원 잔디 여부 및 블랙리스트 관련 로직 */
 	    	if(loginMember.getIsJandi() == 'Y') {
 	    		model.addAttribute("isjandi", "Y");
 	    	}else {
 	    		model.addAttribute("isjandi", "N");
 	    	}
 	    	
-//	    	// 블랙리스트 여부가 Y이면
-//	    	if(loginMember.getIsBlack() == 'Y') {
-//	    		
-//	    		// 해당 멤버의 현재 날짜 - 블랙리스트 해제 날짜를 조회하여 해제 까지 남은 일수를 구한다.
-//	    		double blackD_day = memberService.selectBlackDDay(loginMember.getEmail());
-//	    		if(blackD_day > 0) { // 남은 일수가 0보다 크면 남은 일수를 반환하고 로그인된 세션 정보를 삭제한다.
-//	    			System.out.println((int)blackD_day + "일 남음");
-//	    			response.getWriter().write("누적 경고로 인해 블랙리스트 조치되었습니다. 로그인 가능까지 " + (int)blackD_day + "일 남았습니다." );
-//	    			status.setComplete();
-//	    		}else { // 남은 일 수가 0보다 작으면 블랙리스트를 해제하고 로그인을 성공 시킨다.
-//	    			if(memberService.modifyBlackStatus(loginMember.getEmail())) {
-//	    				System.out.println("블랙리스트 해제 성공");
-//	    			}else {
-//	    				System.out.println("블랙리스트 해제 실패");
-//	    			}
-//	    			response.getWriter().write("true");
-//	    		}
-//	    	}else {
-//	    		response.getWriter().write("true");
-//	    	}
-	    	return "true";
+	    	/* 블랙리스트 여부가 Y이면 */
+	    	if(loginMember.getIsBlack() == 'Y') {
+	    		
+	    		/* 현재 날짜 - 해당 유저의 블랙리스트 해제 날짜를 조회하여 남은 일수를 초단위로 구해온다. */
+	    		int blackTime = memberService.selectBlackTime(member);
+	    		System.out.println("블랙 날짜 초단위로 계산 : " + blackTime);
+	    		
+	    		int blackDay = blackTime / (24 * 60 * 60);
+	    		int blackHour = (blackTime - blackDay * 24 * 60 * 60) / (60 * 60);
+	    		int blackMinute = (blackTime - blackDay * 24 * 60 * 60 - blackHour * 3600) / 60;
+	    		int blackSecond = blackTime % 60;
+	    		
+	    		System.out.println("해당 유저의 남은 블랙 일자는 " + blackDay + "일 " + blackHour + "시간 " 
+	    		                   + blackMinute + "분 " + blackSecond + "초");
+	    		
+	    		/* 남은 일수가 하루 미만이면 남은 시간을 반환하고 로그인된 세션 정보를 삭제한다. */
+	    		if(blackTime > 0 && blackDay < 1) { 
+	    			status.setComplete();
+	    			return "누적 경고로 인해 블랙 리스트 조치 되었습니다. <br> 로그인 가능까지 " + 
+	    			       blackHour + "시간 " + blackMinute + "분 " + blackSecond + "초 남았습니다."; 
+	    	    
+	    	    /* 남은 일수가 하루 이상이면 남은 일수를 반환하고 로그인된 세션 정보를 삭제한다. */
+	    		} else if (blackDay >= 1) { 
+	    			status.setComplete();
+	    			return "누적 경고로 인해 블랙리스트 조치되었습니다. <br> 로그인 가능까지 " + blackDay + "일 남았습니다.";
+	    		
+	    	    /* 남은 시간이 0(초)보다 작으면 블랙리스트를 해제하고 로그인을 성공 시킨다. */
+	    		} else { 
+	    			if(memberService.isBlackUnlocked(member)) {
+	    				return "true";
+	    			} else {
+	    				throw new Exception(); // 오류 페이지
+	    			}
+	    		}
+	    	} else {
+	    		
+	    		return "true";
+	    	}
 	    }
 	}
 	
@@ -327,6 +342,19 @@ public class MemberController {
 		System.out.println("암호화된 패스워드 : " + member.getPassword());
 		
 		return memberService.isUpdatePwd(member) > 0? true:false;
+	}
+	
+	/**
+	 * @author 권순표
+	 * 사용자 로그아웃
+	 * @param status 현재 세션
+	 */
+	@GetMapping("/logout")
+	public String logout(SessionStatus status) {
+		
+		status.setComplete();
+		
+		return "redirect:/";
 	}
 
 	/**

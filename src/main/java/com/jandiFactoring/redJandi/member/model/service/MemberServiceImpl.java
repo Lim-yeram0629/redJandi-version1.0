@@ -105,6 +105,18 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.isUpdatePwd(member);
 	}
 
+	@Override
+	public int selectBlackTime(MemberDTO member) {
+		
+		return memberMapper.selectBlackTime(member);
+	}
+
+	@Override
+	public boolean isBlackUnlocked(MemberDTO member) {
+		
+		return memberMapper.isBlackUnlocked(member) > 0? true:false;
+	}
+
 
 
 }

@@ -185,6 +185,21 @@
 		 WHERE A.EMAIL = #{ email }
     </update>
     
+    <!-- 블랙리스트 해지까지 얼마나 남았는지 조회하기 by 권순표 -->
+	<select id="selectBlackTime" resultType="_int" parameterType="MemberDTO">
+		SELECT (A.BLACK_END_DATE - SYSDATE) * (24*60*60)
+   		  FROM SSACK_TBL A
+  		 WHERE A.EMAIL = #{ email }
+	</select>
+	
+	<!-- 블랙리스트 해지 하기 by 권순표  -->
+	<update id="isBlackUnlocked" parameterType="MemberDTO">
+		UPDATE SSACK_TBL A
+		   SET A.IS_BLACK = 'N'
+		     , A.WARNING = 0
+		 WHERE A.EMAIL = #{ email }
+	</update>
+    
 
 	<select id="selectCountJandiNickName" resultType="_int">
 		SELECT COUNT(JAN.EMAIL)

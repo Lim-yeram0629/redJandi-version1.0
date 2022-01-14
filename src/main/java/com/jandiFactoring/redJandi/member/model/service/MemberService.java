@@ -1,5 +1,6 @@
 package com.jandiFactoring.redJandi.member.model.service;
 
+import java.sql.Date;
 import java.util.Map;
 
 import com.jandiFactoring.redJandi.member.model.dto.MemberDTO;
@@ -33,6 +34,11 @@ public interface MemberService {
 	int selectPwdTrueNumber(MemberDTO member);
 
 	int isUpdatePwd(MemberDTO member);
+
+	int selectBlackTime(MemberDTO member);
+
+	boolean isBlackUnlocked(MemberDTO member);
+
 
 	
 	

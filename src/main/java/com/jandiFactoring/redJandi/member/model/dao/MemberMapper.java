@@ -1,5 +1,6 @@
 package com.jandiFactoring.redJandi.member.model.dao;
 
+import java.sql.Date;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -41,5 +42,8 @@ public interface MemberMapper {
 
 	int isUpdatePwd(MemberDTO member);
 
+	int selectBlackTime(MemberDTO member);
+
+	int isBlackUnlocked(MemberDTO member);
 
 }
