@@ -41,4 +41,9 @@ public class JandiServiceImpl implements JandiService{
 		return jandiMapper.modifyProfile(jandiDTO);
 	}
 
+	@Override
+	public boolean modifyJandiCareerAndIntro(JandiDTO jandiDTO) {
+		return jandiMapper.modifyJandiCareerAndIntro(jandiDTO);
+	}
+
 }

@@ -17,6 +17,8 @@ public interface JandiService {
 
 	boolean modifyProfile(JandiDTO jandiDTO);
 
+	boolean modifyJandiCareerAndIntro(JandiDTO jandiDTO);
+
 
 
 }
