@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <title>클래스룸</title>
@@ -37,17 +34,6 @@
 
 <script>
 $(function(){
-	// 업로드 성공 여부 리다이렉트 메세지
-	if('${ requestScope.uploadMessage }' != ''){
-		alert('${ requestScope.uploadMessage }');
-		console.log('${ requestScope.uploadMessage }');
-	}
-	
-	// 클래스룸 변경 성고 여부 리다이렉트 메세지
-	let message = '${ requestScope.modifyMessage }';
-	if( message != "" ){
-		alert(message);
-	}
 	
 	/* 태그 분리 해서 페이지에 보여주기 */
 	let tags = $('#tag').val().replace(" ","");
@@ -108,14 +94,13 @@ $('#searchCondition').change(function(){
 
 </script>
 <body>
-	<jsp:include page="../../common/nav.jsp" />
+	<th:block th:replace="common/nav.html" ></th:block>
 	<div class="common-sidebar">
-		<jsp:include page="../../common/mentorsidebar.jsp" />
-		<jsp:include page="../class/classRoomNav.jsp" />
+		<th:block th:replace="common/mentorsidebar.html" ></th:block>
+		<th:block th:replace="jandi/class/classRoomNav.html" ></th:block>
 		<div class="sidebar-content">
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
-			<form action="${ pageContext.servletContext.contextPath }/jandi/class/modifyClass" method="post" id="modifyClassForm">
 				<button type="button" class="btn btn-primary" style="float:right" id="modifyClassFormBtn">수정</button>
 				<h2>강의 소개</h2>
 				<hr>
@@ -123,7 +108,7 @@ $('#searchCondition').change(function(){
 				<br>
 				<div id="contents">
 					<textarea class="areaStyle" id="classContents" name="contents" rows="10" wrap="hard"
-						placeholder="강의 소개를 입력해주세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);">${ classDTO.contents }</textarea>
+						placeholder="강의 소개를 입력해주세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);"></textarea>
 				</div>
 				<br>
 				<br>
@@ -131,7 +116,7 @@ $('#searchCondition').change(function(){
 						data-toggle="modal" data-target="#imageModal">썸네일 변경하기</button>
 				</h4>
 				<div align="center">
-					<img class="classImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${ classDTO.filePath }">
+					<img class="classImg" src="/uploadFiles/classImage/${ classDTO.filePath }">
 				</div>
 				<br>
 				<br>
@@ -143,24 +128,20 @@ $('#searchCondition').change(function(){
 					placeholder="태그를 입력해주세요." onkeyup="checkLength(this, $('#tagCheck'), 150);">${ classDTO.tag }</textarea>
 				<hr>
 				<h2>강의 목차</h2>
-				<c:forEach var="mokcha" items="${ mokchaList }">
+				<!-- <c:forEach var="mokcha" items="${ mokchaList }">
 					<p class="contents">
 						${ mokcha.mokchaName }
 					</p>
-				</c:forEach>
-				<a href="${ pageContext.servletContext.contextPath }/jandi/class/classLecture">더 보기</a>
+				</c:forEach> -->
+				<a href="/jandi/class/classLecture">더 보기</a>
 				<hr>
 				<br>
-			</form>
-			<c:if test="${ empty reviewList }">
 				<h3 align="center">아직 작성된 후기가 없습니다.</h3>
-			</c:if>
-			<c:if test="${ !empty reviewList }">
 				<div class="after">
 					<h2>후기 ( ${ classStar } / 5 )</h2>
 					<p>총 ${ reviewCount }개 </p>
-					 <form id="searchform" action="${ pageContext.servletContext.contextPath }/jandi/class/classRoom" method="get" >
-					 	<input type="hidden" name="classCode" value=${ classDTO.classCode }>
+					 <form id="searchform" action="/jandi/class/classRoom" method="get" >
+					 	<input type="hidden" name="classCode" value="">
 						<select class="ui dropdown" id="searchCondition" name="searchCondition" style="margin-left:0px; float:right;">
 			  				<option value="recently" >최신순</option>
 			        		<option value="starDESC">별점 높은순</option>
@@ -169,7 +150,7 @@ $('#searchCondition').change(function(){
 					</form>
 				</div>
 				
-				<c:forEach var="review" items="${ reviewList }">
+				<!-- <c:forEach var="review" items="${ reviewList }">
 					<div class="ui card" id="aftercard" style="margin: 5%; margin-top:0px; width: 90%;">
 						<div class="content">
 							<div class="left aligned header afterheader">
@@ -194,7 +175,7 @@ $('#searchCondition').change(function(){
 			
 				<jsp:include page="../../common/Paging.jsp" />
 				
-				</c:if>
+				</c:if> -->
 		</div>
 	</div>
 	
@@ -211,7 +192,7 @@ $('#searchCondition').change(function(){
 						<h4 class="modal-title" id="myModalLabel">썸네일 변경하기</h4>
 					</div>
 					<div class="modal-body" align="center">
-						<form action="${pageContext.servletContext.contextPath }/jandi/class/uploadClassFile" 
+						<form action="/jandi/class/uploadClassFile" 
 							method="post" enctype="multipart/form-data" id="uploadForm">
 							<input type="hidden" value="${ classDTO.classCode }" name="classCode">
 							<br>
@@ -239,5 +220,5 @@ $('#searchCondition').change(function(){
 			});
 		</script>
 </body>
-<jsp:include page="../../common/footer.jsp" />
+<th:block th:replace="common/footer.html" ></th:block>
 </html>

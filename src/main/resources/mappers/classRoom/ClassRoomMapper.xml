@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jandiFactoring.redJandi.classRoom.model.dao.ClassRoomMapper">
+	
+	<resultMap type="com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO" id="classResultMap">
+		<id column="CLASS_CODE" property="classCode"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="TAG" property="tag"/>
+    	<result column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="BOARD_TYPE" property="boardType"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="PRICE" property="price"/>
+    	<result column="VIEWS" property="views"/>
+    	<result column="MAX_COUNT" property="maxCount"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="ORG_FILE_PATH" property="orgFilePath"/>
+    	<result column="IS_DELETED" property="isDeleted"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="CATEGORY_NAME" property="categoryName"/>
+	</resultMap>
+	
+	<resultMap type="com.jandiFactoring.redJandi.classRoom.model.dto.ClassReviewDTO" id="reviewResultMap">
+    	<id column="REVIEW_CODE" property="rvCode"/>
+    	<result column="WRITE_DATE" property="writeDate"/>
+    	<result column="STAR" property="star"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="IS_DELETED" property="isDelete"/>
+    	<result column="CLASS_CODE" property="classCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="AVG_STAR" property="avgStar"/>
+    </resultMap>
+
+	<select id="selectTitlesAndClassCodesByEmail" resultMap="classResultMap">
+		SELECT 
+			   CL.CLASS_CODE
+			 , CL.TITLE 
+		  FROM CLASS_TBL CL
+		 WHERE CL.EMAIL = #{ email }
+		 ORDER BY
+		 	   CL.CREATE_DATE DESC
+	</select>
+	
+	<select id="selectClassByClassCode" resultMap="classResultMap">
+		SELECT 
+			   CL.CLASS_CODE
+			 , CL.CREATE_DATE
+			 , CL.CONTENTS
+			 , CL.TAG
+			 , CL.EMAIL
+			 , CL.TITLE
+			 , CL.PRICE
+			 , CL.VIEWS
+			 , CL.MAX_COUNT
+			 , CL.FILE_PATH
+			 , CA.CATEGORY_NAME
+			 , JAN.NICKNAME
+		  FROM CLASS_TBL CL
+		  JOIN CATEGORY_TBL CA ON(CA.CATEGORY_CODE = CL.CATEGORY_CODE)
+		  JOIN JANDI_TBL JAN ON(JAN.EMAIL = CL.EMAIL)
+		 WHERE CL.CLASS_CODE = #{ classCode }
+		   AND CL.IS_DELETED = 'N'
+	</select>
+	
+	<!-- 해당 클래스를 듣는 회원의 이메일 목록 조회 by 임예람  -->
+    <select id="selectCurrentMemberList" resultType="hashmap">
+    	SELECT PC.EMAIL
+    	  FROM PURCHASE_CLASS_TBL PC
+    	 WHERE PC.STATUS = 'Y'
+    	   AND PC.CLASS_CODE = #{ classCode }
+    </select>
+    
+    <!-- 해당 클래스를 찜한 회원 목록 가져오기 by 임예람  -->
+    <select id="selectJJimClassMemberList" resultType="hashmap">
+    	SELECT 
+    	       LC.EMAIL
+    	     , LC.CLASS_CODE
+		  FROM LIKED_CLASS_TBL LC
+    	 WHERE LC.CLASS_CODE = #{ classCode }
+    </select>
+    
+    <!-- 해당 클래스의 리뷰 목록 개수 조회하기 by 임예람  -->
+    <select id="selectReviewListByClassCodeTotalCount" resultType="_int">
+    	SELECT
+    	       COUNT(*)
+    	  FROM CLASS_REVIEW_TBL
+    	 WHERE CLASS_CODE = #{ classCode }
+    	   AND IS_DELETED = 'N'
+    </select>
+    
+    <!-- 해당 클래스의 리뷰 목록 조회하기 by 임예람  -->
+    <select id="selectReviewListByClassCode" parameterType="hashmap" resultMap="reviewResultMap">
+    	SELECT
+    	      B.RNUM
+   	     	, B.REVIEW_CODE
+			, B.WRITE_DATE
+			, B.STAR
+			, B.CONTENTS
+			, B.CLASS_CODE
+			, B.EMAIL
+			, B.NICKNAME
+			, B.AVG_STAR
+    	 FROM (SELECT ROWNUM RNUM
+    	 	        , A.REVIEW_CODE
+					, A.WRITE_DATE
+					, A.STAR
+					, A.CONTENTS
+					, A.CLASS_CODE
+					, A.EMAIL
+					, A.NICKNAME
+					, AVG(A.STAR) AVG_STAR
+    	 	     FROM (SELECT
+    	 	     			  CR.REVIEW_CODE
+							, CR.WRITE_DATE
+							, CR.STAR
+							, CR.CONTENTS
+							, CR.CLASS_CODE
+							, CR.EMAIL
+							, SS.NICKNAME
+    	 	     	     FROM CLASS_REVIEW_TBL CR
+    	 	     	     JOIN SSACK_TBL SS ON ( SS.EMAIL = CR.EMAIL )
+    	 	     	   	WHERE CR.CLASS_CODE = #{ classCode }
+    	 	     	      AND CR.IS_DELETED = 'N'
+						<if test="selectCriteria.searchCondition == null">
+							ORDER BY CR.WRITE_DATE DESC
+						</if>
+						<if test="selectCriteria.searchCondition == 'recently'">
+							ORDER BY CR.WRITE_DATE DESC
+						</if>
+						<if test="selectCriteria.searchCondition == 'starDESC'">
+							ORDER BY CR.STAR DESC
+						</if>
+						<if test="selectCriteria.searchCondition == 'starASC'">
+							ORDER BY CR.STAR ASC
+						</if>
+    	 	     ) A
+    	    	<![CDATA[ WHERE ROWNUM <= #{ selectCriteria.endRow } ]]>
+    	    	GROUP BY ROWNUM, A.REVIEW_CODE, A.WRITE_DATE, A.STAR
+    	    		   , A.CONTENTS, A.CLASS_CODE, A.EMAIL, A.NICKNAME
+		  	) B
+		  	WHERE B.RNUM >= #{ selectCriteria.startRow } 
+    </select>
+
+</mapper>

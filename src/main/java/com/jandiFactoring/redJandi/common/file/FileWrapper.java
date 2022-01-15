@@ -61,8 +61,7 @@ public class FileWrapper {
 	/**
 	 * 파일 업로드 처리
 	 * @param file 파라미터로 받은 multipartFile
-	 * @param savedName	저장할 이름
-	 * @param filePath 저장할 파일 경로
+	 * @param dir 파일을 저장할 폴더
 	 * @return 성공시 true, 실패시 false
 	 * 
 	 * @author 임예람

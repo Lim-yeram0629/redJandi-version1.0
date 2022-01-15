@@ -2,6 +2,9 @@ package com.jandiFactoring.redJandi.classRoom.model.dto;
 
 import java.sql.Date;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("ClassDTO")
 public class ClassDTO {
 	
 	private int classCode;
@@ -20,6 +23,7 @@ public class ClassDTO {
 	private String orgFilePath;
 	private String isDeleted;
 	private Double avgReview;
+	private String categoryName;
 	
 	public ClassDTO() {	}
 	
@@ -189,6 +193,14 @@ public class ClassDTO {
 				+ views + ", maxCount=" + maxCount + ", nickName=" + nickName + ", title=" + title + ", price=" + price
 				+ ", filePath=" + filePath + ", orgFilePath=" + orgFilePath + ", isDeleted=" + isDeleted
 				+ ", avgReview=" + avgReview + "]";
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 	
 	
