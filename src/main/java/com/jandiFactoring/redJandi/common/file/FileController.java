@@ -7,17 +7,28 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jandiFactoring.redJandi.common.file.dto.FileDTO;
 
-
 /**
  * @author 임예람
  *
- * 파일 업로드, 파일 다운로드를 위한 클래스
+ * 파일 업로드, 파일 다운로드를 위한 rest컨트롤러
  */
-public class FileWrapper {
+@RestController
+@RequestMapping({"*/file/*"})
+public class FileController {
+	
+	final static String rootPath = new File("").getAbsolutePath() + "/src/main/resources/static";
 	
 	/**
 	 * 원본 파일명을 랜덤으로 저장하여 파일명 중복을 방지하는 메소드
@@ -47,7 +58,6 @@ public class FileWrapper {
 	 */
 	public String checkFilePath(String dir) {
 		// 파일이 저장될 루트 경로
-		final String rootPath = new File("").getAbsolutePath() + "/src/main/resources/static";
 		String filePath = rootPath + dir;
 		
 		// 해당 경로가 있는지 체크하여 경로가 없으면 폴더를 생성한다.
@@ -67,7 +77,8 @@ public class FileWrapper {
 	 * @author 임예람
 	 * @throws Exception 
 	 */
-	public String uploadSingleFile(MultipartFile file, String dir) throws Exception {
+	@RequestMapping(value="upload", method = RequestMethod.POST)
+	public FileDTO uploadSingleFile(@RequestParam String dir, MultipartFile file) throws Exception {
 		
 		String savedName = changeFileNameByRandomUUID(file.getOriginalFilename());
 		String filePath = checkFilePath(dir);
@@ -75,8 +86,6 @@ public class FileWrapper {
 		// multipartFile을 매개변수로 받은 경로에 지정한 이름으로 저장
 		try {
 			file.transferTo(new File(filePath + "/" + savedName));
-		
-			System.out.println("파일 업로드 성공");
 			
 		} catch (IllegalStateException | IOException e) {	// 오류 발생시 해당 파일 삭제
 			e.printStackTrace();
@@ -84,22 +93,47 @@ public class FileWrapper {
 			throw new Exception();
 		}
 		
-		return savedName;
+		FileDTO fileDTO = new FileDTO();
+		fileDTO.setOrgFilePath(file.getOriginalFilename());
+		fileDTO.setFilePath(savedName);
+		
+		return fileDTO;
 	}
 	
+	/**
+	 * 파일 다운로드 
+	 * 
+	 * @author 임예람
+	 * 
+	 * @param filePath
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping("download/{filePath}")
+	public void download(@PathVariable String filePath, HttpServletResponse response) throws IOException{
+		
+		File file = new File(rootPath + filePath);
+		
+		// 파일을 UTF-8로 변환 (한국어 깨짐 방지)
+		String originFileName = filePath.substring(filePath.lastIndexOf("/"));
+		
+		originFileName = new String(originFileName.getBytes("UTF-8"), "iso-8859-1");
+		response.setHeader("Content-type", "application/octet-stream; charset=UTF-8");
+		response.setHeader("Content-Disposition", "filename=" + originFileName);
+		
+		downloadSingleFile(file, response.getOutputStream());
+	}
 	
 	/**
 	 * 파일 다운로드
+	 * @author 임예람
+	 * 
 	 * @param file	다운받을 파일
 	 * @param os 파일을 내보낼 outputStream
-	 * @return 성공시 true, 실패시 false
 	 * 
-	 * @author 임예람
 	 * @throws IOException 
 	 */
-	public boolean downloadSingleFile(File file, OutputStream os) throws IOException {
-		
-		boolean result = false;
+	public void downloadSingleFile(File file, OutputStream os) throws IOException {
 		
 		// 파일의 내용을 byte단위로 읽어오기 때문에 읽어서 저장할 byte배열 선언
 		byte[] buffer = new byte[1024];
@@ -119,20 +153,21 @@ public class FileWrapper {
 		fis.close();
 		os.close();
 		
-		return result;
 	}
 	
 	/**
 	 * @author 임예람
+	 * 
 	 * 같은 경로의 여러개 파일 동시 삭제하기
 	 * 
 	 * @param filePath
 	 * @param files
 	 */
-	public void deleteFilesInSamePath(String filePath, List<FileDTO> files) {
+	@RequestMapping(value="delete/{dir}", method=RequestMethod.DELETE)
+	public void deleteFilesInSamePath(@PathVariable String dir, List<FileDTO> files) {
 		
 		for(FileDTO file : files) {
-			new File(filePath + "/" + file.getFilePath()).delete();
+			new File(rootPath + dir + "/" + file.getFilePath()).delete();
 		}
 		
 	}

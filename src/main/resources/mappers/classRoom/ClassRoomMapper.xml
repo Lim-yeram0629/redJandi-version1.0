@@ -39,6 +39,7 @@
 			 , CL.TITLE 
 		  FROM CLASS_TBL CL
 		 WHERE CL.EMAIL = #{ email }
+		   AND CL.IS_DELETED = 'N'
 		 ORDER BY
 		 	   CL.CREATE_DATE DESC
 	</select>
@@ -61,7 +62,6 @@
 		  JOIN CATEGORY_TBL CA ON(CA.CATEGORY_CODE = CL.CATEGORY_CODE)
 		  JOIN JANDI_TBL JAN ON(JAN.EMAIL = CL.EMAIL)
 		 WHERE CL.CLASS_CODE = #{ classCode }
-		   AND CL.IS_DELETED = 'N'
 	</select>
 	
 	<!-- 해당 클래스를 듣는 회원의 이메일 목록 조회 by 임예람  -->
@@ -101,7 +101,6 @@
 			, B.CLASS_CODE
 			, B.EMAIL
 			, B.NICKNAME
-			, B.AVG_STAR
     	 FROM (SELECT ROWNUM RNUM
     	 	        , A.REVIEW_CODE
 					, A.WRITE_DATE
@@ -110,7 +109,6 @@
 					, A.CLASS_CODE
 					, A.EMAIL
 					, A.NICKNAME
-					, AVG(A.STAR) AVG_STAR
     	 	     FROM (SELECT
     	 	     			  CR.REVIEW_CODE
 							, CR.WRITE_DATE
@@ -123,24 +121,56 @@
     	 	     	     JOIN SSACK_TBL SS ON ( SS.EMAIL = CR.EMAIL )
     	 	     	   	WHERE CR.CLASS_CODE = #{ classCode }
     	 	     	      AND CR.IS_DELETED = 'N'
-						<if test="selectCriteria.searchCondition == null">
+						<if test="selectCriteria.sortValue == null || selectCriteria.sortValue == 'recently'" >
 							ORDER BY CR.WRITE_DATE DESC
 						</if>
-						<if test="selectCriteria.searchCondition == 'recently'">
-							ORDER BY CR.WRITE_DATE DESC
-						</if>
-						<if test="selectCriteria.searchCondition == 'starDESC'">
+						<if test="selectCriteria.sortValue == 'starDESC'">
 							ORDER BY CR.STAR DESC
 						</if>
-						<if test="selectCriteria.searchCondition == 'starASC'">
+						<if test="selectCriteria.sortValue == 'starASC'">
 							ORDER BY CR.STAR ASC
 						</if>
     	 	     ) A
     	    	<![CDATA[ WHERE ROWNUM <= #{ selectCriteria.endRow } ]]>
-    	    	GROUP BY ROWNUM, A.REVIEW_CODE, A.WRITE_DATE, A.STAR
-    	    		   , A.CONTENTS, A.CLASS_CODE, A.EMAIL, A.NICKNAME
 		  	) B
 		  	WHERE B.RNUM >= #{ selectCriteria.startRow } 
+    </select>
+    
+    <update id="modifyClass" parameterType="ClassDTO">
+    	UPDATE CLASS_TBL CL
+    		<set>
+		    	<if test="title != null and title != ''">CL.TITLE = #{ title },</if>
+		    	<if test="contents != null and contents != ''">CL.CONTENTS = #{ contents },</if>
+		    	<if test="filePath != null and filePath != ''">CL.FILE_PATH = #{ filePath },</if>
+		    	<if test="orgFilePath != null and orgFilePath != ''">CL.ORG_FILE_PATH = #{ orgFilePath },</if>
+		    	<if test="tag != null and tag != ''">CL.TAG = #{ tag },</if>
+		    	<if test="price != 0">CL.PRICE = #{ price },</if>
+		    	<if test="categoryCode != 0">CL.CATEGORY_CODE = #{ categoryCode },</if>
+		    	<if test="maxCount != 0">CL.MAX_COUNT = #{ maxCount },</if>
+		    	<if test="isDeleted != null and isDeleted != ''">CL.IS_DELETED = #{ isDeleted },</if>
+    		</set>
+   		 WHERE CL.CLASS_CODE = #{ classCode }
+    </update>
+    
+    <select id="selectMokchaNamesByClassCode" resultType="MokchaDTO">
+    	SELECT 
+    		   A.MOKCHA_NAME
+    		 , ROWNUM
+    	  FROM(
+    	  		SELECT MC.MOKCHA_NAME
+		    	  FROM LECTURE_MOKCHA_TBL MC
+		    	 WHERE MC.CLASS_CODE = #{ classCode }
+		    	   AND MC.IS_DELETED = 'N'
+		    	 ORDER BY MC.WRITE_DATE ASC
+    			)A
+    	 WHERE ROWNUM BETWEEN 1 AND 5
+    </select>
+    
+    <select id="selectCategoryList" resultType="hashmap">
+    	SELECT 
+    		   CA.CATEGORY_CODE
+    		 , CA.CATEGORY_NAME
+    	  FROM CATEGORY_TBL CA
     </select>
 
 </mapper>

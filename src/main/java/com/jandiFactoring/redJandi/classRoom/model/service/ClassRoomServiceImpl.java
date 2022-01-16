@@ -5,12 +5,15 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jandiFactoring.redJandi.classRoom.model.dao.ClassRoomMapper;
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO;
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassReviewDTO;
+import com.jandiFactoring.redJandi.classRoom.model.dto.MokchaDTO;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class ClassRoomServiceImpl implements ClassRoomService{
 
 	private final ClassRoomMapper classRoomMapper;
@@ -52,6 +55,18 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 	public List<ClassReviewDTO> selectReviewListByClassCode(Map<String, Object> searchMap) {
 		// TODO Auto-generated method stub
 		return classRoomMapper.selectReviewListByClassCode(searchMap);
+	}
+	
+	@Override
+	public boolean modifyClass(ClassDTO classDTO) {
+		// TODO Auto-generated method stub
+		return classRoomMapper.modifyClass(classDTO);
+	}
+
+	@Override
+	public List<MokchaDTO> selectMokchaNamesByClassCode(int classCode) {
+		// TODO Auto-generated method stub
+		return classRoomMapper.selectMokchaNamesByClassCode(classCode);
 	}
 	
 }

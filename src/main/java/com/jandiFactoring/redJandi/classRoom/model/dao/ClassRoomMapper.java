@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO;
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassReviewDTO;
+import com.jandiFactoring.redJandi.classRoom.model.dto.MokchaDTO;
 
 @Mapper
 public interface ClassRoomMapper {
@@ -22,5 +23,9 @@ public interface ClassRoomMapper {
 	int selectReviewListByClassCodeTotalCount(Map<String, Object> searchMap);
 
 	List<ClassReviewDTO> selectReviewListByClassCode(Map<String, Object> searchMap);
+	
+	boolean modifyClass(ClassDTO classDTO);
+
+	List<MokchaDTO> selectMokchaNamesByClassCode(int classCode);
 
 }

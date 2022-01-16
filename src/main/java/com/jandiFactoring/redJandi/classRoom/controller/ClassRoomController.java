@@ -51,6 +51,7 @@ public class ClassRoomController {
 		selectCriteria = Pagenation.getSelectCriteria(selectCriteria);
 		
 		model.addAttribute("reviewList", classRoomService.selectReviewListByClassCode(searchMap));
+		model.addAttribute("selectCriteria", selectCriteria);
 		
 	}
 

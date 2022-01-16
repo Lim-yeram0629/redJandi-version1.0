@@ -11,7 +11,7 @@
 .classImg{
 	width: 80%;
 	text-align: center;
-	border: 1px solid green;
+	border: 1px solid #FDD2BF;
 	border-radius: 0.5rem;
 }
 
@@ -24,18 +24,26 @@
 	border: none;
 	width: 100%;
 	resize: none;
+	border-radius: 0.5rem;
 }
 
 .areaStyle:focus {
-	outline: none;
+	outline: 1px solid #FDD2BF;
+}
+
+.inputStyle {
+	border: none;
+	width: 100%;
+	text-align: center;
 }
 
 </style>
 
 <script>
-$(function(){
 	
-	/* 태그 분리 해서 페이지에 보여주기 */
+/* 태그 분리 해서 페이지에 보여주기 */
+function tagSplit(){
+	$('.tag').html("");
 	let tags = $('#tag').val().replace(" ","");
 	let tagArr = tags.split('#');
 	for(let tag of tagArr){
@@ -45,18 +53,7 @@ $(function(){
 			+ tag + "</div>");
 		}
 	}
-	
-	// 내용 길이 체크
-	$('#tagCheck').html($('#tag').val().length);
-	$('#contentsCheck').html($('#classContents').val().length);
-	
-	$('#modifyClassFormBtn').click(function(){
-		if(confirm("강의 소개 페이지를 수정하시겠습니까?")){
-			$('#modifyClassForm').submit();
-		}
-	});
-	
-});
+}
 
 /* 
  * 글자 길이 체크 메소드 
@@ -81,16 +78,113 @@ function checkLength(inputItem, spanItem, maxLength){
 	}
 }
 
-/* 페이징 처리 스크립트 */
 $(function(){
-	if('${ selectCriteria.searchCondition }' != ''){
-		$("#searchCondition").val("${ selectCriteria.searchCondition }");
+	
+	// tag 분리
+	tagSplit();
+	
+	// 내용 길이 체크
+	$('#tagCheck').html($('#tag').val().length);
+	$('#contentsCheck').html($('#classContents').val().length);
+	
+	/* 페이징 처리 스크립트 */
+	if('[[${ selectCriteria.sortValue }]]' != ''){
+		$("#sortValue").val("[[${ selectCriteria.sortValue }]]");
+	}else{
+		$("#sortValue").val("recently");
 	}
+	
+	// 셀렉트 값이 바뀔 때 마다 정렬
+	$('#sortValue').change(function(){
+		$('#searchform').submit();
+	});
+	
+	// 목차 5개만 조회하기
+	$.ajax({
+		method: 'get',
+		url: "/mypage/class/mokcha/names/[[${currentClassDTO.classCode}]]",
+		dataType: "json",
+		success: function(mokchaList){
+			if(mokchaList.length <= 0){
+				$('#mokchaDiv').html("<h3 align='center'>아직 작성된 목차가 없습니다.</h3>");
+			}else{
+				for(let mokcha of mokchaList){
+					$('#mokchaDiv').append("<p class='contents'>"+ mokcha.mokcha_name +"</p>");
+				}
+			}
+		},
+		error: function(err){ console.log(err); }
+	});
 });
-// 셀렉트 값이 바뀔 때 마다 정렬
-$('#searchCondition').change(function(){
-	$('#searchform').submit();
-});
+
+function saveClass(){
+	
+	let filePath = null;
+	let originFilePath = null;
+	
+	if($('#fileInput').val() != ""){
+		
+		let formData = new FormData($('#modifyClassImageForm')[0]);
+		formData.append("file", $('#fileInput').val());
+		formData.append("dir", "/uploadFiles/classImage");
+		
+		let fileDTO = uploadFile(formData);
+		console.table(fileDTO);
+		
+		if(fileDTO == null){
+			return;
+		}
+		
+		filePath = fileDTO.filePath;
+		originFilePath = fileDTO.originFilePath;
+	}
+	
+	let classDTO = {
+			"classCode": "[[${currentClassDTO.classCode}]]",
+			"contents":	$('#classContents').val(),
+			"filePath":	filePath,
+			"originFilePath":	originFilePath,
+			"tag":	$('#tag').val()
+	};
+	
+	modifyClass(classDTO);	
+}
+
+function uploadFile(formData){
+	
+	let fileDTO = null;
+	
+	$.ajax({
+		async: false,	// ajax로 받아온 값은 ajax를 벗어나면 값이 사라지기 떄문에 전역변수에 저장하기 위해 선언
+		method: 'post',
+		url: "/jandi/file/upload",
+		processData: false,
+		contentType: false,
+		cache:false,
+		data: formData,
+		dataType: "json",
+		success: function(classFileDTO){
+			fileDTO = classFileDTO;
+		},
+		error: function(err){ 
+			console.log(err); 
+		}
+	});
+	return fileDTO;
+}
+
+function modifyClass(classDTO){
+	
+	$.ajax({
+		method: 'PATCH',
+		url: "/jandi/class/" + classDTO.classCode,
+		data: classDTO,
+		success: function(savedMessage){
+			$('#savedLabel').html(savedMessage);
+		},
+		error: function(err){ console.log(err);  }
+	});
+}
 
 </script>
 <body>
@@ -101,124 +195,83 @@ $('#searchCondition').change(function(){
 		<div class="sidebar-content">
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
-				<button type="button" class="btn btn-primary" style="float:right" id="modifyClassFormBtn">수정</button>
 				<h2>강의 소개</h2>
 				<hr>
 				<p style="float:right;">( <span id="contentsCheck"></span> / 500자 )</p>
 				<br>
 				<div id="contents">
-					<textarea class="areaStyle" id="classContents" name="contents" rows="10" wrap="hard"
-						placeholder="강의 소개를 입력해주세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);"></textarea>
+					<textarea class="areaStyle" id="classContents" name="contents" rows="15" wrap="hard"
+						placeholder="강의 소개를 입력해주세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);" th:text="${currentClassDTO.contents}"></textarea>
 				</div>
 				<br>
 				<br>
-				<h4>썸네일 <button type="button" style="margin-left:50px; border-radius:1rem;  border: 3px solid #91C788; background: none; padding:5px;"
-						data-toggle="modal" data-target="#imageModal">썸네일 변경하기</button>
-				</h4>
+				<div>
+					<h4 style="float:left; margin-top:10px;">썸네일</h4> 
+					<form id="modifyClassImageForm" enctype="multipart/form-data">
+						<label style="border-radius:1rem;  border: 3px solid #FDD2BF; background: none; padding:5px; padding-left:10px; float:center; margin-left:50px;">
+							썸네일 변경 <input type="file" id="fileInput" name="file" style="border: none; float:right; margin-left:10px;" accept="image/*">
+						</label>
+					</form>
+				</div>
+				<br>
 				<div align="center">
-					<img class="classImg" src="/uploadFiles/classImage/${ classDTO.filePath }">
+					<img id="classThumbnamil" class="classImg" th:src="@{/uploadFiles/classImage/}+${currentClassDTO.filePath}">
 				</div>
 				<br>
 				<br>
-				<div class="tag">
-				</div>
-				<br>
-				<p class="tagName">태그 수정   ( <span id="tagCheck"></span> / 150자 ) </p>
+				<h3>태그</h3>
+				<div class="tag"></div>
+				<p class="tagName" style="float:right;">( <span id="tagCheck"></span> / 150자 ) </p>
 				<textarea class="areaStyle" name="tag" id="tag" rows="2" wrap="hard" 
-					placeholder="태그를 입력해주세요." onkeyup="checkLength(this, $('#tagCheck'), 150);">${ classDTO.tag }</textarea>
-				<hr>
+					placeholder="태그를 입력해주세요." onkeyup="checkLength(this, $('#tagCheck'), 150); tagSplit();" th:text="${currentClassDTO.tag}"></textarea>
+				<br>
+				<button type="button" class="btn btn-primary btnStyle" style="float:right" onclick="saveClass();">저장하기</button>
+				<label id="savedLabel" style="float:right; margin: 10px;"></label>
+				<hr style="margin-top:50px;">
+				
 				<h2>강의 목차</h2>
-				<!-- <c:forEach var="mokcha" items="${ mokchaList }">
-					<p class="contents">
-						${ mokcha.mokchaName }
-					</p>
-				</c:forEach> -->
+				<div id="mokchaDiv"></div>
+				<br>
+				<div id="mokchaDiv"></div>
 				<a href="/jandi/class/classLecture">더 보기</a>
 				<hr>
 				<br>
-				<h3 align="center">아직 작성된 후기가 없습니다.</h3>
-				<div class="after">
-					<h2>후기 ( ${ classStar } / 5 )</h2>
-					<p>총 ${ reviewCount }개 </p>
-					 <form id="searchform" action="/jandi/class/classRoom" method="get" >
-					 	<input type="hidden" name="classCode" value="">
-						<select class="ui dropdown" id="searchCondition" name="searchCondition" style="margin-left:0px; float:right;">
-			  				<option value="recently" >최신순</option>
-			        		<option value="starDESC">별점 높은순</option>
-			        		<option value="starASC">별점 낮은순</option>
-		        		</select>
-					</form>
-				</div>
-				
-				<!-- <c:forEach var="review" items="${ reviewList }">
-					<div class="ui card" id="aftercard" style="margin: 5%; margin-top:0px; width: 90%;">
-						<div class="content">
-							<div class="left aligned header afterheader">
-								<c:if test="${ review.star != '0'}">
-								<c:forEach begin="1" end="${ review.star }">
-							   		<span style="color:#ffcc00;"><i class="star icon"></i></span>
-								</c:forEach>  
-							    </c:if>
-								<span>( ${ review.star } / 5)</span>
-							</div>
-							<div class="left aligned description">
-								<p>${ review.contents }</p>
-							</div>
-						</div>
-						<div class="extra content" id="name-date-content">
-							<div class="right aligned author">
-								${ review.nickName } ${ review.writeDate }
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-			
-				<jsp:include page="../../common/Paging.jsp" />
-				
-				</c:if> -->
-		</div>
-	</div>
-	
-	<!-- Modal -->
-		<div class="modal fade" id="imageModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">썸네일 변경하기</h4>
-					</div>
-					<div class="modal-body" align="center">
-						<form action="/jandi/class/uploadClassFile" 
-							method="post" enctype="multipart/form-data" id="uploadForm">
-							<input type="hidden" value="${ classDTO.classCode }" name="classCode">
-							<br>
-							<b>파일 업로드</b> 
-							<br> 
-							<input type="file" id="fileInput" name="file" style="border: none;" accept="image/*">
-							<br>
+				<th:block th:if="${#lists.size(reviewList) <= 0}">
+					<h3 align="center">아직 작성된 후기가 없습니다.</h3>
+				</th:block>
+				<th:block th:unless="${#lists.size(reviewList) <= 0}">
+					<div class="after">
+						<h2>후기</h2>
+						<p th:text="|총 ${selectCriteria.totalCount}개|"></p>
+						 <form id="searchform" action="/jandi/class/classRoom" method="get" >
+						 	<input type="hidden" name="classCode" th:value="${currentClassDTO.classCode}">
+							<select class="ui dropdown" id="sortValue" name="sortValue" style="margin-left:0px; float:right;">
+				  				<option value="recently">최신순</option>
+				        		<option value="starDESC">별점 높은순</option>
+				        		<option value="starASC">별점 낮은순</option>
+			        		</select>
 						</form>
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default btnBD"
-							data-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-primary" id="modifyBtn">변경하기</button>
-					</div>
-				</div>
-			</div>
+					<th:block th:each="review : ${reviewList}">
+						<div class="ui card" id="aftercard" style="margin: 5%; margin-top:0px; width: 90%;">
+							<div class="content">
+								<div class="left aligned header afterheader">
+								   		<span style="color:#ffcc00;"><i class="star icon"></i></span>
+									<span th:text="|( ${ review.star } / 5)|"></span>
+								</div>
+								<div class="left aligned description">
+									<p th:text="${ review.contents }"></p>
+								</div>
+							</div>
+							<div class="extra content" id="name-date-content">
+								<div class="right aligned author" th:text="|${ review.nickName } ${ review.writeDate } |"></div>
+							</div>
+						</div>
+					</th:block>
+					<th:block th:replace="common/paging.html" ></th:block>
+				</th:block>
 		</div>
-		<script>
-			$('#modifyBtn').click(function() {
-				if ($('#fileInput').val() != "") {
-					$('#uploadForm').submit();
-				}else{
-					alert("변경할 썸네일을 선택해 주세요.");
-				}
-			});
-		</script>
+	</div>
 </body>
 <th:block th:replace="common/footer.html" ></th:block>
 </html>
