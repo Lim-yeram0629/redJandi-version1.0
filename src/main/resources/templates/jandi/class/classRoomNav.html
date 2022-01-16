@@ -47,11 +47,15 @@ table th{
 
 </style>
 <script>
+
+// 클래스 삭제 메소드
 function deleteClass(){
 	
+	// 해당 클래스르 듣는 사람이 있다면 클래스 삭제 불가
 	if("[[${currentMemberCount}]]" != "0"){
 		alert("현재 듣는 인원이 있어서 삭제할 수 없습니다.");
 	}else{
+		
 		let classDTO = {
 				"classCode" : "[[${currentClassDTO.classCode}]]",
 				"isDeleted" : "Y"

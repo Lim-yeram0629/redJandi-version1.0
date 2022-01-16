@@ -117,8 +117,10 @@ $(function(){
 	});
 });
 
+//클래스 저장 메소드
 function saveClass(){
 	
+	//파일 값 초기화
 	let filePath = null;
 	let originFilePath = null;
 	
@@ -128,17 +130,21 @@ function saveClass(){
 		formData.append("file", $('#fileInput').val());
 		formData.append("dir", "/uploadFiles/classImage");
 		
+		// 폼데이터와 함께 파일업로드 메소드 호출
 		let fileDTO = uploadFile(formData);
 		console.table(fileDTO);
 		
+		//파일 업로드 실패시 메소드 종료
 		if(fileDTO == null){
 			return;
 		}
 		
+		// 업로드한 리턴값 변수에 저장
 		filePath = fileDTO.filePath;
 		originFilePath = fileDTO.originFilePath;
 	}
 	
+	// 클래스 부분 업데이트(patch) 메소드 호출하기 위한 dto객체
 	let classDTO = {
 			"classCode": "[[${currentClassDTO.classCode}]]",
 			"contents":	$('#classContents').val(),
@@ -147,9 +153,11 @@ function saveClass(){
 			"tag":	$('#tag').val()
 	};
 	
+	// 클래스 변경 메소드 호출
 	modifyClass(classDTO);	
 }
 
+// 파일 업로드 메소드
 function uploadFile(formData){
 	
 	let fileDTO = null;
@@ -173,6 +181,7 @@ function uploadFile(formData){
 	return fileDTO;
 }
 
+// 클래스 변경 메소드
 function modifyClass(classDTO){
 	
 	$.ajax({
