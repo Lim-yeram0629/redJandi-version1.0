@@ -122,7 +122,6 @@
 	       <!-- 보여지는 영역 --> 
 	       <div class="swiper-wrapper"> 
 		       <!-- <div class="swiper-slide">내용</div> 를 추가하면된다 -->
-		       <th:block th:each="num : ${#numbers.sequence(1,7)}">
 		       <div class="swiper-slide photo-jandi" th:each="popJandi : ${ popularJandi }">
 		       		<div class="title-image carousel-img-jandi">
 		       			<img class="ui Mini circular image" th:src="@{uploadFiles/profile/} + ${popJandi.profile_path}"/>
@@ -130,7 +129,6 @@
 		       		<div><h4 class="jandiNickname" th:text="${ popJandi.nickName }"></h4></div>
 <!-- 		       		<div><h5 class="jandiIntro" th:text="${ popJandi.intro }"></h5></div> -->
 		       </div> 
-		       </th:block>
  
 		   </div> 
 		   <!-- 페이징 버튼 처리 상황에 따라 추가 삭제가능--> 

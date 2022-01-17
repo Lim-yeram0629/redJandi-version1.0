@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jandiFactoring.redJandi.main.model.dao.MainMapper">
+	
+	<resultMap type="com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO" id="classResultMap">
+		<id column="CLASS_CODE" property="classCode"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="TAG" property="tag"/>
+    	<result column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="BOARD_TYPE" property="boardType"/>
+    	<result column="VIEWS" property="views"/>
+    	<result column="MAX_COUNT" property="maxCount"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="PRICE" property="price"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="ORG_FILE_PATH" property="orgFilePath"/>
+    	<result column="NICKNAME" property="nickName" />
+    	<result column="AVGSTAR" property="avgReview"/>
+	</resultMap>
+	
+	<resultMap type="com.jandiFactoring.redJandi.jandi.model.dto.JandiDTO" id="jandiResultMap">
+    	<id column="EMAIL" property="email"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="CAREER" property="career"/>
+    	<result column="INTRO" property="intro"/>
+    	<result column="PROFILE_PATH" property="profile_path"/>
+    	<result column="ENROLL_DATE" property="enroll_date"/>
+    	<result column="ACCOUNT" property="account"/>
+    	<result column="BANK" property="bank"/>
+    	<result column="ACC_NAME" property="acc_name"/>
+    </resultMap>
+    
+    <resultMap type="ClassPurchaseDTO" id="classPurchaseResultMap">
+    	<id column="EMAIL" property="email"/>
+    	<result column="CLASS_CODE" property="classCode"/>
+    	<result column="STATUS" property="status"/>
+    	<result column="PAY_CODE" property="payCode"/>
+    	<result column="CLASS_PURC_CODE" property="classPurcCode"/>
+    	<result column="END_DATE" property="endDate"/>
+    </resultMap>
+    
+	
+<!-- 	<select id="selectAllClassList" resultMap="classResultMap">
+		SELECT 
+				C.CLASS_CODE
+			  , C.EMAIL
+		  FROM CLASS_TBL C
+	</select> -->
+	
+	<select id="selectPopularClass" resultMap="classResultMap">
+		SELECT
+			   ROWNUM
+		     , V.CLASS_CODE
+		     , V.FILE_PATH
+		     , V.TITLE
+		     , V.PRICE
+		     , V.VIEWS
+		     , V.NICKNAME
+		     , V.AVGSTAR
+		FROM (SELECT 
+				      C.CLASS_CODE
+				    , C.FILE_PATH
+				    , C.TITLE
+				    , C.PRICE
+				    , C.VIEWS
+				    , J.NICKNAME
+				    , AVG(CR.STAR) AVGSTAR
+		   	    FROM CLASS_TBL C 
+		   	    JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+		        LEFT JOIN (SELECT STAR
+		                          , CLASS_CODE
+	               			FROM CLASS_REVIEW_TBL) CR ON (CR.CLASS_CODE = C.CLASS_CODE)
+		   	     WHERE C.IS_DELETED = 'N'
+		         GROUP BY C.CLASS_CODE,C.FILE_PATH, C.TITLE, C.PRICE, C.VIEWS, J.NICKNAME  
+			)V
+		WHERE ROWNUM BETWEEN 1 AND 8                      
+			
+	</select>
+	
+	<select id="selectPupularJandi" resultMap="jandiResultMap">
+		SELECT
+		       ROWNUM
+		     , V.EMAIL
+		     , V.NICKNAME
+		     , V.INTRO
+		     , V.PROFILE_PATH
+		  FROM ( SELECT 
+		                J.EMAIL
+		              , J.NICKNAME
+		              , J.INTRO
+		              , J.PROFILE_PATH
+		           FROM JANDI_TBL J
+		      )V
+		 WHERE ROWNUM BETWEEN 1 AND 12
+	</select>
+	
+	<select id="selectViewClass" resultMap="classResultMap">
+	    SELECT
+	           ROWNUM
+	         , V.CLASS_CODE
+	         , V.FILE_PATH
+	         , V.TITLE
+	         , V.PRICE
+	         , V.NICKNAME
+	         , V.AVGSTAR
+	      FROM ( SELECT 
+       		            C.CLASS_CODE
+     		          , C.FILE_PATH
+      		          , C.TITLE
+      		          , C.PRICE
+      		          , C.VIEWS
+      		          , J.NICKNAME
+       		          , AVG(CR.STAR) AVGSTAR
+   	               FROM CLASS_TBL C 
+   	               JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+                   LEFT JOIN (SELECT STAR
+                                  , CLASS_CODE
+                   FROM CLASS_REVIEW_TBL) CR ON (CR.CLASS_CODE = C.CLASS_CODE)
+   	              WHERE C.IS_DELETED = 'N'  
+                  GROUP BY C.CLASS_CODE,C.FILE_PATH, C.TITLE, C.PRICE, C.VIEWS, J.NICKNAME
+   	              ORDER BY C.VIEWS DESC
+	      ) V
+	     WHERE ROWNUM BETWEEN 1 AND 8
+	</select>
+	
+	<select id="selectNewestClass" resultMap="classResultMap">
+		SELECT
+		       ROWNUM
+	         , V.CLASS_CODE
+	         , V.FILE_PATH
+	         , V.TITLE
+	         , V.PRICE
+	         , V.NICKNAME
+	         , V.AVGSTAR
+		  FROM(SELECT
+		              C.CLASS_CODE
+                    , C.FILE_PATH
+                    , C.TITLE
+                    , C.PRICE
+                    , C.VIEWS
+                    , C.CREATE_DATE
+                    , J.NICKNAME
+                    , AVG(CR.STAR) AVGSTAR
+   	             FROM CLASS_TBL C 
+   	             JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+                 LEFT JOIN (SELECT STAR
+                                 , CLASS_CODE
+                 FROM CLASS_REVIEW_TBL) CR ON (CR.CLASS_CODE = C.CLASS_CODE)
+   	            WHERE C.IS_DELETED = 'N'  
+                GROUP BY C.CLASS_CODE, C.FILE_PATH, C.TITLE, C.PRICE, C.VIEWS, J.NICKNAME, C.CREATE_DATE
+   	            ORDER BY C.CREATE_DATE DESC
+		       ) V
+		  WHERE ROWNUM BETWEEN 1 AND 8  
+               
+	</select>
+	
+	<select id="selectDeadlineClass" resultMap="classResultMap">
+		SELECT
+		       ROWNUM
+		     , V.MAX_COUNT
+		     , V.FILE_PATH
+		     , V.TITLE
+		     , V.PRICE
+		     , V.VIEWS
+		     , V.NICKNAME
+		     , V.COUNT
+		     , V.CLASS_CODE
+		  FROM (SELECT
+		               C.MAX_COUNT
+                     , C.FILE_PATH
+                     , C.TITLE
+                     , C.PRICE
+                     , C.VIEWS
+                     , J.NICKNAME
+                     , COUNT(P.CLASS_CODE) COUNT
+                     , P.CLASS_CODE 
+		          FROM CLASS_TBL C
+		          JOIN PURCHASE_CLASS_TBL P ON (P.CLASS_CODE = C.CLASS_CODE)
+		          JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+		         WHERE P.STATUS = 'Y'
+		         GROUP BY P.CLASS_CODE, C.MAX_COUNT, C.FILE_PATH, C.TITLE, C.PRICE, J.NICKNAME, C.VIEWS
+		         ORDER BY C.MAX_COUNT - COUNT(P.CLASS_CODE)
+		       ) V
+		 WHERE ROWNUM BETWEEN 1 AND 8    
+	</select>
+	
+	<select id="selectHighScoreClass" resultMap="classResultMap">
+		SELECT
+		       ROWNUM
+		     , V.CLASS_CODE
+		     , V.FILE_PATH
+		     , V.TITLE
+		     , V.PRICE
+		     , V.VIEWS
+		     , V.CREATE_DATE
+		     , V.NICKNAME
+		     , V.AVGSTAR
+		  FROM(SELECT
+		              C.CLASS_CODE
+                    , C.FILE_PATH
+                    , C.TITLE
+                    , C.PRICE
+                    , C.VIEWS
+                    , C.CREATE_DATE
+                    , J.NICKNAME
+                    , AVG(CR.STAR) AVGSTAR
+   	             FROM CLASS_TBL C 
+   	             JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+                 LEFT JOIN (SELECT STAR
+                                 , CLASS_CODE
+                 FROM CLASS_REVIEW_TBL) CR ON (CR.CLASS_CODE = C.CLASS_CODE)
+   	            WHERE C.IS_DELETED = 'N'  
+                GROUP BY C.CLASS_CODE, C.FILE_PATH, C.TITLE, C.PRICE, C.VIEWS, J.NICKNAME, C.CREATE_DATE
+   	           HAVING AVG(CR.star) IS NOT NULL
+   	            ORDER BY AVG(CR.star) DESC
+		     ) V
+		WHERE ROWNUM BETWEEN 1 AND 8
+	</select>
+
+</mapper>

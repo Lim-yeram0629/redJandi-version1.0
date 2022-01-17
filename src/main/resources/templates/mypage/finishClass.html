@@ -45,14 +45,12 @@
   		</div>
  	 </form>
 <br><br><br><br><br>
- <c:if test="${ empty finishList[0].status }">
-  <div class="unlist-text">
+<!--   <div class="unlist-text">
  	 수강이 완료된 클래스가 없거나, 조회된 결과가 없습니다.
   <br><br><br>
   <a href="findclass/findAllClassMain" class="finish-go"><u>클래스 신청하러가기</u></a>
-</div>
-</c:if>
-<c:if test="${ !empty finishList[0].status }">
+</div> -->
+<th:block th:if test="${ !empty finishList[0].status }">
 <table class="ui single line table finishtable">
   <thead>
     <tr>
@@ -64,29 +62,27 @@
     </tr>
   </thead>
   <tbody>
-    <c:forEach var="finishClass" items="${ requestScope.finishList }">
-    <tr>
+    <tr th:each="finishClass : ${ finishList }">
       <td>${ finishClass.categoryDTO.categoryName }</td>
       <td>${ finishClass.classDTO.title }</td>
       <td>${ finishClass.classDTO.nickName }</td>
       <td>${ finishClass.endDate }</td>
-      <c:if test="${ finishClass.reviewDTO.rvCode eq 0 || finishClass.reviewDTO.isDelete eq 'Y' || finishClass.reviewDTO.isDelete eq null }">
+      <th:block th:if test="${ finishClass.reviewDTO.rvCode eq 0 || finishClass.reviewDTO.isDelete eq 'Y' || finishClass.reviewDTO.isDelete eq null }">
       <td><button class="ui button reviewbtn" id="reviewbtn">수강후기작성</button></td>
-      </c:if>
-      <c:if test="${ finishClass.reviewDTO.rvCode ne 0 && finishClass.reviewDTO.isDelete eq 'N' }">
+      </th:block>
+      <th:block th:if test="${ finishClass.reviewDTO.rvCode ne 0 && finishClass.reviewDTO.isDelete eq 'N' }">
       <td style="color: #52734D; font-weight: 700;">후기작성완료</td>
-      </c:if>
+      </th:block>
     </tr>
-	    <input type="hidden" name="payDate" id="payDate" value="${ finishClass.paymentDTO.payDate }">
-	    <input type="hidden" value="${ finishClass.classCode }">
-	    <input type="hidden" value="${ finishClass.classPurcCode }">
-	    <input type="hidden" value="${ finishClass.reviewDTO.isDelete }">
-    </c:forEach>
+	    <input type="hidden" name="payDate" id="payDate" th:value="${ finishClass.paymentDTO.payDate }">
+	    <input type="hidden" th:value="${ finishClass.classCode }">
+	    <input type="hidden" th:value="${ finishClass.classPurcCode }">
+	    <input type="hidden" th:value="${ finishClass.reviewDTO.isDelete }">
   </tbody>
 </table>
 <br>
    <th:block th:raplace="common/Paging.html" ></th:block>
-</c:if>
+  </th:block>
       </div>
     </div>
     <!-- 수강후기 모달창 -->
@@ -108,8 +104,8 @@
               	<td><input type="text" class="t-categoryName" name="t-categoryName" style="border:none; text-align:center;"></td>
                 <td><input type="text" class="t-nickName" name="t-nickName" style="border:none; text-align:center;"></td>
                 <td><input type="text" class="t-date" name="t-date" style="border:none; text-align:center;"></td>
-                <input type="hidden" name="classCode" id="classCode" value="">
-                <input type="hidden" name="classPurcCode" id="classPurcCode" value="">
+                <input type="hidden" name="classCode" id="classCode">
+                <input type="hidden" name="classPurcCode" id="classPurcCode">
               </tr>
             </tbody>
           </table>
