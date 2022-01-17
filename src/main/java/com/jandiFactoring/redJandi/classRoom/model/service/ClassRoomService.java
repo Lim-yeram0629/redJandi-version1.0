@@ -6,6 +6,7 @@ import java.util.Map;
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO;
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassReviewDTO;
 import com.jandiFactoring.redJandi.classRoom.model.dto.MokchaDTO;
+import com.jandiFactoring.redJandi.common.file.dto.FileDTO;
 
 public interface ClassRoomService {
 
@@ -28,5 +29,7 @@ public interface ClassRoomService {
 	int selectMokchaListByClassCodeTotalCount(Map<String, Object> searchMap);
 
 	List<MokchaDTO> selectMokchaListByClassCode(Map<String, Object> searchMap);
+
+	List<FileDTO> selectMokchaFileListbyMokchaCode(int mokchaCode);
 
 }

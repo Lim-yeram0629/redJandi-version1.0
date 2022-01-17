@@ -94,8 +94,8 @@ public class FileController {
 		}
 		
 		FileDTO fileDTO = new FileDTO();
-		fileDTO.setOrgFilePath(file.getOriginalFilename());
-		fileDTO.setFilePath(savedName);
+		fileDTO.setOrg_file_path(file.getOriginalFilename());
+		fileDTO.setFile_path(savedName);
 		
 		return fileDTO;
 	}
@@ -167,7 +167,7 @@ public class FileController {
 	public void deleteFilesInSamePath(@PathVariable String dir, List<FileDTO> files) {
 		
 		for(FileDTO file : files) {
-			new File(rootPath + dir + "/" + file.getFilePath()).delete();
+			new File(rootPath + dir + "/" + file.getFile_path()).delete();
 		}
 		
 	}

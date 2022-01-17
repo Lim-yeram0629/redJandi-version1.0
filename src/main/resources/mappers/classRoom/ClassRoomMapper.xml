@@ -219,5 +219,18 @@
 			  	)B
 		  WHERE B.RNUM >= #{ selectCriteria.startRow } 
     </select>
+    
+    <select id="selectMokchaFileListbyMokchaCode" resultType="FileDTO">
+    	SELECT
+    		   LF.FILE_CODE
+			 , LF.FILE_PATH
+			 , LF.ORG_FILE_PATH
+			 , LF.UPLOAD_DATE
+			 , LF.EMAIL
+			 , LF.MOKCHA_CODE
+		  FROM LECTURE_FILE_TBL LF
+		 WHERE LF.MOKCHA_CODE = #{ mokcha_code }
+		   AND LF.IS_DELETED = 'N'
+    </select>
 
 </mapper>

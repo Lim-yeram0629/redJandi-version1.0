@@ -11,6 +11,7 @@ import com.jandiFactoring.redJandi.classRoom.model.dao.ClassRoomMapper;
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO;
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassReviewDTO;
 import com.jandiFactoring.redJandi.classRoom.model.dto.MokchaDTO;
+import com.jandiFactoring.redJandi.common.file.dto.FileDTO;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -79,6 +80,12 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 	public List<MokchaDTO> selectMokchaListByClassCode(Map<String, Object> searchMap) {
 		// TODO Auto-generated method stub
 		return classRoomMapper.selectMokchaListByClassCode(searchMap);
+	}
+
+	@Override
+	public List<FileDTO> selectMokchaFileListbyMokchaCode(int mokchaCode) {
+		// TODO Auto-generated method stub
+		return classRoomMapper.selectMokchaFileListbyMokchaCode(mokchaCode);
 	}
 	
 }

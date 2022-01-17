@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO;
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassReviewDTO;
 import com.jandiFactoring.redJandi.classRoom.model.dto.MokchaDTO;
+import com.jandiFactoring.redJandi.common.file.dto.FileDTO;
 
 @Mapper
 public interface ClassRoomMapper {
@@ -31,5 +32,7 @@ public interface ClassRoomMapper {
 	int selectMokchaListByClassCodeTotalCount(Map<String, Object> searchMap);
 
 	List<MokchaDTO> selectMokchaListByClassCode(Map<String, Object> searchMap);
+
+	List<FileDTO> selectMokchaFileListbyMokchaCode(int mokchaCode);
 
 }

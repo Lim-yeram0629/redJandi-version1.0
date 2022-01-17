@@ -71,6 +71,7 @@ public class ClassRoomController {
 		selectCriteria = Pagenation.getSelectCriteria(selectCriteria);
 		
 		model.addAttribute("mokchaList", classRoomService.selectMokchaListByClassCode(searchMap));
+		model.addAttribute("selectCriteria", selectCriteria);
 		
 	}
 

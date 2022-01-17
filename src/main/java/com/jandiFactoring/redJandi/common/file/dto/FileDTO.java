@@ -1,50 +1,61 @@
 package com.jandiFactoring.redJandi.common.file.dto;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import org.apache.ibatis.type.Alias;
 
 @Alias("FileDTO")
 public class FileDTO implements Serializable{
 
-	private int fileCode;
-	private String filePath;
-	private String orgFilePath;
+	private int file_code;
+	private String file_path;
+	private String org_file_path;
 	private String email;
-	private java.sql.Date writeDate;
-	private int mokchaCode;
-	private int postCode;
-	private String isDeleted;
+	private java.sql.Date upload_date;
+	private int mokcha_code;
+	private int post_code;
+	private String is_deleted;
 	private String nickName;
 	
 	public FileDTO() {	}
 
-	public FileDTO(int fileCode, String filePath, String email, String orgFilePath, java.sql.Date writeDate, int mokchaCode,
-			int postCode, String isDeleted, String nickName) {
+	public FileDTO(int file_code, String file_path, String org_file_path, String email, Date upload_date,
+			int mokcha_code, int post_code, String is_deleted, String nickName) {
 		super();
-		this.fileCode = fileCode;
-		this.filePath = filePath;
+		this.file_code = file_code;
+		this.file_path = file_path;
+		this.org_file_path = org_file_path;
 		this.email = email;
-		this.orgFilePath = orgFilePath;
-		this.writeDate = writeDate;
-		this.mokchaCode = mokchaCode;
-		this.postCode = postCode;
-		this.isDeleted = isDeleted;
-		this.setNickName(nickName);
-	}
-	
-	public FileDTO(String email, String filePath, String orgFilePath) {
-		this.email = email;
-		this.filePath = filePath;
-		this.orgFilePath = orgFilePath;
+		this.upload_date = upload_date;
+		this.mokcha_code = mokcha_code;
+		this.post_code = post_code;
+		this.is_deleted = is_deleted;
+		this.nickName = nickName;
 	}
 
-	public String getFilePath() {
-		return filePath;
+	public int getFile_code() {
+		return file_code;
 	}
 
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
+	public void setFile_code(int file_code) {
+		this.file_code = file_code;
+	}
+
+	public String getFile_path() {
+		return file_path;
+	}
+
+	public void setFile_path(String file_path) {
+		this.file_path = file_path;
+	}
+
+	public String getOrg_file_path() {
+		return org_file_path;
+	}
+
+	public void setOrg_file_path(String org_file_path) {
+		this.org_file_path = org_file_path;
 	}
 
 	public String getEmail() {
@@ -55,52 +66,36 @@ public class FileDTO implements Serializable{
 		this.email = email;
 	}
 
-	public String getOrgFilePath() {
-		return orgFilePath;
+	public java.sql.Date getUpload_date() {
+		return upload_date;
 	}
 
-	public void setOrgFilePath(String orgFilePath) {
-		this.orgFilePath = orgFilePath;
+	public void setUpload_date(java.sql.Date upload_date) {
+		this.upload_date = upload_date;
 	}
 
-	public java.sql.Date getWriteDate() {
-		return writeDate;
+	public int getMokcha_code() {
+		return mokcha_code;
 	}
 
-	public void setWriteDate(java.sql.Date writeDate) {
-		this.writeDate = writeDate;
+	public void setMokcha_code(int mokcha_code) {
+		this.mokcha_code = mokcha_code;
 	}
 
-	public int getFileCode() {
-		return fileCode;
+	public int getPost_code() {
+		return post_code;
 	}
 
-	public void setFileCode(int fileCode) {
-		this.fileCode = fileCode;
+	public void setPost_code(int post_code) {
+		this.post_code = post_code;
 	}
 
-	public int getPostCode() {
-		return postCode;
+	public String getIs_deleted() {
+		return is_deleted;
 	}
 
-	public void setPostCode(int postCode) {
-		this.postCode = postCode;
-	}
-
-	public int getMokchaCode() {
-		return mokchaCode;
-	}
-
-	public void setMokchaCode(int mokchaCode) {
-		this.mokchaCode = mokchaCode;
-	}
-
-	public String getIsDeleted() {
-		return isDeleted;
-	}
-
-	public void setIsDeleted(String isDeleted) {
-		this.isDeleted = isDeleted;
+	public void setIs_deleted(String is_deleted) {
+		this.is_deleted = is_deleted;
 	}
 
 	public String getNickName() {
@@ -113,8 +108,10 @@ public class FileDTO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "ClassFileDTO [filePath=" + filePath + ", email=" + email + ", orgFilePath=" + orgFilePath
-				+ ", writeDate=" + writeDate + ", fileCode=" + fileCode + ", postCode=" + postCode + ", mokchaCode="
-				+ mokchaCode + ", isDeleted=" + isDeleted + ", nickName=" + nickName + "]";
+		return "FileDTO [file_code=" + file_code + ", file_path=" + file_path + ", org_file_path=" + org_file_path
+				+ ", email=" + email + ", upload_date=" + upload_date + ", mokcha_code=" + mokcha_code + ", post_code="
+				+ post_code + ", is_deleted=" + is_deleted + ", nickName=" + nickName + "]";
 	}
+	
+
 }

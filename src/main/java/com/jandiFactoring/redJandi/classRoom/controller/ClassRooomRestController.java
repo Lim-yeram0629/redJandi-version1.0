@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO;
 import com.jandiFactoring.redJandi.classRoom.model.dto.MokchaDTO;
 import com.jandiFactoring.redJandi.classRoom.model.service.ClassRoomService;
+import com.jandiFactoring.redJandi.common.file.dto.FileDTO;
 
 @RestController
 @RequestMapping({"/jandi/class/*", "/mypage/class/*", "/findclass/class/*"})
@@ -86,6 +87,14 @@ public class ClassRooomRestController {
 		
 		List<MokchaDTO> classMokchaList = classRoomService.selectMokchaNamesByClassCode(classCode);
 		return classMokchaList;
+	}
+	
+	@RequestMapping(value="mokchaFiles/{mokchaCode}", method = RequestMethod.GET)
+	public List<FileDTO> getMokchaFileListByMokchaCode(@PathVariable int mokchaCode){
+		
+		List<FileDTO> mokchaFileList = classRoomService.selectMokchaFileListbyMokchaCode(mokchaCode);
+		
+		return mokchaFileList;
 	}
 	
 }
