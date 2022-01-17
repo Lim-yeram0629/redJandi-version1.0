@@ -101,7 +101,8 @@
 			, B.CLASS_CODE
 			, B.EMAIL
 			, B.NICKNAME
-    	 FROM (SELECT ROWNUM RNUM
+    	 FROM (SELECT
+    	 			  ROWNUM RNUM
     	 	        , A.REVIEW_CODE
 					, A.WRITE_DATE
 					, A.STAR
@@ -176,7 +177,8 @@
     <select id="selectMokchaListByClassCodeTotalCount" resultType="_int">
     	SELECT COUNT(LM.MOKCHA_CODE)
     	  FROM LECTURE_MOKCHA_TBL LM
-    	 WHERE LM.IS_DELETED = 'N'
+    	  WHERE LM.CLASS_CODE = #{ classCode }
+			AND LM.IS_DELETED = 'N'
     </select>
     
     <select id="selectMokchaListByClassCode" resultType="MokchaDTO">
@@ -187,14 +189,14 @@
 			  , B.WRITE_DATE
 			  , B.CONTENTS
 			  , B.CLASS_CODE
-		     FROM(SELECT 
-			     		  A.ROWNUM RNUM
-		    		    , A.MOKCHA_CODE
-		    		    , A.MOKCHA_NAME
-					    , A.WRITE_DATE
-					    , A.CONTENTS
-					    , A.CLASS_CODE
-				  )FROM(SELECT 
+	      FROM( SELECT 
+		     		  ROWNUM RNUM
+	    		    , A.MOKCHA_CODE
+	    		    , A.MOKCHA_NAME
+				    , A.WRITE_DATE
+				    , A.CONTENTS
+				    , A.CLASS_CODE
+			    FROM( SELECT 
 				    		   LM.MOKCHA_CODE
 				    		 , LM.MOKCHA_NAME
 							 , LM.WRITE_DATE
@@ -212,7 +214,7 @@
 						 <if test="selectCriteria.sortValue == 'nameDESC'">
 							ORDER BY LM.MOKCHA_NAME DESC
 						 </if>
-					 )A
+					)A
 	    	    <![CDATA[ WHERE ROWNUM <= #{ selectCriteria.endRow } ]]>
 			  	)B
 		  WHERE B.RNUM >= #{ selectCriteria.startRow } 
