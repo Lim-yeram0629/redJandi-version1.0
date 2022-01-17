@@ -25,4 +25,8 @@ public interface ClassRoomService {
 
 	List<MokchaDTO> selectMokchaNamesByClassCode(int classCode);
 
+	int selectMokchaListByClassCodeTotalCount(Map<String, Object> searchMap);
+
+	List<MokchaDTO> selectMokchaListByClassCode(Map<String, Object> searchMap);
+
 }

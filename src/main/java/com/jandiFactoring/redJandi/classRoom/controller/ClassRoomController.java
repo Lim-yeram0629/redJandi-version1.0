@@ -57,5 +57,21 @@ public class ClassRoomController {
 		model.addAttribute("selectCriteria", selectCriteria);
 		
 	}
+	
+	@GetMapping("classLecture")
+	public void classLecture(SelectCriteria selectCriteria, Model model) {
+		
+		ClassDTO classDTO = (ClassDTO) model.getAttribute("currentClassDTO");
+		
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("classCode", classDTO.getClassCode());
+		searchMap.put("selectCriteria", selectCriteria);
+		
+		selectCriteria.setPagenationConfig(7, 5, classRoomService.selectMokchaListByClassCodeTotalCount(searchMap));
+		selectCriteria = Pagenation.getSelectCriteria(selectCriteria);
+		
+		model.addAttribute("mokchaList", classRoomService.selectMokchaListByClassCode(searchMap));
+		
+	}
 
 }

@@ -68,5 +68,17 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 		// TODO Auto-generated method stub
 		return classRoomMapper.selectMokchaNamesByClassCode(classCode);
 	}
+
+	@Override
+	public int selectMokchaListByClassCodeTotalCount(Map<String, Object> searchMap) {
+		// TODO Auto-generated method stub
+		return classRoomMapper.selectMokchaListByClassCodeTotalCount(searchMap);
+	}
+
+	@Override
+	public List<MokchaDTO> selectMokchaListByClassCode(Map<String, Object> searchMap) {
+		// TODO Auto-generated method stub
+		return classRoomMapper.selectMokchaListByClassCode(searchMap);
+	}
 	
 }
