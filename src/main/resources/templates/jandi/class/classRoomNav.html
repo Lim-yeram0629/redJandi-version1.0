@@ -89,7 +89,7 @@ function deleteClass(){
 		<!-- 탭 메뉴 상단 시작 -->
 		<table >
 			<tr class="menus">
-				<th width="25" class="menu"><a href="/jandi/class/classRoom?classCode=[[${ currentClassDTO.classCode }]]" class="room class">클래스</a></th>
+				<th width="25" class="menu"><a th:href="@{/jandi/class/classRoom(classCode=${currentClassDTO.classCode})}" class="room class">클래스</a></th>
 				<th width="25" class="menu"><a href="/jandi/class/classLecture" class="room lecture">강의 영상</a></th>
 				<th width="25" class="menu"><a href="/jandi/class/classLearningBoard" class="room learning">학습방</a></th>
 				<th width="25" class="menu"><a href="/jandi/class/jandiClassChat" class="room classChat">채팅</a></th>

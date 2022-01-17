@@ -98,7 +98,7 @@ $(function(){
 	if('[[${ selectCriteria.sortValue }]]' != ''){
 		$("#sortValue").val("[[${ selectCriteria.sortValue }]]");
 	}else{
-		$("#sortValue").val("writeDateDESC");
+		$("#sortValue").val("nameDESC");
 	}
 	
 	// 셀렉트 값이 바뀔 때 마다 정렬
@@ -163,6 +163,7 @@ $(function(){
 			url: "/jandi/class/mokchaFiles/"+mokchaCode,
 			dataType: "json",
 			success: function(fileDTOList){
+				$(mokchaDiv).children('.mokchaVideos').html("");
 				
 				if(fileDTOList.length != 0){
 					for(let fileDTO of fileDTOList){
@@ -173,7 +174,6 @@ $(function(){
 				}
 			}, error: function(err){ console.log(err); }
 		});
-		
 		
 	}
 	
@@ -191,8 +191,7 @@ $(function(){
 				<h2 style="float: left;" th:text="|${ selectCriteria.totalCount }개의 목차|"></h2>
 				<button class="btn-mokcha btn btn-primary" data-toggle="modal" data-target="#addMokchaModal">목차 추가하기</button>
 				<br><br>
-				<hr style="background-color:black; border: 0; height: 1px; ">
-				<br>
+				<hr style="background-color:black; border: 0; height: 1px; margin-bottom:0px;">
 				<th:block th:each="mokcha : ${mokchaList}">
 					<div class="mokcha">
 						<form action="/jandi/class/deleteMokcha" method="post">

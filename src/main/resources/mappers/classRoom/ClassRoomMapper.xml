@@ -205,13 +205,13 @@
 						  FROM LECTURE_MOKCHA_TBL LM
 						 WHERE LM.CLASS_CODE = #{ classCode }
 						   AND LM.IS_DELETED = 'N'
-						 <if test="selectCriteria.sortValue == null || selectCriteria.sortValue == 'writeDateDESC'" >
+						 <if test="selectCriteria.sortValue == 'writeDateDESC'" >
 							ORDER BY LM.WRITE_DATE DESC
 						 </if>
 						 <if test="selectCriteria.sortValue == 'nameASC'">
 							ORDER BY LM.MOKCHA_NAME ASC
 						 </if>
-						 <if test="selectCriteria.sortValue == 'nameDESC'">
+						 <if test="selectCriteria.sortValue == null || selectCriteria.sortValue == 'nameDESC'">
 							ORDER BY LM.MOKCHA_NAME DESC
 						 </if>
 					)A
