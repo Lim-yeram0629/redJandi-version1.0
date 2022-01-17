@@ -39,22 +39,22 @@
           <div class="introduce-detail1">
             <div>
               <label for="name"><span>이름</span></label>
-              <input type="text" class="myinfo" name="member_info" id="name" value="${ sessionScope.loginMember.name }" readonly>
+              <input type="text" class="myinfo" name="member_info" id="name" th:value="${ myInfo.name }" readonly>
           </div>
 
           <div>
               <label for="email"><span>이메일주소</span></label>
-              <input type="text" class="myinfo" name="member_info" id="email" value="${ sessionScope.loginMember.email }" readonly>
+              <input type="text" class="myinfo" name="member_info" id="email" th:value="${ sessionScope.loginMember.email }" readonly>
           </div>
 
           <div>
               <label for="nickname"><span>닉네임</span></label>
-              <input type="text" class="myinfo" name="member_info" id="nickname" value="${ sessionScope.loginMember.nickName }" readonly>
+              <input type="text" class="myinfo" name="member_info" id="nickname" th:value="${ sessionScope.loginMember.nickName }" readonly>
           </div>
 
           <div>
               <label for="phone"><span>핸드폰번호</span></label>
-              <input type="text" class="myinfo" name="member_info" id="phone" value="${ sessionScope.loginMember.phone }" readonly>
+              <input type="text" class="myinfo" name="member_info" id="phone" th:value="${ sessionScope.loginMember.phone }" readonly>
           </div>
           <br><br>
           <div>

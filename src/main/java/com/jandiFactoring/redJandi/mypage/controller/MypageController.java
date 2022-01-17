@@ -32,6 +32,9 @@ public class MypageController {
 	public String mypagemain(HttpSession session, Model model) {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		
+		System.out.println(member);
+		
 		Map<String, String> map = new HashMap<>();
 		map.put("email", member.getEmail());
 		

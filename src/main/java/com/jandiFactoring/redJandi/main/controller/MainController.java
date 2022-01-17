@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO;
 import com.jandiFactoring.redJandi.jandi.model.dto.JandiDTO;
@@ -15,6 +16,7 @@ import com.jandiFactoring.redJandi.main.model.service.MainService;
 
 @Controller
 @RequestMapping("/*")
+@SessionAttributes("loginMember")
 public class MainController {
 	
 	private MainService mainService;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
-  <head>
-	<meta charset="UTF-8">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
 	
     <title>네비바</title>
     
@@ -223,13 +223,17 @@
         </div>
 
         <div class="nav-right">
-            <div class="nav-right-login">
+            <div class="nav-right-login" th:if="${ loginMember == null }">
               <a href="/member/login"
                 ><button type="button" class="btn">로그인</button>
               </a>
                <a href="/member/userAgreement">
                	<button type="button" class="btn" style="background-color:#B61A1A; color:white;">회원가입</button>
               </a>
+            </div>
+            <div class="nav-right-login" th:if="${ loginMember != null }">
+            	<br>
+            	<h4 th:text="|${ loginMember.nickName }님|"></h4>
             </div>
           <div class="nav-right-sidebar">
             <button type="button" id="acti">
