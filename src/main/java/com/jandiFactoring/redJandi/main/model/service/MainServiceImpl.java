@@ -7,51 +7,51 @@ import org.springframework.stereotype.Service;
 
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO;
 import com.jandiFactoring.redJandi.jandi.model.dto.JandiDTO;
-import com.jandiFactoring.redJandi.main.model.dao.MainDAO;
+import com.jandiFactoring.redJandi.main.model.dao.MainMapper;
 
 @Service
 public class MainServiceImpl implements MainService{
 	
-	private MainDAO mainDAO;
+	private MainMapper mainMapper;
 	
 	@Autowired
-	public MainServiceImpl(MainDAO mainDAO) {
-		this.mainDAO = mainDAO;
+	public MainServiceImpl(MainMapper mainMapper) {
+		this.mainMapper = mainMapper;
 	}
 
 	@Override
 	public List<ClassDTO> popularClass() {
-		return mainDAO.selectPopularClass();
+		return mainMapper.selectPopularClass();
 	}
 
 	@Override
 	public List<JandiDTO> popularJandi() {
-		return mainDAO.selectPupularJandi();
+		return mainMapper.selectPupularJandi();
 	}
 
 	@Override
 	public List<ClassDTO> viewClass() {
-		return mainDAO.selectViewClass();
+		return mainMapper.selectViewClass();
 	}
 
 	@Override
 	public List<ClassDTO> newestClass() {
-		return mainDAO.selectNewestClass();
+		return mainMapper.selectNewestClass();
 	}
 
 	@Override
 	public List<ClassDTO> deadlineClass() {
-		return mainDAO.selectDeadlineClass();
+		return mainMapper.selectDeadlineClass();
 	}
 
 	@Override
 	public List<ClassDTO> highScoreClass() {
-		return mainDAO.selectHighScoreClass();
+		return mainMapper.selectHighScoreClass();
 	} 
 
 /*	@Override
 	public List<ClassDTO> selectAllClassList() {
-		return mainDAO.selectAllClassList();
+		return mainMapper.selectAllClassList();
 	} */
 	
 	
