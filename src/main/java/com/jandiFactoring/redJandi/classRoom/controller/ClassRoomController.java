@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO;
-import com.jandiFactoring.redJandi.classRoom.model.dto.ClassReviewDTO;
+import com.jandiFactoring.redJandi.classRoom.model.dto.MokchaDTO;
 import com.jandiFactoring.redJandi.classRoom.model.service.ClassRoomService;
 import com.jandiFactoring.redJandi.common.paging.Pagenation;
 import com.jandiFactoring.redJandi.common.paging.dto.SelectCriteria;
@@ -58,6 +59,12 @@ public class ClassRoomController {
 		
 	}
 	
+	@PostMapping("classRoom")
+	public String registClassRoom(ClassDTO classDTO) {
+		
+		return "redirect:/jandi/";
+	}
+	
 	@GetMapping("classLecture")
 	public void classLecture(SelectCriteria selectCriteria, Model model) {
 		
@@ -74,5 +81,13 @@ public class ClassRoomController {
 		model.addAttribute("selectCriteria", selectCriteria);
 		
 	}
-
+	
+	@PostMapping("classLecture")
+	public String registClassLecture(MokchaDTO mokchaDTO) {
+		
+		classRoomService.registMokcha(mokchaDTO);
+		
+		return "redirect:/jandi/class/classLecture";
+	}
+	
 }

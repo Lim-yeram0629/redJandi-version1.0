@@ -167,6 +167,28 @@
     	 WHERE ROWNUM BETWEEN 1 AND 5
     </select>
     
+    <!-- 클래스 생성 하기 by 임예람 -->
+    <insert id="registClass" parameterType="ClassDTO">
+    	INSERT INTO CLASS_TBL
+    	(
+			 CLASS_CODE
+		   , TITLE
+		   , CATEGORY_CODE
+		   , EMAIL
+		   , MAX_COUNT
+		   , PRICE
+		   , CREATE_DATE
+    	) VALUES (
+    		 SEQ_CLASS_TBL.NEXTVAL
+		   , #{ title }
+		   , #{ categoryCode }
+		   , #{ email }
+		   , #{ maxCount }
+		   , #{ price }
+		   , SYSDATE
+    	)
+    </insert>
+    
     <select id="selectCategoryList" resultType="hashmap">
     	SELECT 
     		   CA.CATEGORY_CODE
@@ -223,14 +245,83 @@
     <select id="selectMokchaFileListbyMokchaCode" resultType="FileDTO">
     	SELECT
     		   LF.FILE_CODE
+    		 , LF.UPLOAD_DATE
 			 , LF.FILE_PATH
 			 , LF.ORG_FILE_PATH
-			 , LF.UPLOAD_DATE
-			 , LF.EMAIL
+			 , LF.IS_DELETED
 			 , LF.MOKCHA_CODE
+			 , LF.EMAIL
 		  FROM LECTURE_FILE_TBL LF
 		 WHERE LF.MOKCHA_CODE = #{ mokcha_code }
 		   AND LF.IS_DELETED = 'N'
     </select>
-
+    
+    <!-- 목차 생성 하기 by 임예람 -->
+    <insert id="registMokcha" parameterType="MokchaDTO">
+    	INSERT INTO LECTURE_MOKCHA_TBL
+    	(
+		  	  MOKCHA_CODE
+			, MOKCHA_NAME
+			, WRITE_DATE
+			, CONTENTS
+			, CLASS_CODE
+			, IS_DELETED
+    	) VALUES (
+    		 SEQ_LECTURE_MOKCHA_TBL.NEXTVAL
+		   , #{ mokcha_name }
+		   , SYSDATE
+		   , #{ contents }
+		   , #{ class_code }
+		   , 'N'
+    	)
+    </insert>
+    
+    <update id="modifyMokcha" parameterType="ClassDTO">
+    	UPDATE LECTURE_MOKCHA_TBL LM
+    		<set>
+		    	<if test="mokcha_name != null and mokcha_name != ''">LM.MOKCHA_NAME = #{ mokcha_name },</if>
+		    	<if test="contents != null and contents != ''">LM.CONTENTS = #{ contents },</if>
+		    	<if test="write_date != null and write_date != ''">LM.WRITE_DATE = #{ write_date },</if>
+		    	<if test="is_deleted != null and is_deleted != ''">LM.IS_DELETED = #{ is_deleted },</if>
+    		</set>
+   		 WHERE LM.MOKCHA_CODE = #{ mokcha_code }
+    </update>
+    
+     <!-- 목차 파일 생성 하기 by 임예람 -->
+    <insert id="registMokchaFile" parameterType="FileDTO">
+    	INSERT INTO LECTURE_MOKCHA_TBL
+    	(
+		  	  FILE_CODE
+			, UPLOAD_DATE
+			, FILE_PATH
+			, ORG_FILE_PATH
+			, IS_DELETED
+			, MOKCHA_CODE
+			, EMAIL
+    	) VALUES (
+    		  SEQ_LECTURE_FILE_TBL.NEXTVAL
+    		, SYSDATE
+    		, #{ filePath }
+    		, #{ orgFilePath }
+    		, 'N'
+    		, #{ mokchaCode }
+    		, #{ email }
+    	)
+    </insert>
+    
+    <update id="modifyMokchaFile" parameterType="FileDTO">
+    	UPDATE LECTURE_FILE_TBL LF
+    		<set>
+		    	<if test="upload_date != null and upload_date != ''">LF.UPLOAD_DATE = SYSDATE,</if>
+		    	<if test="filePath != null and filePath != ''">LF.FILE_PATH = #{ file_path },</if>
+		    	<if test="org_file_path != null and org_file_path != ''">LF.ORG_FILE_PATH = #{ org_file_path },</if>
+		    	<if test="is_deleted != null and is_deleted != ''">LF.IS_DELETED = #{ is_deleted },</if>
+    		</set>
+    	<where>
+    		<if test="FILE_CODE != null and FILE_CODE != ''">LF.FILE_CODE = #{ flie_code }</if>
+    		<if test="mokcha_code != null and mokcha_code != ''">LF.MOKCHA_CODE IN(#{ mokcha_code }) </if>
+    	</where>
+    </update>
+    
+   
 </mapper>

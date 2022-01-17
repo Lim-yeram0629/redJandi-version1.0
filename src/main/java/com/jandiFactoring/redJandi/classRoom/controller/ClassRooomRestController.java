@@ -75,6 +75,7 @@ public class ClassRooomRestController {
 		return lastModifyTime + ", 저장";
 	}
 	
+
 	/**
 	 * 클래스코드로 해당 목차 5개만 조회하는 메소드
 	 * @author 임예람
@@ -89,12 +90,32 @@ public class ClassRooomRestController {
 		return classMokchaList;
 	}
 	
-	@RequestMapping(value="mokchaFiles/{mokchaCode}", method = RequestMethod.GET)
+	@RequestMapping(value="mokcha/mokchaFiles/{mokchaCode}", method = RequestMethod.GET)
 	public List<FileDTO> getMokchaFileListByMokchaCode(@PathVariable int mokchaCode){
 		
 		List<FileDTO> mokchaFileList = classRoomService.selectMokchaFileListbyMokchaCode(mokchaCode);
 		
 		return mokchaFileList;
+	}
+	
+	@RequestMapping(value="mokcha/{mokchaCode}", method = RequestMethod.GET)
+	public String modifyMokcha(@PathVariable int mokchaCode, MokchaDTO mokchaDTO){
+		
+		if(!classRoomService.modifyMokcha(mokchaDTO)) {
+			return "저장에 실패했습니다.";
+		}
+		
+		return "저장에 성공했습니다.";
+	}
+	
+	@RequestMapping(value="mokcha/mokchaFiles/{mokchaCode}", method = RequestMethod.PATCH)
+	public String modifyMokchaFile(@PathVariable int mokchaCode, FileDTO fileDTO){
+		
+		if(!classRoomService.modifyMokchaFile(fileDTO)) {
+			return "저장에 실패했습니다.";
+		}
+		
+		return "저장에 성공했습니다.";
 	}
 	
 }

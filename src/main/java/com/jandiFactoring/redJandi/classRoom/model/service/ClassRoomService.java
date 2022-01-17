@@ -32,4 +32,10 @@ public interface ClassRoomService {
 
 	List<FileDTO> selectMokchaFileListbyMokchaCode(int mokchaCode);
 
+	boolean modifyMokcha(MokchaDTO mokchaDTO);
+
+	boolean modifyMokchaFile(FileDTO fileDTO);
+
+	boolean registMokcha(MokchaDTO mokchaDTO);
+
 }

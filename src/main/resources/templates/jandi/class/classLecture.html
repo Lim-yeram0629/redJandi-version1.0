@@ -160,7 +160,7 @@ $(function(){
 		
 		$.ajax({
 			method: 'get',
-			url: "/jandi/class/mokchaFiles/"+mokchaCode,
+			url: "/jandi/class/mokcha/mokchaFiles/"+mokchaCode,
 			dataType: "json",
 			success: function(fileDTOList){
 				$(mokchaDiv).children('.mokchaVideos').html("");
@@ -201,7 +201,7 @@ $(function(){
 						<span class="write" style="float: right; position: relative; top: 5px;" th:text="${ mokcha.write_date }"></span>
 						<h3 th:onclick="mokchaToggle(this, [[${mokcha.mokcha_code}]]);" >[[${ mokcha.mokcha_name }]] <span style="color:#FDD2BF">▼</span> </h3>
 						<div class="mokchaDiv" style="display:none;">
-							<textarea class="contents" name="contents" rows="7" style="width:80%;" th:text="${ mokcha.contents }"></textarea>
+							<textarea onkeyup="checkLength(this, $('.modifyContents'), 500);" class="contents" name="contents" rows="7" style="width:80%;" th:text="${ mokcha.contents }"></textarea>
 							<div class="mokchaVideos"></div>
 							<form action="/jandi/class/uploadMokchaFile" method="post" enctype="multipart/form-data">
 								<div>
@@ -236,10 +236,11 @@ $(function(){
 								</button>
 								<h4 class="modal-title" id="myModalLabel" style="text-align: center;">클래스 목차 추가하기</h4>
 							</div>
-							<form action="/jandi/class/registLecture" method="post">
+							<form action="/jandi/class/classLecture" method="post">
+								<input type="hidden" name="class_code" th:value="${ currentClassDTO.classCode }">
 								<div class="modal-body" align="left">
 									목차 제목 ( <span id="titleCheck">0</span> / 30자 )<br> 
-								<input type="text" class="inputSyle" name="mockchaName" 
+								<input type="text" class="inputSyle" name="mokcha_name" 
 									placeholder="목차 제목을 입력하세요." onkeyup="checkLength(this, $('#titleCheck'), 30);" style="width: 550px;"> 
 									<br>
 								<br> 목차 내용( <span id="contentsCheck">0</span> / 500자 )<br>
