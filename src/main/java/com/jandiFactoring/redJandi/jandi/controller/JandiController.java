@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jandiFactoring.redJandi.jandi.model.dto.JandiDTO;
 import com.jandiFactoring.redJandi.jandi.model.service.JandiService;
+import com.jandiFactoring.redJandi.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/jandi/*")
@@ -31,9 +32,9 @@ public class JandiController {
 	
 	@GetMapping("jandiProfile")
 	public void jandiProfile(Model model) {
+		
 		JandiDTO jandi = new JandiDTO();
-//		jandi.setEmail(((MemberDTO) model.getAttribute("loginMember")).getEmail());
-		jandi.setEmail("ram@gmail.com");
+		jandi.setEmail(((MemberDTO) model.getAttribute("loginMember")).getEmail());
 		
 		JandiDTO jandiInfo = jandiService.selectJandiInformation(jandi);
 		jandi.setNickName(jandiInfo.getNickName());
