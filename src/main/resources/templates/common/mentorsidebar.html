@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8" />
-<title>Signin Template for Bootstrap</title>
+<title>잔디 사이드바</title>
 
 <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="/css/semantic/semantic.css">
@@ -24,12 +24,29 @@ a {
  	border: 0.5px solid black;
  }
 </style>
-
+<script>
+	$(function(){
+		
+		$.ajax({
+			type: 'get',
+			url: "/jandi/class/titles&ClassCodes/[[${jandi.email}]]",
+			dataType: 'json',
+			success : function(classList){
+				for(let classDTO of classList){
+					$('#myClass').append("<li><a href='/jandi/class/classRoom?classCode=" + classDTO.classCode + "'>"
+										+ classDTO.title + "</a></li>");
+				}
+			},
+			error: function(err){ console.log(err); }
+		});
+		
+	});
+</script>
 </head>
 <body>
 	<div id="sidebar">
 		<div class="sidebar-inner-name">
-			<h1 th:text="${ jandiInfo.nickName }+님"></h1>
+			<h1 th:text="${ jandi.nickName }+님"></h1>
 			<hr class="border-1px-black" />
 		</div>
 		<div class="sidebar-inner-name1">
@@ -38,8 +55,10 @@ a {
 			</ul>
 			<ul>
 				<h3>내 클래스</h3>
-					<li><a></a></li>
- 				<li><button type="button" style="border:none; background: none; padding:1px;"
+			</ul>
+			<ul id="myClass"></ul>
+			<ul>
+				<li><button type="button" style="border:none; background: none; padding:1px;"
 						data-toggle="modal" data-target="#addClassModal">클래스 생성하기</button></li>
 			</ul>
 			<ul>

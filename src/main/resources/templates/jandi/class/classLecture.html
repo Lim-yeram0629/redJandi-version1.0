@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>강의 영상</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<style>
+
+.btnStyle {
+	float: right;
+}
+
+img {
+	width: 250px;
+	text-align: center;
+	border: none !important;
+}
+
+.content {
+	width: 90%;
+	border: none !important;
+}
+
+.mokcha {
+	width: 100%;
+}
+
+.mokcha input {
+	border: none;
+	width: 80%;
+	margin: 10px;
+}
+
+.mokcha video {
+	width: 90%;
+	margin: 10px;
+}
+
+.newMokcha {
+	width: 100%;
+	padding-left: 10%;
+}
+
+.newMokcha input {
+	width: 80%;
+	margin: 10px;
+}
+
+.newMokcha textarea {
+	width: 80%;
+	margin: 10px;
+}
+
+.inputSyle{
+	border-radius: 0.5rem;
+	border: 1px solid #FDD2BF;
+	height: 30px;
+	padding:2%;
+}
+.inputSyle:focus {
+	outline: 1px solid #FDD2BF;
+}
+.contents{
+	resize: none;
+	border-radius: 0.5rem;
+	border: 1px solid #FDD2BF;
+	padding:2%;
+	margin-left:10px;
+}
+.contents:focus {
+	outline: 1px solid #FDD2BF;
+}
+
+.write {
+	text-align: right;
+    position: relative;
+    right: 7%;
+    bottom: 32px;
+}
+
+.btn-mokcha {
+	border-radius: 20px;
+	position: relative;
+    left: 73%;
+    background-color: white;
+    top: 20px;
+}
+
+</style>
+<script>
+
+$(function(){
+	
+	/* 페이징 처리 스크립트 */
+	if('[[${ selectCriteria.sortValue }]]' != ''){
+		$("#sortValue").val("[[${ selectCriteria.sortValue }]]");
+	}else{
+		$("#sortValue").val("nameDESC");
+	}
+	
+	// 셀렉트 값이 바뀔 때 마다 정렬
+	$('#sortValue').change(function(){
+		$('#searchform').submit();
+	});
+});
+
+	// 강의 영상 올리기 전 빈 값 체크 
+	function checkValue(item){
+		if($(item).prev().val() != ""){
+			$(item).parent().parent().submit();
+			alert("업로드를 시작합니다.");
+		}else{
+			alert("파일을 선택해 주세요.");
+		}
+	}
+	
+	// 목차 토글
+	function mokchaToggle(item, mokchaCode) {
+		let mokchaDiv = $(item).next();
+		
+		if(mokchaDiv.css('display') == 'none'){
+			mokchaDiv.css('display', 'block');
+			
+			$(item).html($(item).html().replace("▼", "▲"));
+			
+			getMokchaFileList(mokchaDiv, mokchaCode);
+		}else{
+			mokchaDiv.css('display','none');
+			
+			$(item).html($(item).html().replace("▲", "▼"));
+		}
+	}
+	
+	// 목차 삭제
+	function deleteMokcha(item){
+		console.log($(item).next());
+		if(confirm("해당 목차를 삭제하시면 안의 내용까지 전부 삭제됩니댜. 삭제하시겠습니까?")){
+			$(item).parent().submit();
+		}
+	}
+	
+	// 글자 길이 체크
+	function checkLength(inputItem, spanItem, maxLength){
+		let $item = $(inputItem);
+		spanItem.html($item.val().length);
+		
+		if($item.val().length > maxLength){
+			alert(maxLength + "자를 초과할 수 없습니다.");
+			$item.val($item.val().substr(0, (maxLength-1)));
+			$item.focus();
+			spanItem.html($item.val().length);
+		}
+	}
+	
+	function getMokchaFileList(mokchaDiv, mokchaCode){
+		console.log(mokchaDiv);
+		
+		$.ajax({
+			method: 'get',
+			url: "/jandi/class/mokcha/mokchaFiles/"+mokchaCode,
+			dataType: "json",
+			success: function(fileDTOList){
+				$(mokchaDiv).children('.mokchaVideos').html("");
+				
+				if(fileDTOList.length != 0){
+					for(let fileDTO of fileDTOList){
+						$(mokchaDiv).children('.mokchaVideos')
+									.append("<video class='mokcha' controls src='/lectureFiles/videos/" 
+											+ fileDTO.file_path + "'></video>");
+					}
+				}
+			}, error: function(err){ console.log(err); }
+		});
+		
+	}
+	
+</script>
+<body>
+	<th:block th:replace="common/nav.html" ></th:block>
+	<div class="common-sidebar">
+		<th:block th:replace="common/mentorsidebar.html" ></th:block>
+		<th:block th:replace="jandi/class/classRoomNav.html" ></th:block>
+		<div class="sidebar-content">
+			<!-- 탭 메뉴 상단 끝 -->
+			<!-- 탭 메뉴 내용 시작 -->
+			<div>
+			<br>
+				<h2 style="float: left;" th:text="|${ selectCriteria.totalCount }개의 목차|"></h2>
+				<button class="btn-mokcha btn btn-primary" data-toggle="modal" data-target="#addMokchaModal">목차 추가하기</button>
+				<br><br>
+				<hr style="background-color:black; border: 0; height: 1px; margin-bottom:0px;">
+				<th:block th:each="mokcha : ${mokchaList}">
+					<div class="mokcha">
+						<form action="/jandi/class/deleteMokcha" method="post">
+							<button type="button" class="btnStyle btn btn-primary" onclick="deleteMokcha(this);">삭제</button>
+							<input type="hidden" name="mokchaCode" th:value="${ mokcha.mokcha_code }">
+						</form>
+						<span class="write" style="float: right; position: relative; top: 5px;" th:text="${ mokcha.write_date }"></span>
+						<h3 th:onclick="mokchaToggle(this, [[${mokcha.mokcha_code}]]);" >[[${ mokcha.mokcha_name }]] <span style="color:#FDD2BF">▼</span> </h3>
+						<div class="mokchaDiv" style="display:none;">
+							<textarea onkeyup="checkLength(this, $('.modifyContents'), 500);" class="contents" name="contents" rows="7" style="width:80%;" th:text="${ mokcha.contents }"></textarea>
+							<div class="mokchaVideos"></div>
+							<form action="/jandi/class/uploadMokchaFile" method="post" enctype="multipart/form-data">
+								<div>
+									<input type="hidden" name="mokchaCode" th:value="${ mokcha.mokcha_code }">
+									<br><b>영상 업로드</b> <br> <input type="file" name="file" style="border: none;" accept="video/*">
+									<button type="button" class="btnStyle sendBtn btn btn-primary" onclick="checkValue(this);">영상 추가하기</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<br>
+					<hr style="background-color: lightgray; border: 0; height: 1px;">
+				</th:block>
+					<form id="searchform" action="/jandi/class/classLecture" method="get" >
+						<select class="ui dropdown" id="sortValue" name="sortValue" style="float:right;">
+								<option value="writeDateDESC">최신순</option>
+					      	 	<option value="nameASC">제목 오름차순</option>
+					      	 	<option value="nameDESC">제목 내림차순</option>
+					    </select>
+					</form>
+				<br><br>
+					<th:block th:replace="common/paging.html" ></th:block>
+				<br>
+				<!-- <button class="btn-mokcha" data-toggle="modal" data-target="#addMokchaModal">추가</button> -->
+				<div class="modal fade" id="addMokchaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel" style="text-align: center;">클래스 목차 추가하기</h4>
+							</div>
+							<form action="/jandi/class/classLecture" method="post">
+								<input type="hidden" name="class_code" th:value="${ currentClassDTO.classCode }">
+								<div class="modal-body" align="left">
+									목차 제목 ( <span id="titleCheck">0</span> / 30자 )<br> 
+								<input type="text" class="inputSyle" name="mokcha_name" 
+									placeholder="목차 제목을 입력하세요." onkeyup="checkLength(this, $('#titleCheck'), 30);" style="width: 550px;"> 
+									<br>
+								<br> 목차 내용( <span id="contentsCheck">0</span> / 500자 )<br>
+								<textarea name="contents" class="contents" placeholder="목차 내용을 입력하세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);" style="width: 550px;" ></textarea>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default btnBD"
+										data-dismiss="modal">취소</button>
+									<button type="submit" class="btn btn-primary" style="margin: 10px;">추가</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<th:block th:replace="common/footer.html" ></th:block>
+</html>

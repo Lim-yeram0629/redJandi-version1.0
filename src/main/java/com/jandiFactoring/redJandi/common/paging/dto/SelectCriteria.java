@@ -133,6 +133,12 @@ public class SelectCriteria implements java.io.Serializable  {
 		this.sortValue = sortValue;
 	}
 	
+	public void setPagenationConfig(int limit, int buttonAmount, int totalCount) {
+		this.setLimit(limit);
+		this.setButtonAmount(buttonAmount);
+		this.setTotalCount(totalCount);
+	}
+	
 	public void setPagenation(int maxPage, int startPage, int endPage, int startRow, int endRow) {
 		this.setMaxPage(maxPage);
 		this.setStartPage(startPage);

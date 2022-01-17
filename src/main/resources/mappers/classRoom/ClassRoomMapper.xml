@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jandiFactoring.redJandi.classRoom.model.dao.ClassRoomMapper">
+	
+	<resultMap type="com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO" id="classResultMap">
+		<id column="CLASS_CODE" property="classCode"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="TAG" property="tag"/>
+    	<result column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="BOARD_TYPE" property="boardType"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="PRICE" property="price"/>
+    	<result column="VIEWS" property="views"/>
+    	<result column="MAX_COUNT" property="maxCount"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="ORG_FILE_PATH" property="orgFilePath"/>
+    	<result column="IS_DELETED" property="isDeleted"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="CATEGORY_NAME" property="categoryName"/>
+	</resultMap>
+	
+	<resultMap type="com.jandiFactoring.redJandi.classRoom.model.dto.ClassReviewDTO" id="reviewResultMap">
+    	<id column="REVIEW_CODE" property="rvCode"/>
+    	<result column="WRITE_DATE" property="writeDate"/>
+    	<result column="STAR" property="star"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="IS_DELETED" property="isDelete"/>
+    	<result column="CLASS_CODE" property="classCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="AVG_STAR" property="avgStar"/>
+    </resultMap>
+
+	<select id="selectTitlesAndClassCodesByEmail" resultMap="classResultMap">
+		SELECT 
+			   CL.CLASS_CODE
+			 , CL.TITLE 
+		  FROM CLASS_TBL CL
+		 WHERE CL.EMAIL = #{ email }
+		   AND CL.IS_DELETED = 'N'
+		 ORDER BY
+		 	   CL.CREATE_DATE DESC
+	</select>
+	
+	<select id="selectClassByClassCode" resultMap="classResultMap">
+		SELECT 
+			   CL.CLASS_CODE
+			 , CL.CREATE_DATE
+			 , CL.CONTENTS
+			 , CL.TAG
+			 , CL.EMAIL
+			 , CL.TITLE
+			 , CL.PRICE
+			 , CL.VIEWS
+			 , CL.MAX_COUNT
+			 , CL.FILE_PATH
+			 , CA.CATEGORY_NAME
+			 , JAN.NICKNAME
+		  FROM CLASS_TBL CL
+		  JOIN CATEGORY_TBL CA ON(CA.CATEGORY_CODE = CL.CATEGORY_CODE)
+		  JOIN JANDI_TBL JAN ON(JAN.EMAIL = CL.EMAIL)
+		 WHERE CL.CLASS_CODE = #{ classCode }
+	</select>
+	
+	<!-- 해당 클래스를 듣는 회원의 이메일 목록 조회 by 임예람  -->
+    <select id="selectCurrentMemberList" resultType="hashmap">
+    	SELECT PC.EMAIL
+    	  FROM PURCHASE_CLASS_TBL PC
+    	 WHERE PC.STATUS = 'Y'
+    	   AND PC.CLASS_CODE = #{ classCode }
+    </select>
+    
+    <!-- 해당 클래스를 찜한 회원 목록 가져오기 by 임예람  -->
+    <select id="selectJJimClassMemberList" resultType="hashmap">
+    	SELECT 
+    	       LC.EMAIL
+    	     , LC.CLASS_CODE
+		  FROM LIKED_CLASS_TBL LC
+    	 WHERE LC.CLASS_CODE = #{ classCode }
+    </select>
+    
+    <!-- 해당 클래스의 리뷰 목록 개수 조회하기 by 임예람  -->
+    <select id="selectReviewListByClassCodeTotalCount" resultType="_int">
+    	SELECT
+    	       COUNT(REVIEW_CODE)
+    	  FROM CLASS_REVIEW_TBL
+    	 WHERE CLASS_CODE = #{ classCode }
+    	   AND IS_DELETED = 'N'
+    </select>
+    
+    <!-- 해당 클래스의 리뷰 목록 조회하기 by 임예람  -->
+    <select id="selectReviewListByClassCode" parameterType="hashmap" resultMap="reviewResultMap">
+    	SELECT
+    	      B.RNUM
+   	     	, B.REVIEW_CODE
+			, B.WRITE_DATE
+			, B.STAR
+			, B.CONTENTS
+			, B.CLASS_CODE
+			, B.EMAIL
+			, B.NICKNAME
+    	 FROM (SELECT
+    	 			  ROWNUM RNUM
+    	 	        , A.REVIEW_CODE
+					, A.WRITE_DATE
+					, A.STAR
+					, A.CONTENTS
+					, A.CLASS_CODE
+					, A.EMAIL
+					, A.NICKNAME
+    	 	     FROM (SELECT
+    	 	     			  CR.REVIEW_CODE
+							, CR.WRITE_DATE
+							, CR.STAR
+							, CR.CONTENTS
+							, CR.CLASS_CODE
+							, CR.EMAIL
+							, SS.NICKNAME
+    	 	     	     FROM CLASS_REVIEW_TBL CR
+    	 	     	     JOIN SSACK_TBL SS ON ( SS.EMAIL = CR.EMAIL )
+    	 	     	   	WHERE CR.CLASS_CODE = #{ classCode }
+    	 	     	      AND CR.IS_DELETED = 'N'
+						<if test="selectCriteria.sortValue == null || selectCriteria.sortValue == 'recently'" >
+							ORDER BY CR.WRITE_DATE DESC
+						</if>
+						<if test="selectCriteria.sortValue == 'starDESC'">
+							ORDER BY CR.STAR DESC
+						</if>
+						<if test="selectCriteria.sortValue == 'starASC'">
+							ORDER BY CR.STAR ASC
+						</if>
+    	 	     ) A
+    	    	<![CDATA[ WHERE ROWNUM <= #{ selectCriteria.endRow } ]]>
+		  	) B
+		  	WHERE B.RNUM >= #{ selectCriteria.startRow } 
+    </select>
+    
+    <update id="modifyClass" parameterType="ClassDTO">
+    	UPDATE CLASS_TBL CL
+    		<set>
+		    	<if test="title != null and title != ''">CL.TITLE = #{ title },</if>
+		    	<if test="contents != null and contents != ''">CL.CONTENTS = #{ contents },</if>
+		    	<if test="filePath != null and filePath != ''">CL.FILE_PATH = #{ filePath },</if>
+		    	<if test="orgFilePath != null and orgFilePath != ''">CL.ORG_FILE_PATH = #{ orgFilePath },</if>
+		    	<if test="tag != null and tag != ''">CL.TAG = #{ tag },</if>
+		    	<if test="price != 0">CL.PRICE = #{ price },</if>
+		    	<if test="categoryCode != 0">CL.CATEGORY_CODE = #{ categoryCode },</if>
+		    	<if test="maxCount != 0">CL.MAX_COUNT = #{ maxCount },</if>
+		    	<if test="isDeleted != null and isDeleted != ''">CL.IS_DELETED = #{ isDeleted },</if>
+    		</set>
+   		 WHERE CL.CLASS_CODE = #{ classCode }
+    </update>
+    
+    <select id="selectMokchaNamesByClassCode" resultType="MokchaDTO">
+    	SELECT 
+    		   A.MOKCHA_NAME
+    		 , ROWNUM
+    	  FROM(
+    	  		SELECT MC.MOKCHA_NAME
+		    	  FROM LECTURE_MOKCHA_TBL MC
+		    	 WHERE MC.CLASS_CODE = #{ classCode }
+		    	   AND MC.IS_DELETED = 'N'
+		    	 ORDER BY MC.WRITE_DATE ASC
+    			)A
+    	 WHERE ROWNUM BETWEEN 1 AND 5
+    </select>
+    
+    <!-- 클래스 생성 하기 by 임예람 -->
+    <insert id="registClass" parameterType="ClassDTO">
+    	INSERT INTO CLASS_TBL
+    	(
+			 CLASS_CODE
+		   , TITLE
+		   , CATEGORY_CODE
+		   , EMAIL
+		   , MAX_COUNT
+		   , PRICE
+		   , CREATE_DATE
+    	) VALUES (
+    		 SEQ_CLASS_TBL.NEXTVAL
+		   , #{ title }
+		   , #{ categoryCode }
+		   , #{ email }
+		   , #{ maxCount }
+		   , #{ price }
+		   , SYSDATE
+    	)
+    </insert>
+    
+    <select id="selectCategoryList" resultType="hashmap">
+    	SELECT 
+    		   CA.CATEGORY_CODE
+    		 , CA.CATEGORY_NAME
+    	  FROM CATEGORY_TBL CA
+    </select>
+    
+    <select id="selectMokchaListByClassCodeTotalCount" resultType="_int">
+    	SELECT COUNT(LM.MOKCHA_CODE)
+    	  FROM LECTURE_MOKCHA_TBL LM
+    	  WHERE LM.CLASS_CODE = #{ classCode }
+			AND LM.IS_DELETED = 'N'
+    </select>
+    
+    <select id="selectMokchaListByClassCode" resultType="MokchaDTO">
+	     SELECT 
+	     		B.RNUM
+    		  , B.MOKCHA_CODE
+    		  , B.MOKCHA_NAME
+			  , B.WRITE_DATE
+			  , B.CONTENTS
+			  , B.CLASS_CODE
+	      FROM( SELECT 
+		     		  ROWNUM RNUM
+	    		    , A.MOKCHA_CODE
+	    		    , A.MOKCHA_NAME
+				    , A.WRITE_DATE
+				    , A.CONTENTS
+				    , A.CLASS_CODE
+			    FROM( SELECT 
+				    		   LM.MOKCHA_CODE
+				    		 , LM.MOKCHA_NAME
+							 , LM.WRITE_DATE
+							 , LM.CONTENTS
+							 , LM.CLASS_CODE
+						  FROM LECTURE_MOKCHA_TBL LM
+						 WHERE LM.CLASS_CODE = #{ classCode }
+						   AND LM.IS_DELETED = 'N'
+						 <if test="selectCriteria.sortValue == 'writeDateDESC'" >
+							ORDER BY LM.WRITE_DATE DESC
+						 </if>
+						 <if test="selectCriteria.sortValue == 'nameASC'">
+							ORDER BY LM.MOKCHA_NAME ASC
+						 </if>
+						 <if test="selectCriteria.sortValue == null || selectCriteria.sortValue == 'nameDESC'">
+							ORDER BY LM.MOKCHA_NAME DESC
+						 </if>
+					)A
+	    	    <![CDATA[ WHERE ROWNUM <= #{ selectCriteria.endRow } ]]>
+			  	)B
+		  WHERE B.RNUM >= #{ selectCriteria.startRow } 
+    </select>
+    
+    <select id="selectMokchaFileListbyMokchaCode" resultType="FileDTO">
+    	SELECT
+    		   LF.FILE_CODE
+    		 , LF.UPLOAD_DATE
+			 , LF.FILE_PATH
+			 , LF.ORG_FILE_PATH
+			 , LF.IS_DELETED
+			 , LF.MOKCHA_CODE
+			 , LF.EMAIL
+		  FROM LECTURE_FILE_TBL LF
+		 WHERE LF.MOKCHA_CODE = #{ mokcha_code }
+		   AND LF.IS_DELETED = 'N'
+    </select>
+    
+    <!-- 목차 생성 하기 by 임예람 -->
+    <insert id="registMokcha" parameterType="MokchaDTO">
+    	INSERT INTO LECTURE_MOKCHA_TBL
+    	(
+		  	  MOKCHA_CODE
+			, MOKCHA_NAME
+			, WRITE_DATE
+			, CONTENTS
+			, CLASS_CODE
+			, IS_DELETED
+    	) VALUES (
+    		 SEQ_LECTURE_MOKCHA_TBL.NEXTVAL
+		   , #{ mokcha_name }
+		   , SYSDATE
+		   , #{ contents }
+		   , #{ class_code }
+		   , 'N'
+    	)
+    </insert>
+    
+    <update id="modifyMokcha" parameterType="ClassDTO">
+    	UPDATE LECTURE_MOKCHA_TBL LM
+    		<set>
+		    	<if test="mokcha_name != null and mokcha_name != ''">LM.MOKCHA_NAME = #{ mokcha_name },</if>
+		    	<if test="contents != null and contents != ''">LM.CONTENTS = #{ contents },</if>
+		    	<if test="write_date != null and write_date != ''">LM.WRITE_DATE = #{ write_date },</if>
+		    	<if test="is_deleted != null and is_deleted != ''">LM.IS_DELETED = #{ is_deleted },</if>
+    		</set>
+   		 WHERE LM.MOKCHA_CODE = #{ mokcha_code }
+    </update>
+    
+     <!-- 목차 파일 생성 하기 by 임예람 -->
+    <insert id="registMokchaFile" parameterType="FileDTO">
+    	INSERT INTO LECTURE_MOKCHA_TBL
+    	(
+		  	  FILE_CODE
+			, UPLOAD_DATE
+			, FILE_PATH
+			, ORG_FILE_PATH
+			, IS_DELETED
+			, MOKCHA_CODE
+			, EMAIL
+    	) VALUES (
+    		  SEQ_LECTURE_FILE_TBL.NEXTVAL
+    		, SYSDATE
+    		, #{ filePath }
+    		, #{ orgFilePath }
+    		, 'N'
+    		, #{ mokchaCode }
+    		, #{ email }
+    	)
+    </insert>
+    
+    <update id="modifyMokchaFile" parameterType="FileDTO">
+    	UPDATE LECTURE_FILE_TBL LF
+    		<set>
+		    	<if test="upload_date != null and upload_date != ''">LF.UPLOAD_DATE = SYSDATE,</if>
+		    	<if test="filePath != null and filePath != ''">LF.FILE_PATH = #{ file_path },</if>
+		    	<if test="org_file_path != null and org_file_path != ''">LF.ORG_FILE_PATH = #{ org_file_path },</if>
+		    	<if test="is_deleted != null and is_deleted != ''">LF.IS_DELETED = #{ is_deleted },</if>
+    		</set>
+    	<where>
+    		<if test="FILE_CODE != null and FILE_CODE != ''">LF.FILE_CODE = #{ flie_code }</if>
+    		<if test="mokcha_code != null and mokcha_code != ''">LF.MOKCHA_CODE IN(#{ mokcha_code }) </if>
+    	</where>
+    </update>
+    
+   
+</mapper>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>클래스룸</title>
+
+<style>
+
+a{ 
+	color:black;
+}
+
+.title {
+	width: 100%;
+	font-size: 30px;
+	text-align: center;
+	color:#ff9566;
+}
+
+.room {
+	font-size: 20px;
+	background: none;
+	border: none;
+	font-weight: 2px;
+}
+
+table{
+	text-align: center;
+	width: 100%;
+}
+
+table th{
+	text-align: center;
+}
+
+.menus {
+  margin: 0 auto;
+  border: none;
+  width: 300px;
+}
+
+.menu {
+  padding: 0px;
+  text-align: center;
+  border: none;
+}
+
+
+</style>
+<script>
+
+// 클래스 삭제 메소드
+function deleteClass(){
+	
+	// 해당 클래스르 듣는 사람이 있다면 클래스 삭제 불가
+	if("[[${currentMemberCount}]]" != "0"){
+		alert("현재 듣는 인원이 있어서 삭제할 수 없습니다.");
+	}else{
+		
+		let classDTO = {
+				"classCode" : "[[${currentClassDTO.classCode}]]",
+				"isDeleted" : "Y"
+		}
+		
+		$.ajax({
+			method: 'PATCH',
+			url: "/jandi/class/" + classDTO.classCode,
+			data: classDTO,
+			success: function(){},
+			error: function(err){ console.log(err);  }
+		});
+		
+		location.href="/jandi/jandiProfile";
+	}
+}
+
+</script>
+</head>
+<body>
+	<div class="sidebar-content">
+		<label style="color:#ff9566;" th:text="|카테고리 > ${currentClassDTO.categoryName} |"></label>
+		<button class="btn btn-primary" style="float:right" onclick="deleteClass();">클래스 삭제</button>
+		<br><br><br>
+		<div align="center">
+			<p class="title" style="width: 70%;"><b th:text="|${currentClassDTO.title} 클래스룸|"></b></p>
+		</div>
+		<br>
+		<p align="right"><b th:text="|(인원 ${currentMemberCount} / ${currentClassDTO.maxCount} )|"></b></p>
+		<br>
+		<!-- 탭 메뉴 상단 시작 -->
+		<table >
+			<tr class="menus">
+				<th width="25" class="menu"><a th:href="@{/jandi/class/classRoom(classCode=${currentClassDTO.classCode})}" class="room class">클래스</a></th>
+				<th width="25" class="menu"><a href="/jandi/class/classLecture" class="room lecture">강의 영상</a></th>
+				<th width="25" class="menu"><a href="/jandi/class/classLearningBoard" class="room learning">학습방</a></th>
+				<th width="25" class="menu"><a href="/jandi/class/jandiClassChat" class="room classChat">채팅</a></th>
+			</tr>
+		</table>
+		<br>
+		<br>
+	</div>
+</body>
+</html>
