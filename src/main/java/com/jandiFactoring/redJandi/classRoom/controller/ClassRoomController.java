@@ -32,6 +32,7 @@ public class ClassRoomController {
 	@GetMapping("classRoom")
 	public void classRoom(ClassDTO classDTO, SelectCriteria selectCriteria, Model model) {
 		
+		// 해당 클래스 번호로 클래스 정보 조회
 		ClassDTO currentClassDTO = classRoomService.selectClassByClassCode(classDTO.getClassCode());
 		model.addAttribute("currentClassDTO", currentClassDTO);
 		
@@ -43,10 +44,12 @@ public class ClassRoomController {
 		// 해당 클래스를 찜한 회원의 리스트 조회 후 SessionAttributes에 저장
 		model.addAttribute("jjimClassMemberList", classRoomService.selectJJimClassMemberList(classDTO.getClassCode()));
 		
+		// 클래스 코드와 페이징처리 객체 맵에 저장
 		Map<String, Object> searchMap = new HashMap<>();
 		searchMap.put("classCode", classDTO.getClassCode());
 		searchMap.put("selectCriteria", selectCriteria);
 		
+		// 불러올 개수, 버튼 개수, 전체 개수 저장 후 페이징처리
 		selectCriteria.setPagenationConfig(5, 5, classRoomService.selectReviewListByClassCodeTotalCount(searchMap));
 		selectCriteria = Pagenation.getSelectCriteria(selectCriteria);
 		
