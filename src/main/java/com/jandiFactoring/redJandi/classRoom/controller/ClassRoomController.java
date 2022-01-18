@@ -20,7 +20,7 @@ import com.jandiFactoring.redJandi.common.paging.dto.SelectCriteria;
 
 @Controller
 @RequestMapping({"/jandi/class/*", "/mypage/class/*", "/findclass/class/*"})
-@SessionAttributes({"currentClassDTO", "currentMemberList", "currentMemberCount", "jandi"})
+@SessionAttributes({"loginMember", "currentClassDTO", "currentMemberList", "currentMemberCount", "jandi"})
 public class ClassRoomController {
 	
 	private final ClassRoomService classRoomService;

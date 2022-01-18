@@ -3,6 +3,8 @@ package com.jandiFactoring.redJandi.jandi.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,10 +33,9 @@ public class JandiController {
 	}
 	
 	@GetMapping("jandiProfile")
-	public void jandiProfile(Model model) {
-		
+	public void jandiProfile(Model model, HttpSession session) {
 		JandiDTO jandi = new JandiDTO();
-		jandi.setEmail(((MemberDTO) model.getAttribute("loginMember")).getEmail());
+		jandi.setEmail(((MemberDTO) session.getAttribute("loginMember")).getEmail());
 		
 		JandiDTO jandiInfo = jandiService.selectJandiInformation(jandi);
 		jandi.setNickName(jandiInfo.getNickName());

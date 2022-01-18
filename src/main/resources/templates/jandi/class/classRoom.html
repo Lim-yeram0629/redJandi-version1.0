@@ -197,10 +197,10 @@ function modifyClass(classDTO){
 
 </script>
 <body>
-	<th:block th:replace="common/nav.html" ></th:block>
+	<th:block th:replace="/common/nav.html" ></th:block>
 	<div class="common-sidebar">
-		<th:block th:replace="common/mentorsidebar.html" ></th:block>
-		<th:block th:replace="jandi/class/classRoomNav.html" ></th:block>
+		<th:block th:replace="/common/mentorsidebar.html" ></th:block>
+		<th:block th:replace="/jandi/class/classRoomNav.html" ></th:block>
 		<div class="sidebar-content">
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
@@ -277,10 +277,10 @@ function modifyClass(classDTO){
 							</div>
 						</div>
 					</th:block>
-					<th:block th:replace="common/paging.html" ></th:block>
+					<th:block th:replace="/common/paging.html" ></th:block>
 				</th:block>
 		</div>
 	</div>
 </body>
-<th:block th:replace="common/footer.html" ></th:block>
+<th:block th:replace="/common/footer.html" ></th:block>
 </html>

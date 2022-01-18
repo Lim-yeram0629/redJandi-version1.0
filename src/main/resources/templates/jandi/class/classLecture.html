@@ -179,10 +179,10 @@ $(function(){
 	
 </script>
 <body>
-	<th:block th:replace="common/nav.html" ></th:block>
+	<th:block th:replace="/common/nav.html" ></th:block>
 	<div class="common-sidebar">
-		<th:block th:replace="common/mentorsidebar.html" ></th:block>
-		<th:block th:replace="jandi/class/classRoomNav.html" ></th:block>
+		<th:block th:replace="/common/mentorsidebar.html" ></th:block>
+		<th:block th:replace="/jandi/class/classRoomNav.html" ></th:block>
 		<div class="sidebar-content">
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
@@ -223,7 +223,7 @@ $(function(){
 					    </select>
 					</form>
 				<br><br>
-					<th:block th:replace="common/paging.html" ></th:block>
+					<th:block th:replace="/common/paging.html" ></th:block>
 				<br>
 				<!-- <button class="btn-mokcha" data-toggle="modal" data-target="#addMokchaModal">추가</button> -->
 				<div class="modal fade" id="addMokchaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -259,5 +259,5 @@ $(function(){
 		</div>
 	</div>
 </body>
-<th:block th:replace="common/footer.html" ></th:block>
+<th:block th:replace="/common/footer.html" ></th:block>
 </html>
