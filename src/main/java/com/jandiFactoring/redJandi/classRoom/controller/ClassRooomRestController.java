@@ -98,14 +98,14 @@ public class ClassRooomRestController {
 		return mokchaFileList;
 	}
 	
-	@RequestMapping(value="mokcha/{mokchaCode}", method = RequestMethod.GET)
-	public String modifyMokcha(@PathVariable int mokchaCode, MokchaDTO mokchaDTO){
+	@RequestMapping(value="mokcha/{mokchaCode}", method = RequestMethod.PATCH)
+	public MokchaDTO modifyMokcha(@PathVariable int mokchaCode, MokchaDTO mokchaDTO){
 		
 		if(!classRoomService.modifyMokcha(mokchaDTO)) {
-			return "저장에 실패했습니다.";
+			return mokchaDTO;
 		}
 		
-		return "저장에 성공했습니다.";
+		return mokchaDTO;
 	}
 	
 	@RequestMapping(value="mokcha/mokchaFiles/{mokchaCode}", method = RequestMethod.PATCH)
@@ -117,5 +117,6 @@ public class ClassRooomRestController {
 		
 		return "저장에 성공했습니다.";
 	}
+	
 	
 }

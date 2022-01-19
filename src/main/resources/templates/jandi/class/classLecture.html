@@ -177,6 +177,23 @@ $(function(){
 		
 	}
 	
+	function modifyMokcha(item, mokcha_code){
+		let mokcha = {
+				mokcha_code : mokcha_code,
+				mokcha_name : $(item).nextAll('.mokcha_name').val(),
+				contents : $(item).nextAll('.contents').val()
+		};
+		$.ajax({
+			method:'patch',
+			url: "/jandi/class/mokcha/"+mokcha_code,
+			data: mokcha,
+			dataType: "json",
+			success: function(mokchaDTO){
+				$(item).parent().prevAll('.mokchaTitle').html(mokchaDTO.mokcha_name + " <span style='color:#FDD2BF'>▼</span>");
+			}, error: function(err){ console.log(err); }
+		});
+	}
+	
 </script>
 <body>
 	<th:block th:replace="/common/nav.html" ></th:block>
@@ -189,18 +206,18 @@ $(function(){
 			<div>
 			<br>
 				<h2 style="float: left;" th:text="|${ selectCriteria.totalCount }개의 목차|"></h2>
-				<button class="btn-mokcha btn btn-primary" data-toggle="modal" data-target="#addMokchaModal">목차 추가하기</button>
+				<button class="btn-mokcha btn btn-primary" data-toggle="modal" data-target="#addMokchaModal" 
+					style="margin-right: 0px;">목차 추가하기</button>
 				<br><br>
-				<hr style="background-color:black; border: 0; height: 1px; margin-bottom:0px;">
+				<hr style="background-color:black; border: 0; height: 1px;">
 				<th:block th:each="mokcha : ${mokchaList}">
 					<div class="mokcha">
-						<form action="/jandi/class/deleteMokcha" method="post">
-							<button type="button" class="btnStyle btn btn-primary" onclick="deleteMokcha(this);">삭제</button>
-							<input type="hidden" name="mokchaCode" th:value="${ mokcha.mokcha_code }">
-						</form>
 						<span class="write" style="float: right; position: relative; top: 5px;" th:text="${ mokcha.write_date }"></span>
-						<h3 th:onclick="mokchaToggle(this, [[${mokcha.mokcha_code}]]);" >[[${ mokcha.mokcha_name }]] <span style="color:#FDD2BF">▼</span> </h3>
+						<h3 th:onclick="mokchaToggle(this, [[${mokcha.mokcha_code}]]);" class="mokchaTitle" >[[${ mokcha.mokcha_name }]] <span style="color:#FDD2BF">▼</span> </h3>
 						<div class="mokchaDiv" style="display:none;">
+							<button type="button" class="btnStyle btn btn-primary" th:onclick="deleteMokcha(this, [[${mokcha.mokcha_code}]]);" >삭제</button>
+							<button type="button" class="btnStyle btn btn-primary" th:onclick="modifyMokcha(this, [[${mokcha.mokcha_code}]]);" style="margin-right: 5px;">수정</button>
+							<input type="text" onkeyup="checkLength(this, $('.modifyContents'), 30);" class="inputSyle mokcha_name" th:value="${ mokcha.mokcha_name }" style="border: 1px solid #FDD2BF;">
 							<textarea onkeyup="checkLength(this, $('.modifyContents'), 500);" class="contents" name="contents" rows="7" style="width:80%;" th:text="${ mokcha.contents }"></textarea>
 							<div class="mokchaVideos"></div>
 							<form action="/jandi/class/uploadMokchaFile" method="post" enctype="multipart/form-data">

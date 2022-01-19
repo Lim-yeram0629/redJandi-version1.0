@@ -35,7 +35,8 @@ public class JandiController {
 	@GetMapping("jandiProfile")
 	public void jandiProfile(Model model, HttpSession session) {
 		JandiDTO jandi = new JandiDTO();
-		jandi.setEmail(((MemberDTO) session.getAttribute("loginMember")).getEmail());
+		jandi.setEmail("ram@gmail.com");
+//		jandi.setEmail(((MemberDTO) session.getAttribute("loginMember")).getEmail());
 		
 		JandiDTO jandiInfo = jandiService.selectJandiInformation(jandi);
 		jandi.setNickName(jandiInfo.getNickName());
@@ -73,15 +74,8 @@ public class JandiController {
 	public JandiDTO modifyJandiProfile(JandiDTO jandiDTO, MultipartFile profileImage) throws Exception {
 		
 		System.out.println("modifyProfile Jandi: " + jandiDTO);
-		String originFilePath = jandiDTO.getProfile_path();
-		
-//		FileController fileWrapper = new FileController();
-//		String savedName = fileWrapper.uploadSingleFile(profileImage, "/uploadFiles/profile");
-//		jandiDTO.setProfile_path(savedName);
-//		
-//		if(!jandiService.modifyProfile(jandiDTO)) {
-//			jandiDTO.setProfile_path(originFilePath);
-//		}
+		if(!jandiService.modifyProfile(jandiDTO)) {
+		}
 		
 		return jandiDTO;
 	}
