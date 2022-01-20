@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.jandiFactoring.redJandi.common.file.dto.FileDTO;
 
 /**
@@ -163,13 +165,12 @@ public class FileController {
 	 * @param filePath
 	 * @param files
 	 */
-	@RequestMapping(value="delete/{dir}", method=RequestMethod.DELETE)
-	public void deleteFilesInSamePath(@PathVariable String dir, List<FileDTO> files) {
-		
-		for(FileDTO file : files) {
+	@RequestMapping(value="delete", method=RequestMethod.DELETE)
+	public void deleteFilesInSamePath(@RequestParam String dir, FileDTO fileDTO) {
+		System.out.println(fileDTO);
+		for(FileDTO file : fileDTO.getFiles()) {
 			new File(rootPath + dir + "/" + file.getFile_path()).delete();
 		}
-		
 	}
 	
 }

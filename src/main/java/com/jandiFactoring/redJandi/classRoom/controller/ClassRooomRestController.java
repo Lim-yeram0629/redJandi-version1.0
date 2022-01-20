@@ -109,7 +109,7 @@ public class ClassRooomRestController {
 	}
 	
 	@RequestMapping(value="mokcha/mokchaFiles/{mokchaCode}", method = RequestMethod.PATCH)
-	public String modifyMokchaFile(@PathVariable int mokchaCode, FileDTO fileDTO){
+	public String modifyMokchaFiles(@PathVariable int mokchaCode, FileDTO fileDTO){
 		
 		if(!classRoomService.modifyMokchaFile(fileDTO)) {
 			return "저장에 실패했습니다.";
@@ -118,5 +118,14 @@ public class ClassRooomRestController {
 		return "저장에 성공했습니다.";
 	}
 	
+	@RequestMapping(value="mokcha/mokchaFile", method = RequestMethod.POST)
+	public FileDTO registMokchaFile(FileDTO fileDTO){
+		
+		if(!classRoomService.registMokchaFile(fileDTO)) {
+			return fileDTO;
+		}
+		
+		return fileDTO;
+	}
 	
 }

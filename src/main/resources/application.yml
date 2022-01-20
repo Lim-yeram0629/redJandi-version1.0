@@ -34,6 +34,9 @@ spring:
     prefix: classpath:/templates/
     cache: false
     
+  # file size 설정
+  servlet:    multipart:      max-file-size: 1000MB
+      max-request-size: 1000MB        
 # mybatis config (mappers/**/*.xml -> 매퍼스 밑에 모든 이름의 xml을 사용)
 mybatis:
   mapper-locations: mappers/**/*.xml

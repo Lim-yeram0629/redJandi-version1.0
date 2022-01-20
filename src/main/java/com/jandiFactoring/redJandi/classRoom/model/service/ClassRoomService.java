@@ -37,5 +37,7 @@ public interface ClassRoomService {
 	boolean modifyMokchaFile(FileDTO fileDTO);
 
 	boolean registMokcha(MokchaDTO mokchaDTO);
+	
+	boolean registMokchaFile(FileDTO fileDTO);
 
 }

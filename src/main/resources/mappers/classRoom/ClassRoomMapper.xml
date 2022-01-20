@@ -289,7 +289,7 @@
     
      <!-- 목차 파일 생성 하기 by 임예람 -->
     <insert id="registMokchaFile" parameterType="FileDTO">
-    	INSERT INTO LECTURE_MOKCHA_TBL
+    	INSERT INTO LECTURE_FILE_TBL
     	(
 		  	  FILE_CODE
 			, UPLOAD_DATE
@@ -301,10 +301,10 @@
     	) VALUES (
     		  SEQ_LECTURE_FILE_TBL.NEXTVAL
     		, SYSDATE
-    		, #{ filePath }
-    		, #{ orgFilePath }
+    		, #{ file_path }
+    		, #{ org_file_path }
     		, 'N'
-    		, #{ mokchaCode }
+    		, #{ mokcha_code }
     		, #{ email }
     	)
     </insert>
@@ -313,12 +313,12 @@
     	UPDATE LECTURE_FILE_TBL LF
     		<set>
 		    	<if test="upload_date != null and upload_date != ''">LF.UPLOAD_DATE = SYSDATE,</if>
-		    	<if test="filePath != null and filePath != ''">LF.FILE_PATH = #{ file_path },</if>
+		    	<if test="file_path != null and file_path != ''">LF.FILE_PATH = #{ file_path },</if>
 		    	<if test="org_file_path != null and org_file_path != ''">LF.ORG_FILE_PATH = #{ org_file_path },</if>
 		    	<if test="is_deleted != null and is_deleted != ''">LF.IS_DELETED = #{ is_deleted },</if>
     		</set>
     	<where>
-    		<if test="FILE_CODE != null and FILE_CODE != ''">LF.FILE_CODE = #{ flie_code }</if>
+    		<if test="file_code != null and file_code != ''">LF.FILE_CODE = #{ flie_code }</if>
     		<if test="mokcha_code != null and mokcha_code != ''">LF.MOKCHA_CODE IN(#{ mokcha_code }) </if>
     	</where>
     </update>

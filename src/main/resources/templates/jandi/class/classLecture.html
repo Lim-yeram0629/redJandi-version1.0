@@ -119,6 +119,7 @@ $(function(){
 	
 	// 목차 토글
 	function mokchaToggle(item, mokchaCode) {
+		
 		let mokchaDiv = $(item).next();
 		
 		if(mokchaDiv.css('display') == 'none'){
@@ -126,7 +127,16 @@ $(function(){
 			
 			$(item).html($(item).html().replace("▼", "▲"));
 			
-			getMokchaFileList(mokchaDiv, mokchaCode);
+			$(mokchaDiv).children('.mokchaVideos').html("");
+			
+			let mokchaFileList = getMokchaFileList(mokchaCode);
+			if(mokchaFileList != null){
+				for(let fileDTO of mokchaFileList){
+					$(mokchaDiv).children('.mokchaVideos')
+								.append("<video class='mokcha' controls src='/lectureFiles/videos/" 
+										+ fileDTO.file_path + "'></video>");
+				}
+			}
 		}else{
 			mokchaDiv.css('display','none');
 			
@@ -135,10 +145,25 @@ $(function(){
 	}
 	
 	// 목차 삭제
-	function deleteMokcha(item){
-		console.log($(item).next());
+	function deleteMokcha(item, mokcha_code){
 		if(confirm("해당 목차를 삭제하시면 안의 내용까지 전부 삭제됩니댜. 삭제하시겠습니까?")){
-			$(item).parent().submit();
+			let mokcha = {
+					mokcha_code : mokcha_code,
+					is_deleted : 'Y'
+			};
+			/* patchMokcha(mokcha, mokcha_code); */
+			
+			let mokchaFileList = getMokchaFileList(mokcha_code);
+			if(mokchaFileList != null){
+				
+				let mokchaFile = {
+						mokcha_code : mokcha_code,
+						is_deleted : 'Y'
+				}
+				/* patchMokchaFiles(mokchaFile, mokcha_code); */
+				
+				deleteMokchaFiles(mokchaFileList);
+			}
 		}
 	}
 	
@@ -155,26 +180,18 @@ $(function(){
 		}
 	}
 	
-	function getMokchaFileList(mokchaDiv, mokchaCode){
-		console.log(mokchaDiv);
-		
+	function getMokchaFileList(mokchaCode){
+		let mokchaFileList = null;
 		$.ajax({
+			async: false,
 			method: 'get',
 			url: "/jandi/class/mokcha/mokchaFiles/"+mokchaCode,
 			dataType: "json",
 			success: function(fileDTOList){
-				$(mokchaDiv).children('.mokchaVideos').html("");
-				
-				if(fileDTOList.length != 0){
-					for(let fileDTO of fileDTOList){
-						$(mokchaDiv).children('.mokchaVideos')
-									.append("<video class='mokcha' controls src='/lectureFiles/videos/" 
-											+ fileDTO.file_path + "'></video>");
-					}
-				}
+				mokchaFileList = fileDTOList;
 			}, error: function(err){ console.log(err); }
 		});
-		
+		return mokchaFileList;
 	}
 	
 	function modifyMokcha(item, mokcha_code){
@@ -183,14 +200,118 @@ $(function(){
 				mokcha_name : $(item).nextAll('.mokcha_name').val(),
 				contents : $(item).nextAll('.contents').val()
 		};
+		
+		let mokchaDTO = patchMokcha(mokcha, mokcha_code);
+		if(mokchaDTO != null){
+			$(item).parent().prevAll('.mokchaTitle')
+							.html(mokchaDTO.mokcha_name + " <span style='color:#FDD2BF'>▼</span>");
+		}
+	}
+	
+	function patchMokcha(mokcha, mokcha_code){
+		let mokchaDTO = null;
 		$.ajax({
+			async: false,
 			method:'patch',
 			url: "/jandi/class/mokcha/"+mokcha_code,
 			data: mokcha,
 			dataType: "json",
-			success: function(mokchaDTO){
-				$(item).parent().prevAll('.mokchaTitle').html(mokchaDTO.mokcha_name + " <span style='color:#FDD2BF'>▼</span>");
+			success: function(dto){
+				mokchaDTO = dto;
 			}, error: function(err){ console.log(err); }
+		});
+		return mokchaDTO;
+	}
+	
+	function uploadMokchaFile(item, mokcha_code){
+		
+		let formData = new FormData($(item).parent()[0]);
+		formData.append("file", $(item).prev().val());
+		formData.append("dir", "/lectureFiles/videos");
+		
+		let mokchaDiv = $(item).parent().parent();
+		console.log(mokchaDiv);
+		
+		if($(item).prev().val() != ""){
+			alert("영상 업로드를 시작합니다.");
+			let fileDTO = uploadFile(formData);
+			
+			if(fileDTO != null){
+				
+				let mokchaFileDTO = {
+					mokcha_code : mokcha_code,
+					file_path : fileDTO.file_path,
+					org_file_path : fileDTO.org_file_path,
+					email : '[[${ jandi.email }]]'
+				};
+				
+				postMokchaFile(mokchaFileDTO);
+				$(mokchaDiv).children('.mokchaVideos')
+							.append("<video class='mokcha' controls src='/lectureFiles/videos/" 
+									+ mokchaFileDTO.file_path + "'></video>");
+			}
+		}else{
+			alert("올릴 영상을 선택해 주세요.");
+		}
+		
+		$(item).prev().val("");
+	}
+	
+	function uploadFile(formData){
+		let fileDTO = null;
+		$.ajax({
+			async: false,
+			method: 'post',
+			url: "/jandi/file/upload",
+			processData: false,
+			contentType: false,
+			cache:false,
+			data: formData,
+			dataType: "json",
+			success: function(data){
+				fileDTO = data;
+			},
+			error: function(err){ 
+				console.log(err); 
+			}
+		});
+		return fileDTO;
+	}
+	
+	function postMokchaFile(mokchaFileDTO, item){
+		$.ajax({
+			async: false,
+			method:'post',
+			url: "/jandi/class/mokcha/mokchaFile",
+			data: mokchaFileDTO,
+			dataType: "json",
+			success: function(mokchaFileDTO){
+			}, error: function(err){ console.log(err); }
+		});
+	}
+	
+	function patchMokchaFiles(mokchaFile, mokcha_code){
+		$.ajax({
+			method:'patch',
+			url: "/jandi/class/mokcha/mokchaFiles/"+mokcha_code,
+			data: mokchaFile,
+			success: function(dto){
+			}, error: function(err){ console.log(err); }
+		});
+	}
+	
+	function deleteMokchaFiles(mokchaFileList){
+		let fileDTO = {
+				files: mokchaFileList
+		};
+		$.ajax({
+			method:'delete',
+			url: "/jandi/file/delete",
+			data:{ 
+				"fileDTO" : fileDTO,
+				"dir" : "/lectureFiles/videos"
+			}, 
+			success: function(data){}, error: function(err){ console.log(err); }
 		});
 	}
 	
@@ -220,12 +341,10 @@ $(function(){
 							<input type="text" onkeyup="checkLength(this, $('.modifyContents'), 30);" class="inputSyle mokcha_name" th:value="${ mokcha.mokcha_name }" style="border: 1px solid #FDD2BF;">
 							<textarea onkeyup="checkLength(this, $('.modifyContents'), 500);" class="contents" name="contents" rows="7" style="width:80%;" th:text="${ mokcha.contents }"></textarea>
 							<div class="mokchaVideos"></div>
-							<form action="/jandi/class/uploadMokchaFile" method="post" enctype="multipart/form-data">
-								<div>
-									<input type="hidden" name="mokchaCode" th:value="${ mokcha.mokcha_code }">
-									<br><b>영상 업로드</b> <br> <input type="file" name="file" style="border: none;" accept="video/*">
-									<button type="button" class="btnStyle sendBtn btn btn-primary" onclick="checkValue(this);">영상 추가하기</button>
-								</div>
+							<form class="lectureVideoForm" method="post" enctype="multipart/form-data">
+								<br><b>영상 업로드</b> <br> 
+								<input type="file" name="file" class="lectureVideoFile" style="border: none;" accept="video/*">
+								<button type="button" class="btnStyle sendBtn btn btn-primary" th:onclick="uploadMokchaFile(this, [[${mokcha.mokcha_code}]]);">영상 추가하기</button>
 							</form>
 						</div>
 					</div>

@@ -105,5 +105,11 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 		// TODO Auto-generated method stub
 		return classRoomMapper.registMokcha(mokchaDTO);
 	}
+
+	@Override
+	public boolean registMokchaFile(FileDTO fileDTO) {
+		// TODO Auto-generated method stub
+		return classRoomMapper.registMokchaFile(fileDTO);
+	}
 	
 }

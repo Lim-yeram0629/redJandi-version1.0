@@ -41,4 +41,7 @@ public interface ClassRoomMapper {
 
 	boolean registMokcha(MokchaDTO mokchaDTO);
 
+	boolean registMokchaFile(FileDTO fileDTO);
+	
+	
 }

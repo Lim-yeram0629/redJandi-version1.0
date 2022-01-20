@@ -2,6 +2,7 @@ package com.jandiFactoring.redJandi.common.file.dto;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
@@ -17,6 +18,7 @@ public class FileDTO implements Serializable{
 	private int post_code;
 	private String is_deleted;
 	private String nickName;
+	private List<FileDTO> files;
 	
 	public FileDTO() {	}
 
@@ -111,6 +113,14 @@ public class FileDTO implements Serializable{
 		return "FileDTO [file_code=" + file_code + ", file_path=" + file_path + ", org_file_path=" + org_file_path
 				+ ", email=" + email + ", upload_date=" + upload_date + ", mokcha_code=" + mokcha_code + ", post_code="
 				+ post_code + ", is_deleted=" + is_deleted + ", nickName=" + nickName + "]";
+	}
+
+	public List<FileDTO> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<FileDTO> files) {
+		this.files = files;
 	}
 	
 
