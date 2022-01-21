@@ -71,10 +71,11 @@ public class JandiController {
 	
 	@PostMapping("profile")
 	@ResponseBody
-	public JandiDTO modifyJandiProfile(JandiDTO jandiDTO, MultipartFile profileImage) throws Exception {
+	public JandiDTO modifyJandiProfile(JandiDTO jandiDTO) throws Exception{
 		
 		System.out.println("modifyProfile Jandi: " + jandiDTO);
 		if(!jandiService.modifyProfile(jandiDTO)) {
+			throw new Exception();
 		}
 		
 		return jandiDTO;

@@ -151,7 +151,7 @@ $(function(){
 					mokcha_code : mokcha_code,
 					is_deleted : 'Y'
 			};
-			/* patchMokcha(mokcha, mokcha_code); */
+			patchMokcha(mokcha, mokcha_code);
 			
 			let mokchaFileList = getMokchaFileList(mokcha_code);
 			if(mokchaFileList != null){
@@ -160,10 +160,10 @@ $(function(){
 						mokcha_code : mokcha_code,
 						is_deleted : 'Y'
 				}
-				/* patchMokchaFiles(mokchaFile, mokcha_code); */
-				
+				patchMokchaFiles(mokchaFile, mokcha_code);
 				deleteMokchaFiles(mokchaFileList);
 			}
+			$('#classMokcha').load(location.href+' #classMokcha');
 		}
 	}
 	
@@ -301,16 +301,19 @@ $(function(){
 	}
 	
 	function deleteMokchaFiles(mokchaFileList){
-		let fileDTO = {
-				files: mokchaFileList
-		};
+		let fileNames = [];
+		for(file of mokchaFileList){
+			fileNames.push(file.file_path);
+		}
+		
 		$.ajax({
 			method:'delete',
 			url: "/jandi/file/delete",
-			data:{ 
-				"fileDTO" : fileDTO,
-				"dir" : "/lectureFiles/videos"
-			}, 
+			traditional: true,	// 배열 및 리스트로 값을 넘기기 위해 선언
+			data:{
+				fileNames : fileNames,
+				dir : "/lectureFiles/videos"
+			},
 			success: function(data){}, error: function(err){ console.log(err); }
 		});
 	}
@@ -324,7 +327,7 @@ $(function(){
 		<div class="sidebar-content">
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
-			<div>
+			<div id="classMokcha">
 			<br>
 				<h2 style="float: left;" th:text="|${ selectCriteria.totalCount }개의 목차|"></h2>
 				<button class="btn-mokcha btn btn-primary" data-toggle="modal" data-target="#addMokchaModal" 

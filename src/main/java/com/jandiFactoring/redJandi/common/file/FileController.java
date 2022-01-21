@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -166,10 +167,9 @@ public class FileController {
 	 * @param files
 	 */
 	@RequestMapping(value="delete", method=RequestMethod.DELETE)
-	public void deleteFilesInSamePath(@RequestParam String dir, FileDTO fileDTO) {
-		System.out.println(fileDTO);
-		for(FileDTO file : fileDTO.getFiles()) {
-			new File(rootPath + dir + "/" + file.getFile_path()).delete();
+	public void deleteFilesInSamePath(@RequestParam(value="fileNames") String[] fileNames, @RequestParam String dir) {
+		for(String fileName : fileNames) {
+			new File(rootPath + dir + "/" + fileName).delete();
 		}
 	}
 	

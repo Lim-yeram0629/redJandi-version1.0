@@ -23,7 +23,7 @@ public class FileDTO implements Serializable{
 	public FileDTO() {	}
 
 	public FileDTO(int file_code, String file_path, String org_file_path, String email, Date upload_date,
-			int mokcha_code, int post_code, String is_deleted, String nickName) {
+			int mokcha_code, int post_code, String is_deleted, String nickName, List<FileDTO> files) {
 		super();
 		this.file_code = file_code;
 		this.file_path = file_path;
@@ -34,7 +34,10 @@ public class FileDTO implements Serializable{
 		this.post_code = post_code;
 		this.is_deleted = is_deleted;
 		this.nickName = nickName;
+		this.files = files;
 	}
+
+
 
 	public int getFile_code() {
 		return file_code;
@@ -108,13 +111,6 @@ public class FileDTO implements Serializable{
 		this.nickName = nickName;
 	}
 
-	@Override
-	public String toString() {
-		return "FileDTO [file_code=" + file_code + ", file_path=" + file_path + ", org_file_path=" + org_file_path
-				+ ", email=" + email + ", upload_date=" + upload_date + ", mokcha_code=" + mokcha_code + ", post_code="
-				+ post_code + ", is_deleted=" + is_deleted + ", nickName=" + nickName + "]";
-	}
-
 	public List<FileDTO> getFiles() {
 		return files;
 	}
@@ -122,6 +118,13 @@ public class FileDTO implements Serializable{
 	public void setFiles(List<FileDTO> files) {
 		this.files = files;
 	}
-	
 
+	@Override
+	public String toString() {
+		return "FileDTO [file_code=" + file_code + ", file_path=" + file_path + ", org_file_path=" + org_file_path
+				+ ", email=" + email + ", upload_date=" + upload_date + ", mokcha_code=" + mokcha_code + ", post_code="
+				+ post_code + ", is_deleted=" + is_deleted + ", nickName=" + nickName + ", files=" + files + "]";
+	}
+	
+	
 }
