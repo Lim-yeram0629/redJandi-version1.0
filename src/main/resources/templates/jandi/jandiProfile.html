@@ -125,33 +125,64 @@ p {
 		if(profileImg != ""){
 			
 			let formData = new FormData($('#changeImgForm')[0]);
-			formData.append("email", "[[${jandi.email}]]");
-			formData.append("profile_path", "[[${jandiInfo.profile_path}]]");
-			formData.append("profileImage", profileImg);
+			formData.append("file", profileImg);
+			formData.append("dir", "/uploadFiles/profile");
 			
-			$.ajax({
-				type: 'post',
-				enctype: 'multipart/form-data',
-				processData: false,	// 파일 전송 시 필수
-				contentType: false, // 파일 전송 시 필수
-				cache: false,	// 파일 전송 시 필수
-				url: "/jandi/profile",
-				data: formData,
-				dataType : "json",
-				success: function(jandiDTO){	
-					console.log(jandiDTO);
+			let fileDTO = uploadProfile(formData);
+			if(fileDTO != null){
+				
+				let jandiDTO = {
+						email: "[[${jandi.email}]]",
+						profile_path: fileDTO.file_path
+				};
+				
+				jandiDTO = saveJandiProfile(jandiDTO);
+				if(jandiDTO != null){
 					$('#profile').attr("src", "/uploadFiles/profile/" + jandiDTO.profile_path);
-					
-					$("#profileImage").val("");
-					$('#closeBtn').click();
-				},
-				error: function(err){
-					console.log(err);
 				}
-			});	//ajax 끝
+				
+				$("#profileImage").val("");
+				$('#closeBtn').click();
+			}
 		}else{
 			alert("바꿀 프로필 이미지를 선택해 주세요.");
 		}
+	}
+	
+	function uploadProfile(formData){
+		let fileDTO = null;
+		$.ajax({
+			async: false,
+			method: 'post',
+			url: "/jandi/file/upload",
+			processData: false,
+			contentType: false,
+			cache:false,
+			data: formData,
+			dataType: "json",
+			success: function(data){
+				fileDTO = data;
+			},
+			error: function(err){ 
+				console.log(err); 
+			}
+		});
+		return fileDTO;
+	}
+	
+	function saveJandiProfile(jandiDTO){
+		let jandi = null;
+		$.ajax({
+			async: false,
+			method:'post',
+			url: "/jandi/profile",
+			data: jandiDTO,
+			dataType: "json",
+			success: function(data){
+				jandi = data;
+			}, error: function(err){ console.log(err); }
+		});
+		return jandi;
 	}
 	
 	/* 텍스트 길이값 넘어가지 않게 체크하는 메소드 */
@@ -312,7 +343,7 @@ p {
 						<br><b>변경할 프로필 사진을 선택해 주세요.</b> 
 						<br><br> 
 						<form id="changeImgForm" enctype="multipart/form-data" accept="image/*">
-							<input type="file" name="profileImage" id="profileImage">
+							<input type="file" name="file" id="profileImage">
 						</form>
 						<br><br>
 						<button type="button" class="btn btn-default" style="margin-right: 80%;" 

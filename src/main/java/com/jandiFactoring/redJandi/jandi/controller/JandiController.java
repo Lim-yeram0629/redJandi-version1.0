@@ -32,11 +32,17 @@ public class JandiController {
 		this.jandiService = jandiService;
 	}
 	
+	/**
+	 * 해당 잔기의 정보를 조회하여 페이지를 요청하는 메소드
+	 * @author 임예람
+	 * @param model
+	 * @param session
+	 */
 	@GetMapping("jandiProfile")
 	public void jandiProfile(Model model, HttpSession session) {
 		JandiDTO jandi = new JandiDTO();
-		jandi.setEmail("ram@gmail.com");
 //		jandi.setEmail(((MemberDTO) session.getAttribute("loginMember")).getEmail());
+		jandi.setEmail("ram@gmail.com");
 		
 		JandiDTO jandiInfo = jandiService.selectJandiInformation(jandi);
 		jandi.setNickName(jandiInfo.getNickName());
@@ -46,6 +52,13 @@ public class JandiController {
 		model.addAttribute("jandiClassList", jandiService.selectJandiClassList(jandi));
 	}
 	
+	/**
+	 * 잔디의 닉네임을 변경하는 메소드
+	 * @author 임예람
+	 * @param jandiDTO
+	 * @param rttr
+	 * @return 성공 혹은 실패 리다이렉트 메세지
+	 */
 	@PostMapping("nickName")
 	public String modifyJandiNickName(JandiDTO jandiDTO, RedirectAttributes rttr) {
 		
@@ -57,6 +70,13 @@ public class JandiController {
 		return "redirect:/jandi/jandiProfile";
 	}
 	
+	/**
+	 * 잔디의 프로필 사진을 디폴트 사진으로 변경하는 메소드
+	 * @author 임예람
+	 * @param jandiDTO
+	 * @param rttr
+	 * @return 성공 또는 실패 리다이렉트 메세지
+	 */
 	@GetMapping("profile")
 	public String modifyJandiProfileToDefaultImage(JandiDTO jandiDTO, RedirectAttributes rttr) {
 		
@@ -69,18 +89,30 @@ public class JandiController {
 		return "redirect:/jandi/jandiProfile";
 	}
 	
+	/**
+	 * 잔디의 프로필 사진을 변경하는 메소드
+	 * @author 임예람
+	 * @param jandiDTO
+	 * @return 성공시 jandiDTO, 실패시 null
+	 */
 	@PostMapping("profile")
 	@ResponseBody
-	public JandiDTO modifyJandiProfile(JandiDTO jandiDTO) throws Exception{
+	public JandiDTO modifyJandiProfile(JandiDTO jandiDTO){
 		
 		System.out.println("modifyProfile Jandi: " + jandiDTO);
 		if(!jandiService.modifyProfile(jandiDTO)) {
-			throw new Exception();
+			return null;
 		}
 		
 		return jandiDTO;
 	}
 	
+	/**
+	 * 잔디의 정보를 변경하는 메소드
+	 * @author 임예람
+	 * @param jandiDTO
+	 * @return 성공시 수정 시간 반환, 실패시 실패 메세지 반환
+	 */
 	@PostMapping("careerAndIntro")
 	@ResponseBody
 	public String modifyJandiCareerAndIntro(JandiDTO jandiDTO) {

@@ -90,6 +90,12 @@ public class ClassRooomRestController {
 		return classMokchaList;
 	}
 	
+	/**
+	 * 해당 목차의 강의 영상 파일 조회
+	 * @author 임예람
+	 * @param mokchaCode
+	 * @return 강의 영상 리스트
+	 */
 	@RequestMapping(value="mokcha/mokchaFiles/{mokchaCode}", method = RequestMethod.GET)
 	public List<FileDTO> getMokchaFileListByMokchaCode(@PathVariable int mokchaCode){
 		
@@ -98,31 +104,35 @@ public class ClassRooomRestController {
 		return mokchaFileList;
 	}
 	
+	/** 
+	 * 목차 코드의 목차 내용을 수정하는 메소드
+	 * @author 임예람
+	 * @param mokchaCode
+	 * @param mokchaDTO
+	 * @return 업데이트 성공시 mokchaDTo, 실패시 null
+	 */
 	@RequestMapping(value="mokcha/{mokchaCode}", method = RequestMethod.PATCH)
 	public MokchaDTO modifyMokcha(@PathVariable int mokchaCode, MokchaDTO mokchaDTO){
 		
 		if(!classRoomService.modifyMokcha(mokchaDTO)) {
-			return mokchaDTO;
+			return null;
 		}
 		
 		return mokchaDTO;
 	}
 	
-	@RequestMapping(value="mokcha/mokchaFiles/{mokchaCode}", method = RequestMethod.PATCH)
-	public String modifyMokchaFiles(@PathVariable int mokchaCode, FileDTO fileDTO){
-		
-		if(!classRoomService.modifyMokchaFile(fileDTO)) {
-			return "저장에 실패했습니다.";
-		}
-		
-		return "저장에 성공했습니다.";
-	}
 	
+	/**
+	 * 목차 파일을을 데이터 베이스에 인서트 하는 메소드
+	 * @author 임예람
+	 * @param fileDTO
+	 * @return 인서트 성공시 fileDTO, 실패시 null
+	 */
 	@RequestMapping(value="mokcha/mokchaFile", method = RequestMethod.POST)
 	public FileDTO registMokchaFile(FileDTO fileDTO){
 		
 		if(!classRoomService.registMokchaFile(fileDTO)) {
-			return fileDTO;
+			return null;
 		}
 		
 		return fileDTO;
