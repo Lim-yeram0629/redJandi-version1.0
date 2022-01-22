@@ -40,16 +40,18 @@ public class JandiController {
 	 */
 	@GetMapping("jandiProfile")
 	public void jandiProfile(Model model, HttpSession session) {
+		// 세션에 저장할 잔디 DTO 선언 후, 로그인 멤버의 이메일을 저장
 		JandiDTO jandi = new JandiDTO();
 //		jandi.setEmail(((MemberDTO) session.getAttribute("loginMember")).getEmail());
 		jandi.setEmail("ram@gmail.com");
 		
+		// 잔디 정보 조회하고 세션에 저장할 잔디 DTO에 닉네임 저장
 		JandiDTO jandiInfo = jandiService.selectJandiInformation(jandi);
 		jandi.setNickName(jandiInfo.getNickName());
 		
-		model.addAttribute("jandi", jandi);
-		model.addAttribute("jandiInfo", jandiInfo);
-		model.addAttribute("jandiClassList", jandiService.selectJandiClassList(jandi));
+		model.addAttribute("jandi", jandi);	// 잔디 DTO 세션에 저장
+		model.addAttribute("jandiInfo", jandiInfo);	// 조회한 잔디 정보
+		model.addAttribute("jandiClassList", jandiService.selectJandiClassList(jandi));	// 잔디의 클래스 썸네일 리스트(3개)
 	}
 	
 	/**

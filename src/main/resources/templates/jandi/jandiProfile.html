@@ -122,22 +122,26 @@ p {
 	
 	function modifyProfileImage(){
 		let profileImg = $("#profileImage").val();
-		if(profileImg != ""){
+		if(profileImg != ""){	// file input값이 있으면 실행
 			
+			// formData에 파일과 저장할 dir을 저장
 			let formData = new FormData($('#changeImgForm')[0]);
 			formData.append("file", profileImg);
 			formData.append("dir", "/uploadFiles/profile");
 			
-			let fileDTO = uploadProfile(formData);
-			if(fileDTO != null){
+			//파일 업로드 메소드 
+			let fileDTO = uploadProfile(formData);	
+			
+			if(fileDTO != null){ // 파일 업로드가 성공하면
 				
+				// 잔디 테이블에 업데이트할 정보 저장
 				let jandiDTO = {
 						email: "[[${jandi.email}]]",
 						profile_path: fileDTO.file_path
 				};
-				
+				// 잔디 테이블에 업데이트
 				jandiDTO = saveJandiProfile(jandiDTO);
-				if(jandiDTO != null){
+				if(jandiDTO != null){	// 업데이트 성공시 화면에 프로필 사진 변경
 					$('#profile').attr("src", "/uploadFiles/profile/" + jandiDTO.profile_path);
 				}
 				
