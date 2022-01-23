@@ -1,14 +1,19 @@
 package com.jandiFactoring.redJandi.classRoom.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jandiFactoring.redJandi.classRoom.model.dto.ClassDTO;
 import com.jandiFactoring.redJandi.classRoom.model.dto.MokchaDTO;
@@ -16,7 +21,7 @@ import com.jandiFactoring.redJandi.classRoom.model.service.ClassRoomService;
 import com.jandiFactoring.redJandi.common.file.dto.FileDTO;
 
 @RestController
-@RequestMapping({"/jandi/class/*", "/mypage/class/*", "/findclass/class/*"})
+@RequestMapping({"/jandi/class/*", "/mypage/class/*", "/findclass/class/*", "/jandi/class"})
 public class ClassRooomRestController {
 	
 	private final ClassRoomService classRoomService;
@@ -75,6 +80,23 @@ public class ClassRooomRestController {
 		return lastModifyTime + ", 저장";
 	}
 	
+	@RequestMapping(value="", method = RequestMethod.POST)
+	public void createClass(ClassDTO classDTO, HttpServletResponse response) throws IOException {
+		
+		if(!classRoomService.registClass(classDTO)) {
+			response.sendRedirect("/jandi/jandiProfile");
+		}
+		// 최신 클래스 코드 가져오기
+		List<ClassDTO> classDTOList = classRoomService.selectTitlesAndClassCodesByEmail(classDTO.getEmail());
+		response.sendRedirect("/jandi/class/classRoom?classCode=" + classDTOList.get(0).getClassCode());
+	}
+	
+	@RequestMapping(value="categorys", method = RequestMethod.GET)
+	public List<HashMap<String, Object>> getCategorys() {
+		
+		return classRoomService.selectCategoryList();
+	}
+	
 
 	/**
 	 * 클래스코드로 해당 목차 5개만 조회하는 메소드
@@ -119,6 +141,24 @@ public class ClassRooomRestController {
 		}
 		
 		return mokchaDTO;
+	}
+	
+	
+	/**
+	 * 해당 목차파일들을 업데이트 하는 메소드
+	 * @author 임예람
+	 * @param mokchaCode
+	 * @param fileDTO
+	 * @return 업데이트 성공시 fileDTO, 실패시 null
+	 */
+	@RequestMapping(value="mokcha/mokchaFiles/{mokchaCode}", method = RequestMethod.PATCH)
+	public FileDTO patchMokchaFile(@PathVariable int mokchaCode, FileDTO fileDTO){
+		
+		if(!classRoomService.modifyMokchaFile(fileDTO)) {
+			return null;
+		}
+		
+		return fileDTO;
 	}
 	
 	

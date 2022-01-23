@@ -1,5 +1,6 @@
 package com.jandiFactoring.redJandi.classRoom.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,5 +40,9 @@ public interface ClassRoomService {
 	boolean registMokcha(MokchaDTO mokchaDTO);
 	
 	boolean registMokchaFile(FileDTO fileDTO);
+
+	boolean registClass(ClassDTO classDTO);
+
+	List<HashMap<String, Object>> selectCategoryList();
 
 }

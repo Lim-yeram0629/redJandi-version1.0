@@ -27,6 +27,15 @@ a {
 <script>
 	$(function(){
 		
+		if('[[${ createClassMessage }]]' != ''){
+			alert('[[${ createClassMessage }]]');
+			
+			if('[[${ createClassMessage }]]' == '클래스를 생성했습니다.'){
+				let recentClass = $('#myClass').children().first().find('a');
+				console.log(recentClass);
+			}
+		}
+		
 		$.ajax({
 			type: 'get',
 			url: "/jandi/class/titles&ClassCodes/[[${jandi.email}]]",
@@ -39,6 +48,20 @@ a {
 			},
 			error: function(err){ console.log(err); }
 		});
+		
+		$.ajax({
+			type: 'get',
+			url: "/jandi/class/categorys",
+			dataType: 'json',
+			success : function(categorys){
+				for(let category of categorys){
+					$('#categorys').append("<option value=" + category.CATEGORY_CODE + ">" + category.CATEGORY_NAME + "</option>");
+				}
+			},
+			error: function(err){ console.log(err); }
+		});
+		
+		
 		
 	});
 </script>
@@ -83,16 +106,13 @@ a {
 						</button>
 						<h4 class="modal-title" id="myModalLabel">클래스 추가하기</h4>
 					</div>
-					<form action="/jandi/class/createClass" method="post" id="modalForm">
+					<form action="/jandi/class" method="post" id="modalForm">
 						<div class="modal-body" align="center">
-							카테고리 <select name="categoryCode">
-								<!-- <th:block th:each="category : ${ categoryList }">
-									<option value="${ category.CATEGORY_CODE }">${ category.CATEGORY_NAME }</option>
-								</th:block> -->
-							</select> <br>
+							카테고리 <select name="categoryCode" id="categorys"></select> <br>
 							<br> 클래스 제목 <input type="text" name="title" id="classTitle" class="titleInput"><br>
 							<br> 클래스 정원 <input type="number" name="maxCount" id="maxCount"> 명 <br>
 							<br> 클래스 가격 <input type="number" name="price" id="price"> 원
+							<input type="hidden" name="email" th:value="${ jandi.email }">
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default btnBD"
@@ -113,8 +133,9 @@ a {
 						$('#title').focus();
 						$('#title').val().substr(0, 300);
 					}
-					if($('#okBtn'))
-					$('#modalForm').submit();
+					if($('#okBtn')){
+						$('#modalForm').submit();
+					}
 				}
 			});
 		</script>

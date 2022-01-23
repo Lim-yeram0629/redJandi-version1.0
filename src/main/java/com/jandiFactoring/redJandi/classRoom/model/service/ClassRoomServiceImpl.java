@@ -1,5 +1,6 @@
 package com.jandiFactoring.redJandi.classRoom.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +70,12 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 		// TODO Auto-generated method stub
 		return classRoomMapper.selectMokchaNamesByClassCode(classCode);
 	}
+	
+	@Override
+	public boolean registClass(ClassDTO classDTO) {
+		// TODO Auto-generated method stub
+		return classRoomMapper.registClass(classDTO);
+	}
 
 	@Override
 	public int selectMokchaListByClassCodeTotalCount(Map<String, Object> searchMap) {
@@ -110,6 +117,12 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 	public boolean registMokchaFile(FileDTO fileDTO) {
 		// TODO Auto-generated method stub
 		return classRoomMapper.registMokchaFile(fileDTO);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> selectCategoryList() {
+		// TODO Auto-generated method stub
+		return classRoomMapper.selectCategoryList();
 	}
 	
 }

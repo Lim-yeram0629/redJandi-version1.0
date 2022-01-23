@@ -59,12 +59,6 @@ public class ClassRoomController {
 		
 	}
 	
-	@PostMapping("classRoom")
-	public String registClassRoom(ClassDTO classDTO) {
-		
-		return "redirect:/jandi/";
-	}
-	
 	@GetMapping("classLecture")
 	public void classLecture(SelectCriteria selectCriteria, Model model) {
 		

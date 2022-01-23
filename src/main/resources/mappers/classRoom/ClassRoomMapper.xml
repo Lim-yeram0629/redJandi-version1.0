@@ -153,20 +153,6 @@
    		 WHERE CL.CLASS_CODE = #{ classCode }
     </update>
     
-    <select id="selectMokchaNamesByClassCode" resultType="MokchaDTO">
-    	SELECT 
-    		   A.MOKCHA_NAME
-    		 , ROWNUM
-    	  FROM(
-    	  		SELECT MC.MOKCHA_NAME
-		    	  FROM LECTURE_MOKCHA_TBL MC
-		    	 WHERE MC.CLASS_CODE = #{ classCode }
-		    	   AND MC.IS_DELETED = 'N'
-		    	 ORDER BY MC.WRITE_DATE ASC
-    			)A
-    	 WHERE ROWNUM BETWEEN 1 AND 5
-    </select>
-    
     <!-- 클래스 생성 하기 by 임예람 -->
     <insert id="registClass" parameterType="ClassDTO">
     	INSERT INTO CLASS_TBL
@@ -178,6 +164,7 @@
 		   , MAX_COUNT
 		   , PRICE
 		   , CREATE_DATE
+		   , IS_DELETED
     	) VALUES (
     		 SEQ_CLASS_TBL.NEXTVAL
 		   , #{ title }
@@ -186,8 +173,24 @@
 		   , #{ maxCount }
 		   , #{ price }
 		   , SYSDATE
+		   , 'N'
     	)
     </insert>
+    
+    <select id="selectMokchaNamesByClassCode" resultType="MokchaDTO">
+    	SELECT 
+    		   A.MOKCHA_NAME
+    		 , ROWNUM
+    	  FROM(
+    	  		SELECT MC.MOKCHA_NAME
+		    	  FROM LECTURE_MOKCHA_TBL MC
+		    	 WHERE MC.CLASS_CODE = #{ classCode }
+		    	   AND MC.IS_DELETED = 'N'
+		    	 ORDER BY MC.MOKCHA_NAME ASC
+    			)A
+    	 WHERE ROWNUM BETWEEN 1 AND 5
+    </select>
+    
     
     <select id="selectCategoryList" resultType="hashmap">
     	SELECT 

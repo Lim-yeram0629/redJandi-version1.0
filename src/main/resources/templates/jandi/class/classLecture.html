@@ -120,16 +120,17 @@ $(function(){
 	// 목차 토글
 	function mokchaToggle(item, mokchaCode) {
 		
-		let mokchaDiv = $(item).next();
+		let mokchaDiv = $(item).next(); 
 		
 		if(mokchaDiv.css('display') == 'none'){
 			mokchaDiv.css('display', 'block');
-			
 			$(item).html($(item).html().replace("▼", "▲"));
 			
-			$(mokchaDiv).children('.mokchaVideos').html("");
-			
+			// html 초기화로 여러번 클릭시 중복 영상 방지
+			$(mokchaDiv).children('.mokchaVideos').html(""); 
+			// 목차 파일 조뢰
 			let mokchaFileList = getMokchaFileList(mokchaCode);
+			// 목차 파일 리스트 만큼 화면에 보여주기
 			if(mokchaFileList != null){
 				for(let fileDTO of mokchaFileList){
 					$(mokchaDiv).children('.mokchaVideos')
@@ -139,30 +140,37 @@ $(function(){
 			}
 		}else{
 			mokchaDiv.css('display','none');
-			
 			$(item).html($(item).html().replace("▲", "▼"));
 		}
 	}
 	
 	// 목차 삭제
 	function deleteMokcha(item, mokcha_code){
+		// 목차 삭제 경고 알러창 확인 클릭 시
 		if(confirm("해당 목차를 삭제하시면 안의 내용까지 전부 삭제됩니댜. 삭제하시겠습니까?")){
+			// 바꿀 목차 객체 선언
 			let mokcha = {
 					mokcha_code : mokcha_code,
 					is_deleted : 'Y'
 			};
+			// 목차 업데이트
 			patchMokcha(mokcha, mokcha_code);
 			
+			// 해당 목차의 파일 리스트 가져오기
 			let mokchaFileList = getMokchaFileList(mokcha_code);
+			// 파일 리스트가 있다면
 			if(mokchaFileList != null){
-				
+				// 파일 객체 선언
 				let mokchaFile = {
 						mokcha_code : mokcha_code,
 						is_deleted : 'Y'
 				}
+				// 목차 파일 DB에 업데이트
 				patchMokchaFiles(mokchaFile, mokcha_code);
+				// 파일을 삭제하는 파일 restAPI 호출
 				deleteMokchaFiles(mokchaFileList);
 			}
+			// mokcha리스트 부분 새로고침
 			$('#classMokcha').load(location.href+' #classMokcha');
 		}
 	}
@@ -195,13 +203,15 @@ $(function(){
 	}
 	
 	function modifyMokcha(item, mokcha_code){
+		// 변경할 목차 객체 선언
 		let mokcha = {
 				mokcha_code : mokcha_code,
 				mokcha_name : $(item).nextAll('.mokcha_name').val(),
 				contents : $(item).nextAll('.contents').val()
 		};
-		
+		// 목차 수정 후 받은 변경된 목차 저장
 		let mokchaDTO = patchMokcha(mokcha, mokcha_code);
+		// 변경 성공 시 화면에 적용
 		if(mokchaDTO != null){
 			$(item).parent().prevAll('.mokchaTitle')
 							.html(mokchaDTO.mokcha_name + " <span style='color:#FDD2BF'>▼</span>");
@@ -225,19 +235,26 @@ $(function(){
 	
 	function uploadMokchaFile(item, mokcha_code){
 		
+		// 파일 업로드시 저장할 파일 formData
 		let formData = new FormData($(item).parent()[0]);
 		formData.append("file", $(item).prev().val());
 		formData.append("dir", "/lectureFiles/videos");
 		
+		// 영상 파일을 보여줄 목차 div
 		let mokchaDiv = $(item).parent().parent();
 		console.log(mokchaDiv);
 		
+		// 파일 빈값 체크
 		if($(item).prev().val() != ""){
 			alert("영상 업로드를 시작합니다.");
+			
+			// 파일 업로드하고 파일 객체 반환받아 저장
 			let fileDTO = uploadFile(formData);
 			
+			// 파일 업로드 성공시
 			if(fileDTO != null){
 				
+				// DB에 저장할 객체 선언
 				let mokchaFileDTO = {
 					mokcha_code : mokcha_code,
 					file_path : fileDTO.file_path,
@@ -245,7 +262,9 @@ $(function(){
 					email : '[[${ jandi.email }]]'
 				};
 				
+				// DB에 목파 파일 인서트
 				postMokchaFile(mokchaFileDTO);
+				// 인서트 후 비디오 화면에 보여주기
 				$(mokchaDiv).children('.mokchaVideos')
 							.append("<video class='mokcha' controls src='/lectureFiles/videos/" 
 									+ mokchaFileDTO.file_path + "'></video>");
