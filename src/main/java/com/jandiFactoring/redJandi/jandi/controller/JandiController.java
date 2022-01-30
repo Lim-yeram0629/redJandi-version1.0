@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jandiFactoring.redJandi.jandi.model.dto.JandiDTO;
 import com.jandiFactoring.redJandi.jandi.model.service.JandiService;
-import com.jandiFactoring.redJandi.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/jandi/*")
@@ -33,7 +31,7 @@ public class JandiController {
 	}
 	
 	/**
-	 * 해당 잔기의 정보를 조회하여 페이지를 요청하는 메소드
+	 * 해당 잔디의 정보를 조회하여 페이지를 요청하는 메소드
 	 * @author 임예람
 	 * @param model
 	 * @param session
